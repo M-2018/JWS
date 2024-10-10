@@ -121,6 +121,7 @@ C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.AssemblyInfo.cs
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.csproj.CoreCompileInputs.cache
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.MvcApplicationPartsAssemblyInfo.cs
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.MvcApplicationPartsAssemblyInfo.cache
+C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.sourcelink.json
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\staticwebassets.build.json
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\staticwebassets.development.json
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\staticwebassets\msbuild.JWS.Microsoft.AspNetCore.StaticWebAssets.props

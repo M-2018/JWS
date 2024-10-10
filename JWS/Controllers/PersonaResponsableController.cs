@@ -1,4 +1,5 @@
 ﻿using JWS.Data;
+using JWS.DTOs;
 using JWS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ namespace JWS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PersonaResponsableController : Controller
+    public class PersonaResponsableController : ControllerBase
     {
         private readonly APIAppDbContext _context;
 
@@ -18,14 +19,23 @@ namespace JWS.Controllers
 
         // GET: api/personasresponsables
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PersonaResponsable>>> GetPersonasResponsables()
+        public async Task<ActionResult<IEnumerable<PersonaResponsableDTO>>> GetPersonasResponsables()
         {
-            return await _context.PersonasResponsables.ToListAsync();
+            return await _context.PersonasResponsables
+                .Select(pr => new PersonaResponsableDTO
+                {
+                    Id = pr.Id,
+                    Nombres = pr.Nombres,
+                    Apellidos = pr.Apellidos,
+                    Relacion = pr.Relacion,
+                    EstudianteId = pr.EstudianteId
+                })
+                .ToListAsync();
         }
 
         // GET: api/personasresponsables/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<PersonaResponsable>> GetPersonaResponsable(long id)
+        public async Task<ActionResult<PersonaResponsableDTO>> GetPersonaResponsable(long id)
         {
             var personaResponsable = await _context.PersonasResponsables.FindAsync(id);
 
@@ -34,27 +44,57 @@ namespace JWS.Controllers
                 return NotFound();
             }
 
-            return personaResponsable;
+            var personaResponsableDTO = new PersonaResponsableDTO
+            {
+                Id = personaResponsable.Id,
+                Nombres = personaResponsable.Nombres,
+                Apellidos = personaResponsable.Apellidos,
+                Relacion = personaResponsable.Relacion,
+                EstudianteId = personaResponsable.EstudianteId
+            };
+
+            return personaResponsableDTO;
         }
 
         // POST: api/personasresponsables
         [HttpPost]
-        public async Task<ActionResult<PersonaResponsable>> PostPersonaResponsable(PersonaResponsable personaResponsable)
+        public async Task<ActionResult<PersonaResponsableDTO>> PostPersonaResponsable(PersonaResponsableDTO personaResponsableDTO)
         {
+            var personaResponsable = new PersonaResponsable
+            {
+                Nombres = personaResponsableDTO.Nombres,
+                Apellidos = personaResponsableDTO.Apellidos,
+                Relacion = personaResponsableDTO.Relacion,
+                EstudianteId = personaResponsableDTO.EstudianteId
+            };
+
             _context.PersonasResponsables.Add(personaResponsable);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetPersonaResponsable), new { id = personaResponsable.Id }, personaResponsable);
+            personaResponsableDTO.Id = personaResponsable.Id;
+
+            return CreatedAtAction(nameof(GetPersonaResponsable), new { id = personaResponsableDTO.Id }, personaResponsableDTO);
         }
 
         // PUT: api/personasresponsables/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPersonaResponsable(long id, PersonaResponsable personaResponsable)
+        public async Task<IActionResult> PutPersonaResponsable(long id, PersonaResponsableDTO personaResponsableDTO)
         {
-            if (id != personaResponsable.Id)
+            if (id != personaResponsableDTO.Id)
             {
                 return BadRequest();
             }
+
+            var personaResponsable = await _context.PersonasResponsables.FindAsync(id);
+            if (personaResponsable == null)
+            {
+                return NotFound();
+            }
+
+            personaResponsable.Nombres = personaResponsableDTO.Nombres;
+            personaResponsable.Apellidos = personaResponsableDTO.Apellidos;
+            personaResponsable.Relacion = personaResponsableDTO.Relacion;
+            personaResponsable.EstudianteId = personaResponsableDTO.EstudianteId;
 
             _context.Entry(personaResponsable).State = EntityState.Modified;
 

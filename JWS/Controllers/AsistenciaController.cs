@@ -1,4 +1,5 @@
 ﻿using JWS.Data;
+using JWS.DTOs;
 using JWS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,23 @@ namespace JWS.Controllers
 
         // GET: api/asistencias
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Asistencia>>> GetAsistencias()
+        public async Task<ActionResult<IEnumerable<AsistenciaDTO>>> GetAsistencias()
         {
-            return await _context.Asistencias.ToListAsync();
+            return await _context.Asistencias
+                .Select(a => new AsistenciaDTO
+                {
+                    Id = a.Id,
+                    Fecha = a.Fecha,
+                    Presente = a.Presente,
+                    EstudianteId = a.EstudianteId,
+                    MateriaId = a.MateriaId
+                })
+                .ToListAsync();
         }
 
         // GET: api/asistencias/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Asistencia>> GetAsistencia(long id)
+        public async Task<ActionResult<AsistenciaDTO>> GetAsistencia(long id)
         {
             var asistencia = await _context.Asistencias.FindAsync(id);
 
@@ -34,27 +44,57 @@ namespace JWS.Controllers
                 return NotFound();
             }
 
-            return asistencia;
+            var asistenciaDTO = new AsistenciaDTO
+            {
+                Id = asistencia.Id,
+                Fecha = asistencia.Fecha,
+                Presente = asistencia.Presente,
+                EstudianteId = asistencia.EstudianteId,
+                MateriaId = asistencia.MateriaId
+            };
+
+            return asistenciaDTO;
         }
 
         // POST: api/asistencias
         [HttpPost]
-        public async Task<ActionResult<Asistencia>> PostAsistencia(Asistencia asistencia)
+        public async Task<ActionResult<AsistenciaDTO>> PostAsistencia(AsistenciaDTO asistenciaDTO)
         {
+            var asistencia = new Asistencia
+            {
+                Fecha = asistenciaDTO.Fecha,
+                Presente = asistenciaDTO.Presente,
+                EstudianteId = asistenciaDTO.EstudianteId,
+                MateriaId = asistenciaDTO.MateriaId
+            };
+
             _context.Asistencias.Add(asistencia);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAsistencia), new { id = asistencia.Id }, asistencia);
+            asistenciaDTO.Id = asistencia.Id;
+
+            return CreatedAtAction(nameof(GetAsistencia), new { id = asistenciaDTO.Id }, asistenciaDTO);
         }
 
         // PUT: api/asistencias/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAsistencia(long id, Asistencia asistencia)
+        public async Task<IActionResult> PutAsistencia(long id, AsistenciaDTO asistenciaDTO)
         {
-            if (id != asistencia.Id)
+            if (id != asistenciaDTO.Id)
             {
                 return BadRequest();
             }
+
+            var asistencia = await _context.Asistencias.FindAsync(id);
+            if (asistencia == null)
+            {
+                return NotFound();
+            }
+
+            asistencia.Fecha = asistenciaDTO.Fecha;
+            asistencia.Presente = asistenciaDTO.Presente;
+            asistencia.EstudianteId = asistenciaDTO.EstudianteId;
+            asistencia.MateriaId = asistenciaDTO.MateriaId;
 
             _context.Entry(asistencia).State = EntityState.Modified;
 

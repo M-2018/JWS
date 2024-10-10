@@ -1,1 +1,47 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+    background-color: #1d1d1d;
+    color: #fff;
+    font-family: Arial, sans-serif;
+  }
+  
+  .login-container {
+    padding-top: 100px;
+  }
+  
+  .login-card {
+    background-color: #333;
+    border: 2px solid #ff9800; 
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Logo del login */
+  .login-logo {
+    width: 80px;
+  }
+  
+  /* Input del formulario */
+  .login-input {
+    background-color: #1f1f1f;
+    border: 2px solid #ff9800; /* Borde naranja */
+    color: #fff;
+  }
+  
+  .login-input:focus {
+    background-color: #1f1f1f;
+    border-color: #ff9800;
+    color: #fff;
+  }
+  
+  /* Botón de Ingreso */
+  .btn-login {
+    background-color: #ff9800;
+    border: none;
+    color: #fff;
+  }
+  
+  .btn-login:hover {
+    background-color: #e68900;
+    border: none;
+  }

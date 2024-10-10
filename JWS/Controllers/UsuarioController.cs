@@ -1,4 +1,5 @@
 ﻿using JWS.Data;
+using JWS.DTOs;
 using JWS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,24 @@ namespace JWS.Controllers
 
         // GET: api/usuarios
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
+        public async Task<ActionResult<IEnumerable<UsuarioDTO>>> GetUsuarios()
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Usuarios
+                .Select(u => new UsuarioDTO
+                {
+                    Id = u.Id,
+                    Username = u.Username,
+                    Email = u.Email,
+                    Nombres = u.Nombres,
+                    Apellidos = u.Apellidos,
+                    IsAdmin = u.IsAdmin
+                })
+                .ToListAsync();
         }
 
         // GET: api/usuarios/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Usuario>> GetUsuario(long id)
+        public async Task<ActionResult<UsuarioDTO>> GetUsuario(long id)
         {
             var usuario = await _context.Usuarios.FindAsync(id);
 
@@ -34,27 +45,61 @@ namespace JWS.Controllers
                 return NotFound();
             }
 
-            return usuario;
+            var usuarioDTO = new UsuarioDTO
+            {
+                Id = usuario.Id,
+                Username = usuario.Username,
+                Email = usuario.Email,
+                Nombres = usuario.Nombres,
+                Apellidos = usuario.Apellidos,
+                IsAdmin = usuario.IsAdmin
+            };
+
+            return usuarioDTO;
         }
 
         // POST: api/usuarios
         [HttpPost]
-        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
+        public async Task<ActionResult<UsuarioDTO>> PostUsuario(UsuarioDTO usuarioDTO)
         {
+            var usuario = new Usuario
+            {
+                Username = usuarioDTO.Username,
+                Email = usuarioDTO.Email,
+                Password = "hashed_password",  // Aquí puedes agregar la lógica para el hashing
+                Nombres = usuarioDTO.Nombres,
+                Apellidos = usuarioDTO.Apellidos,
+                IsAdmin = usuarioDTO.IsAdmin
+            };
+
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuario);
+            usuarioDTO.Id = usuario.Id;
+
+            return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuarioDTO);
         }
 
         // PUT: api/usuarios/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUsuario(long id, Usuario usuario)
+        public async Task<IActionResult> PutUsuario(long id, UsuarioDTO usuarioDTO)
         {
-            if (id != usuario.Id)
+            if (id != usuarioDTO.Id)
             {
                 return BadRequest();
             }
+
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
+            {
+                return NotFound();
+            }
+
+            usuario.Username = usuarioDTO.Username;
+            usuario.Email = usuarioDTO.Email;
+            usuario.Nombres = usuarioDTO.Nombres;
+            usuario.Apellidos = usuarioDTO.Apellidos;
+            usuario.IsAdmin = usuarioDTO.IsAdmin;
 
             _context.Entry(usuario).State = EntityState.Modified;
 

@@ -1,4 +1,5 @@
 ﻿using JWS.Data;
+using JWS.DTOs;
 using JWS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,30 @@ namespace JWS.Controllers
 
         // GET: api/estudiantes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Estudiante>>> GetEstudiantes()
+        public async Task<ActionResult<IEnumerable<EstudianteDTO>>> GetEstudiantes()
         {
-            return await _context.Estudiantes.ToListAsync();
+            return await _context.Estudiantes
+                .Select(e => new EstudianteDTO
+                {
+                    Id = e.Id,
+                    CodigoUnico = e.CodigoUnico,
+                    Nombres = e.Nombres,
+                    Apellidos = e.Apellidos,
+                    NroDocumento = e.NroDocumento,
+                    TipoDocumento = e.TipoDocumento,
+                    FechaNacimiento = e.FechaNacimiento,
+                    Direccion = e.Direccion,
+                    Telefono = e.Telefono,
+                    Email = e.Email,
+                    SemestrePagado = e.SemestrePagado,
+                    CicloId = e.CicloId
+                })
+                .ToListAsync();
         }
 
         // GET: api/estudiantes/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Estudiante>> GetEstudiante(long id)
+        public async Task<ActionResult<EstudianteDTO>> GetEstudiante(long id)
         {
             var estudiante = await _context.Estudiantes.FindAsync(id);
 
@@ -34,27 +51,78 @@ namespace JWS.Controllers
                 return NotFound();
             }
 
-            return estudiante;
+            var estudianteDTO = new EstudianteDTO
+            {
+                Id = estudiante.Id,
+                CodigoUnico = estudiante.CodigoUnico,
+                Nombres = estudiante.Nombres,
+                Apellidos = estudiante.Apellidos,
+                NroDocumento = estudiante.NroDocumento,
+                TipoDocumento = estudiante.TipoDocumento,
+                FechaNacimiento = estudiante.FechaNacimiento,
+                Direccion = estudiante.Direccion,
+                Telefono = estudiante.Telefono,
+                Email = estudiante.Email,
+                SemestrePagado = estudiante.SemestrePagado,
+                CicloId = estudiante.CicloId
+            };
+
+            return estudianteDTO;
         }
 
         // POST: api/estudiantes
         [HttpPost]
-        public async Task<ActionResult<Estudiante>> PostEstudiante(Estudiante estudiante)
+        public async Task<ActionResult<EstudianteDTO>> PostEstudiante(EstudianteDTO estudianteDTO)
         {
+            var estudiante = new Estudiante
+            {
+                CodigoUnico = estudianteDTO.CodigoUnico,
+                Nombres = estudianteDTO.Nombres,
+                Apellidos = estudianteDTO.Apellidos,
+                NroDocumento = estudianteDTO.NroDocumento,
+                TipoDocumento = estudianteDTO.TipoDocumento,
+                FechaNacimiento = estudianteDTO.FechaNacimiento,
+                Direccion = estudianteDTO.Direccion,
+                Telefono = estudianteDTO.Telefono,
+                Email = estudianteDTO.Email,
+                SemestrePagado = estudianteDTO.SemestrePagado,
+                CicloId = estudianteDTO.CicloId
+            };
+
             _context.Estudiantes.Add(estudiante);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetEstudiante), new { id = estudiante.Id }, estudiante);
+            estudianteDTO.Id = estudiante.Id;
+
+            return CreatedAtAction(nameof(GetEstudiante), new { id = estudianteDTO.Id }, estudianteDTO);
         }
 
         // PUT: api/estudiantes/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEstudiante(long id, Estudiante estudiante)
+        public async Task<IActionResult> PutEstudiante(long id, EstudianteDTO estudianteDTO)
         {
-            if (id != estudiante.Id)
+            if (id != estudianteDTO.Id)
             {
                 return BadRequest();
             }
+
+            var estudiante = await _context.Estudiantes.FindAsync(id);
+            if (estudiante == null)
+            {
+                return NotFound();
+            }
+
+            estudiante.CodigoUnico = estudianteDTO.CodigoUnico;
+            estudiante.Nombres = estudianteDTO.Nombres;
+            estudiante.Apellidos = estudianteDTO.Apellidos;
+            estudiante.NroDocumento = estudianteDTO.NroDocumento;
+            estudiante.TipoDocumento = estudianteDTO.TipoDocumento;
+            estudiante.FechaNacimiento = estudianteDTO.FechaNacimiento;
+            estudiante.Direccion = estudianteDTO.Direccion;
+            estudiante.Telefono = estudianteDTO.Telefono;
+            estudiante.Email = estudianteDTO.Email;
+            estudiante.SemestrePagado = estudianteDTO.SemestrePagado;
+            estudiante.CicloId = estudianteDTO.CicloId;
 
             _context.Entry(estudiante).State = EntityState.Modified;
 
@@ -97,6 +165,5 @@ namespace JWS.Controllers
         {
             return _context.Estudiantes.Any(e => e.Id == id);
         }
-
     }
 }

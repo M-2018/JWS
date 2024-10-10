@@ -1,4 +1,5 @@
 ﻿using JWS.Data;
+using JWS.DTOs;
 using JWS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,14 +19,20 @@ namespace JWS.Controllers
 
         // GET: api/ciclos
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Ciclo>>> GetCiclos()
+        public async Task<ActionResult<IEnumerable<CicloDTO>>> GetCiclos()
         {
-            return await _context.Ciclos.ToListAsync();
+            return await _context.Ciclos
+                .Select(c => new CicloDTO
+                {
+                    Id = c.Id,
+                    Nombre = c.Nombre
+                })
+                .ToListAsync();
         }
 
         // GET: api/ciclos/{id}
         [HttpGet("{id}")]
-        public async Task<ActionResult<Ciclo>> GetCiclo(long id)
+        public async Task<ActionResult<CicloDTO>> GetCiclo(long id)
         {
             var ciclo = await _context.Ciclos.FindAsync(id);
 
@@ -34,27 +41,48 @@ namespace JWS.Controllers
                 return NotFound();
             }
 
-            return ciclo;
+            var cicloDTO = new CicloDTO
+            {
+                Id = ciclo.Id,
+                Nombre = ciclo.Nombre
+            };
+
+            return cicloDTO;
         }
 
         // POST: api/ciclos
         [HttpPost]
-        public async Task<ActionResult<Ciclo>> PostCiclo(Ciclo ciclo)
+        public async Task<ActionResult<CicloDTO>> PostCiclo(CicloDTO cicloDTO)
         {
+            var ciclo = new Ciclo
+            {
+                Nombre = cicloDTO.Nombre
+            };
+
             _context.Ciclos.Add(ciclo);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCiclo), new { id = ciclo.Id }, ciclo);
+            cicloDTO.Id = ciclo.Id;
+
+            return CreatedAtAction(nameof(GetCiclo), new { id = cicloDTO.Id }, cicloDTO);
         }
 
         // PUT: api/ciclos/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCiclo(long id, Ciclo ciclo)
+        public async Task<IActionResult> PutCiclo(long id, CicloDTO cicloDTO)
         {
-            if (id != ciclo.Id)
+            if (id != cicloDTO.Id)
             {
                 return BadRequest();
             }
+
+            var ciclo = await _context.Ciclos.FindAsync(id);
+            if (ciclo == null)
+            {
+                return NotFound();
+            }
+
+            ciclo.Nombre = cicloDTO.Nombre;
 
             _context.Entry(ciclo).State = EntityState.Modified;
 
