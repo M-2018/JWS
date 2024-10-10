@@ -12,6 +12,7 @@ export class HomeComponent {
   constructor(private router: Router) { }
 
   navigateTo(route: string) {
+    console.log('Navegando a:', route);
     this.router.navigate([route]);
   }
 }

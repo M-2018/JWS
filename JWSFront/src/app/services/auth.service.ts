@@ -10,9 +10,33 @@ export class AuthService {
   private apiUrl = 'https://localhost:7246/api/Usuario';
   constructor(private http: HttpClient) { }
 
-  login(username: string, password: string): Observable<any> {
+  login(email: string, password: string): Observable<boolean> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = { username, password };    
-    return this.http.post(`${this.apiUrl}/login`, body, { headers });
+    const body = { email, password }; 
+    return this.http.post<boolean>(`${this.apiUrl}/validate-credentials`, body, { headers });
   }
 }
+
+/**
+ * [
+  {
+    "id": 1,
+    "username": "Administrador",
+    "email": "admin@mail.com",
+    "nombres": "Luiz",
+    "apellidos": "Diaz",
+    "isAdmin": true
+  },
+  {
+    "id": 2,
+    "username": "Usuario",
+    "email": "usuario@mail.com",
+    "nombres": "Users",
+    "apellidos": "Perez",
+    "isAdmin": false
+  }
+]
+
+Admin123@
+Usuario123@
+ */
