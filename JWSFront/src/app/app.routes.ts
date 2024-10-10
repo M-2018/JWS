@@ -7,10 +7,13 @@ import { StudentComponent } from './student/student.component';
 import { EnrollmentComponent } from './enrollment/enrollment.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { GradesComponent } from './grades/grades.component';
+import { CheckGradesComponent } from './check-grades/check-grades.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
-    { path: '', redirectTo: '/home', pathMatch: 'full' }, // Redirecciona a Home cuando la ruta está vacía
+  { path: '', redirectTo: '/home', pathMatch: 'full' }, 
   { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'user-registration', component: UserRegistrationComponent },
   { path: 'cycle-subject', component: CycleSubjectComponent },
   { path: 'teacher', component: TeacherComponent },
@@ -18,4 +21,8 @@ export const routes: Routes = [
   { path: 'enrollment', component: EnrollmentComponent },
   { path: 'attendance', component: AttendanceComponent },
   { path: 'grades', component: GradesComponent },
+  { path: 'check-grades', component: CheckGradesComponent },
+  
+
+
 ];

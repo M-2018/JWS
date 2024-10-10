@@ -1,47 +1,108 @@
+/* Estilos generales */
 body {
-    background-color: #1d1d1d;
-    color: #fff;
-    font-family: Arial, sans-serif;
-  }
-  
-  .login-container {
-    padding-top: 100px;
-  }
-  
-  .login-card {
-    background-color: #333;
-    border: 2px solid #ff9800; 
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Logo del login */
-  .login-logo {
-    width: 80px;
-  }
-  
-  /* Input del formulario */
-  .login-input {
-    background-color: #1f1f1f;
-    border: 2px solid #ff9800; /* Borde naranja */
-    color: #fff;
-  }
-  
-  .login-input:focus {
-    background-color: #1f1f1f;
-    border-color: #ff9800;
-    color: #fff;
-  }
-  
-  /* Botón de Ingreso */
-  .btn-login {
-    background-color: #ff9800;
-    border: none;
-    color: #fff;
-  }
-  
-  .btn-login:hover {
-    background-color: #e68900;
-    border: none;
-  }
+  background-color: #1d1d1d;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+/* Estilos para el Home */
+.home-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.home-logo {
+  text-align: center;
+  margin-bottom: 10px; /* Reducido el espaciado entre el logo y el card */
+}
+
+.login-logo {
+  width: 15rem; /* Ajusta el tamaño del logo según sea necesario */
+}
+
+.home-card {
+  background-color: #333;
+  border: 2px solid #ff9800; /* Bordes naranjas */
+  border-radius: 10px;
+  padding: 20px; /* Ajuste del padding para mayor uniformidad */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.home-title {
+  font-size: 24px;
+  margin-bottom: 15px; /* Reducido el margen para que el título esté más cerca del botón */
+  color: #ff9800;
+}
+
+.home-options {
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-home {
+  background-color: #ff9800;
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+  margin: 0 5px; /* Ajustado el margen para mantener la cercanía entre los botones */
+}
+
+.btn-home:hover {
+  background-color: #e68900;
+}
+
+/* Estilos para el Login */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-card {
+  background-color: #333; /* Mismo color de fondo que el card de Home */
+  border: 2px solid #ff9800; /* Bordes naranjas */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+.login-title {
+  font-size: 24px;
+  margin-bottom: 20px; /* Ajuste del margen para que esté cerca del formulario */
+  color: #ff9800;
+}
+
+.login-input {
+  background-color: #444; /* Color de fondo para el input */
+  border: 1px solid #ff9800; /* Borde del input */
+  color: #fff; /* Color del texto en el input */
+}
+
+.login-input::placeholder {
+  color: #bbb; /* Color del placeholder */
+}
+
+.btn-login {
+  background-color: #ff9800; /* Color del botón */
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 5px;
+}
+
+.btn-login:hover {
+  background-color: #e68900; /* Color del botón al pasar el mouse */
+}
