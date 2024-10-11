@@ -122,19 +122,35 @@ namespace JWS.Controllers
             return NoContent();
         }
 
+        //[HttpPost("validate-credentials")]
+        //public async Task<ActionResult<bool>> ValidateUserCredentials(LoginDTO loginDTO)
+        //{
+        //    var usuario = await _context.Usuarios
+        //        .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.Password == loginDTO.Password);
+
+        //    if (usuario == null)
+        //    {
+        //        return false; 
+        //    }
+
+        //    return true; 
+        //}
+
         [HttpPost("validate-credentials")]
-        public async Task<ActionResult<bool>> ValidateUserCredentials(LoginDTO loginDTO)
+        public async Task<ActionResult<LoginResponseDTO>> ValidateUserCredentials(LoginDTO loginDTO)
         {
             var usuario = await _context.Usuarios
                 .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.Password == loginDTO.Password);
 
             if (usuario == null)
             {
-                return false; 
+                return new LoginResponseDTO { IsValid = false, Username = null, IsAdmin = false };
             }
 
-            return true; 
+            return new LoginResponseDTO { IsValid = true, Username = usuario.Username, IsAdmin = usuario.IsAdmin };
         }
+
+
 
         // DELETE: api/usuarios/{id}
         [HttpDelete("{id}")]

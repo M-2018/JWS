@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LoginResponseDTO } from '../dto/LoginResponseDTO';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
+  username: string | null = '';
+  isAdmin: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.loginForm = this.fb.group({
@@ -23,21 +26,28 @@ export class LoginComponent {
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.loginForm.valid) {
       const email = this.loginForm.value.email;
       const password = this.loginForm.value.password;
       this.authService.login(email, password).subscribe(
-        (result) => {
-          if (result) {
-            //this.router.navigate(['/dashboard']); // Redirige a la página de dashboard después de un login exitoso
-            console.log('Login exitoso');
+        (response: LoginResponseDTO) => {
+          if (response.isValid) {
+            this.username = response.username;
+            this.isAdmin = response.isAdmin;
+            console.log('Login exitoso', this.username, this.isAdmin);
+            // Redirige a la página de dashboard después de un login exitoso
+            //this.router.navigate(['/dashboard']);
           } else {
+            this.errorMessage = 'Credenciales inválidas';
             console.log('Login fallido');
           }
         },
-        
+        (error) => {
+          console.error('Error en el login', error);
+          this.errorMessage = 'Error en la conexión con el servidor';
+        }
       );
-    } 
+    }
   }
 }
