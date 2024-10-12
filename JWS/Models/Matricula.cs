@@ -12,13 +12,11 @@ namespace JWS.Models
         [JsonIgnore]
         public Estudiante Estudiante { get; set; }
 
-        public long MateriaId { get; set; }
+        public long CicloId { get; set; }
         [JsonIgnore]
-        public Materia Materia { get; set; }
+        public Ciclo Ciclo { get; set; }
 
         public int AnioLectivo { get; set; }
 
-        [JsonIgnore]
-        public ICollection<Calificacion> Calificaciones { get; set; }
     }
 }

@@ -22,8 +22,8 @@ namespace JWS.Models
         public string? FotoUrl { get; set; }
         public bool? SemestrePagado { get; set; }
 
-        [JsonIgnore]
-        public ICollection<Matricula> Matriculas { get; set; }
+        //[JsonIgnore]
+        //public ICollection<Matricula> Matriculas { get; set; }
         [JsonIgnore]
         public ICollection<PersonaResponsable> PersonasResponsables { get; set; }
 

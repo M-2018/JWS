@@ -112,13 +112,40 @@ namespace JWS.Migrations
                         column: x => x.CicloId,
                         principalTable: "Ciclos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Materias_Profesores_ProfesorId",
                         column: x => x.ProfesorId,
                         principalTable: "Profesores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Matriculas",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EstudianteId = table.Column<long>(type: "bigint", nullable: false),
+                    CicloId = table.Column<long>(type: "bigint", nullable: false),
+                    AnioLectivo = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Matriculas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Matriculas_Ciclos_CicloId",
+                        column: x => x.CicloId,
+                        principalTable: "Ciclos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Matriculas_Estudiantes_EstudianteId",
+                        column: x => x.EstudianteId,
+                        principalTable: "Estudiantes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -140,7 +167,7 @@ namespace JWS.Migrations
                         column: x => x.EstudianteId,
                         principalTable: "Estudiantes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -151,51 +178,29 @@ namespace JWS.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Presente = table.Column<bool>(type: "bit", nullable: true),
+                    Ausente = table.Column<bool>(type: "bit", nullable: true),
                     EstudianteId = table.Column<long>(type: "bigint", nullable: false),
-                    MateriaId = table.Column<long>(type: "bigint", nullable: false)
+                    MateriaId = table.Column<long>(type: "bigint", nullable: false),
+                    CicloId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Asistencias", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Asistencias_Ciclos_CicloId",
+                        column: x => x.CicloId,
+                        principalTable: "Ciclos",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Asistencias_Estudiantes_EstudianteId",
                         column: x => x.EstudianteId,
                         principalTable: "Estudiantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Asistencias_Materias_MateriaId",
                         column: x => x.MateriaId,
                         principalTable: "Materias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Matriculas",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    EstudianteId = table.Column<long>(type: "bigint", nullable: false),
-                    MateriaId = table.Column<long>(type: "bigint", nullable: false),
-                    AnioLectivo = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Matriculas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Matriculas_Estudiantes_EstudianteId",
-                        column: x => x.EstudianteId,
-                        principalTable: "Estudiantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Matriculas_Materias_MateriaId",
-                        column: x => x.MateriaId,
-                        principalTable: "Materias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -213,32 +218,34 @@ namespace JWS.Migrations
                     NotaDefinitiva = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
                     Recuperacion = table.Column<bool>(type: "bit", nullable: true),
                     Habilitacion = table.Column<bool>(type: "bit", nullable: true),
-                    MatriculaId = table.Column<long>(type: "bigint", nullable: false),
-                    MateriaId = table.Column<long>(type: "bigint", nullable: false),
-                    ProfesorId = table.Column<long>(type: "bigint", nullable: false)
+                    EstudianteId = table.Column<long>(type: "bigint", nullable: false),
+                    CicloId = table.Column<long>(type: "bigint", nullable: false),
+                    MateriaId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Calificaciones", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Calificaciones_Ciclos_CicloId",
+                        column: x => x.CicloId,
+                        principalTable: "Ciclos",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Calificaciones_Estudiantes_EstudianteId",
+                        column: x => x.EstudianteId,
+                        principalTable: "Estudiantes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_Calificaciones_Materias_MateriaId",
                         column: x => x.MateriaId,
                         principalTable: "Materias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Calificaciones_Matriculas_MatriculaId",
-                        column: x => x.MatriculaId,
-                        principalTable: "Matriculas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Calificaciones_Profesores_ProfesorId",
-                        column: x => x.ProfesorId,
-                        principalTable: "Profesores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Asistencias_CicloId",
+                table: "Asistencias",
+                column: "CicloId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Asistencias_EstudianteId",
@@ -251,19 +258,19 @@ namespace JWS.Migrations
                 column: "MateriaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Calificaciones_CicloId",
+                table: "Calificaciones",
+                column: "CicloId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Calificaciones_EstudianteId",
+                table: "Calificaciones",
+                column: "EstudianteId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Calificaciones_MateriaId",
                 table: "Calificaciones",
                 column: "MateriaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Calificaciones_MatriculaId",
-                table: "Calificaciones",
-                column: "MatriculaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Calificaciones_ProfesorId",
-                table: "Calificaciones",
-                column: "ProfesorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Estudiantes_CicloId",
@@ -281,14 +288,14 @@ namespace JWS.Migrations
                 column: "ProfesorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Matriculas_CicloId",
+                table: "Matriculas",
+                column: "CicloId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Matriculas_EstudianteId",
                 table: "Matriculas",
                 column: "EstudianteId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Matriculas_MateriaId",
-                table: "Matriculas",
-                column: "MateriaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersonasResponsables_EstudianteId",
@@ -306,25 +313,25 @@ namespace JWS.Migrations
                 name: "Calificaciones");
 
             migrationBuilder.DropTable(
+                name: "Matriculas");
+
+            migrationBuilder.DropTable(
                 name: "PersonasResponsables");
 
             migrationBuilder.DropTable(
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Matriculas");
+                name: "Materias");
 
             migrationBuilder.DropTable(
                 name: "Estudiantes");
 
             migrationBuilder.DropTable(
-                name: "Materias");
+                name: "Profesores");
 
             migrationBuilder.DropTable(
                 name: "Ciclos");
-
-            migrationBuilder.DropTable(
-                name: "Profesores");
         }
     }
 }

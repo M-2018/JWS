@@ -17,11 +17,6 @@ namespace JWS.Models
         [JsonIgnore]
         public Ciclo Ciclo { get; set; }
 
-        [JsonIgnore]
-        public ICollection<Calificacion> Calificaciones { get; set; }
-        [JsonIgnore]
-        public ICollection<Matricula> Matriculas { get; set; }
-        [JsonIgnore]
-        public ICollection<Asistencia> Asistencias { get; set; }
+        
     }
 }

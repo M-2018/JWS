@@ -30,6 +30,12 @@ namespace JWS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<bool?>("Ausente")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("CicloId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("EstudianteId")
                         .HasColumnType("bigint");
 
@@ -43,6 +49,8 @@ namespace JWS.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CicloId");
 
                     b.HasIndex("EstudianteId");
 
@@ -59,13 +67,16 @@ namespace JWS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
+                    b.Property<long>("CicloId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("EstudianteId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool?>("Habilitacion")
                         .HasColumnType("bit");
 
                     b.Property<long>("MateriaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("MatriculaId")
                         .HasColumnType("bigint");
 
                     b.Property<decimal?>("NotaActitudinal")
@@ -89,19 +100,16 @@ namespace JWS.Migrations
                     b.Property<decimal?>("NotaTrabajo2")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("ProfesorId")
-                        .HasColumnType("bigint");
-
                     b.Property<bool?>("Recuperacion")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CicloId");
+
+                    b.HasIndex("EstudianteId");
+
                     b.HasIndex("MateriaId");
-
-                    b.HasIndex("MatriculaId");
-
-                    b.HasIndex("ProfesorId");
 
                     b.ToTable("Calificaciones");
                 });
@@ -220,17 +228,17 @@ namespace JWS.Migrations
                     b.Property<int>("AnioLectivo")
                         .HasColumnType("int");
 
-                    b.Property<long>("EstudianteId")
+                    b.Property<long>("CicloId")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("MateriaId")
+                    b.Property<long>("EstudianteId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstudianteId");
+                    b.HasIndex("CicloId");
 
-                    b.HasIndex("MateriaId");
+                    b.HasIndex("EstudianteId");
 
                     b.ToTable("Matriculas");
                 });
@@ -354,17 +362,25 @@ namespace JWS.Migrations
 
             modelBuilder.Entity("JWS.Models.Asistencia", b =>
                 {
+                    b.HasOne("JWS.Models.Ciclo", "Ciclo")
+                        .WithMany()
+                        .HasForeignKey("CicloId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("JWS.Models.Estudiante", "Estudiante")
                         .WithMany()
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("JWS.Models.Materia", "Materia")
-                        .WithMany("Asistencias")
+                        .WithMany()
                         .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("Ciclo");
 
                     b.Navigation("Estudiante");
 
@@ -373,29 +389,29 @@ namespace JWS.Migrations
 
             modelBuilder.Entity("JWS.Models.Calificacion", b =>
                 {
-                    b.HasOne("JWS.Models.Materia", "Materia")
-                        .WithMany("Calificaciones")
-                        .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JWS.Models.Matricula", "Matricula")
-                        .WithMany("Calificaciones")
-                        .HasForeignKey("MatriculaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("JWS.Models.Profesor", "Profesor")
+                    b.HasOne("JWS.Models.Ciclo", "Ciclo")
                         .WithMany()
-                        .HasForeignKey("ProfesorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("CicloId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("JWS.Models.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("JWS.Models.Materia", "Materia")
+                        .WithMany()
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Ciclo");
+
+                    b.Navigation("Estudiante");
 
                     b.Navigation("Materia");
-
-                    b.Navigation("Matricula");
-
-                    b.Navigation("Profesor");
                 });
 
             modelBuilder.Entity("JWS.Models.Estudiante", b =>
@@ -414,7 +430,7 @@ namespace JWS.Migrations
                     b.HasOne("JWS.Models.Ciclo", "Ciclo")
                         .WithMany("Materias")
                         .HasForeignKey("CicloId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("JWS.Models.Profesor", "Profesor")
@@ -430,21 +446,21 @@ namespace JWS.Migrations
 
             modelBuilder.Entity("JWS.Models.Matricula", b =>
                 {
-                    b.HasOne("JWS.Models.Estudiante", "Estudiante")
-                        .WithMany("Matriculas")
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("JWS.Models.Ciclo", "Ciclo")
+                        .WithMany()
+                        .HasForeignKey("CicloId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JWS.Models.Materia", "Materia")
-                        .WithMany("Matriculas")
-                        .HasForeignKey("MateriaId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("JWS.Models.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Ciclo");
 
                     b.Navigation("Estudiante");
-
-                    b.Navigation("Materia");
                 });
 
             modelBuilder.Entity("JWS.Models.PersonaResponsable", b =>
@@ -452,7 +468,7 @@ namespace JWS.Migrations
                     b.HasOne("JWS.Models.Estudiante", "Estudiante")
                         .WithMany("PersonasResponsables")
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Estudiante");
@@ -467,23 +483,7 @@ namespace JWS.Migrations
 
             modelBuilder.Entity("JWS.Models.Estudiante", b =>
                 {
-                    b.Navigation("Matriculas");
-
                     b.Navigation("PersonasResponsables");
-                });
-
-            modelBuilder.Entity("JWS.Models.Materia", b =>
-                {
-                    b.Navigation("Asistencias");
-
-                    b.Navigation("Calificaciones");
-
-                    b.Navigation("Matriculas");
-                });
-
-            modelBuilder.Entity("JWS.Models.Matricula", b =>
-                {
-                    b.Navigation("Calificaciones");
                 });
 
             modelBuilder.Entity("JWS.Models.Profesor", b =>
