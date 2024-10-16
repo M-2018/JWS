@@ -1,17 +1,95 @@
-<div class="login-container">
-    <div class="login-card">
-      <div class="text-center mb-4">
-        <img src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png" alt="Logo" class="login-logo"> 
+<div class="login-container" *ngIf="!isLoggedIn">
+  <div class="login-card">
+    <div class="text-center mb-4">
+      <img
+        src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+        alt="Logo"
+        class="login-logo"
+      />
+    </div>
+    <h3 class="login-title">Login</h3>
+    <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
+      <div class="form-group mb-3">
+        <input
+          type="text"
+          class="form-control login-input"
+          placeholder="Email"
+          formControlName="email"
+          required
+        />
       </div>
-      <h3 class="login-title">Login</h3>
-      <form (ngSubmit)="onSubmit()" [formGroup]="loginForm"> 
-        <div class="form-group mb-3">
-          <input type="text" class="form-control login-input" placeholder="Email" formControlName="email" required>
-        </div>
-        <div class="form-group mb-3">
-          <input type="password" class="form-control login-input" placeholder="Contraseña" formControlName="password" required>
-        </div>
-        <button type="submit" class="btn btn-login w-100">Ingresar</button>
-      </form>
+      <div class="form-group mb-3">
+        <input
+          type="password"
+          class="form-control login-input"
+          placeholder="Contraseña"
+          formControlName="password"
+          required
+        />
+      </div>
+      <button type="submit" class="btn btn-login w-100">Ingresar</button>
+    </form>
+  </div>
+</div>
+
+<div class="home-card" *ngIf="isLoggedIn">
+  <div class="text-center mb-4">
+    <img
+      src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+      alt="Logo"
+      class="login-logo"
+    />
+  </div>
+  <h2 class="home-title text-center mb-4">¿Qué desea gestionar?</h2>
+
+  <!-- Distribución en dos columnas -->
+  <div class="home-options container">
+    <div class="row">
+      <div class="col-md-6 mb-3" *ngIf="isAdmin">
+        <button class="btn-home w-100" (click)="navigateTo('/usuarios')">
+           Usuario
+        </button>
+      </div>
+      <div class="col-md-6 mb-3" *ngIf="isAdmin">
+        <button class="btn-home w-100" (click)="navigateTo('/ciclos')">
+           Ciclo
+        </button>
+      </div>
+      <div class="col-md-6 mb-3" *ngIf="isAdmin">
+        <button class="btn-home w-100" (click)="navigateTo('/profesores')">
+           Profesor
+        </button>
+      </div>
+      <div class="col-md-6 mb-3" *ngIf="isAdmin">
+        <button class="btn-home w-100" (click)="navigateTo('/estudiantes')">
+           Estudiante
+        </button>
+      </div>
+      <div class="col-md-6 mb-3" *ngIf="isAdmin">
+        <button class="btn-home w-100" (click)="navigateTo('/materias')">
+           Materia
+        </button>
+      </div>
+      <div class="col-md-6 mb-3" *ngIf="isAdmin">
+        <button
+          class="btn-home w-100"
+          (click)="navigateTo('/personas-responsables')"
+        >
+           Persona Responsable
+        </button>
+      </div>
+
+      <!-- Opciones para cualquier usuario -->
+      <div class="col-md-6 mb-3">
+        <button class="btn-home w-100" (click)="navigateTo('/asistencias')">
+           Asistencia
+        </button>
+      </div>
+      <div class="col-md-6 mb-3">
+        <button class="btn-home w-100" (click)="navigateTo('/calificaciones')">
+           Calificación
+        </button>
+      </div>
     </div>
   </div>
+</div>

@@ -11,33 +11,37 @@ import { LoginResponseDTO } from '../dto/LoginResponseDTO';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
 })
 export class LoginComponent {
   loginForm: FormGroup;
   errorMessage: string = '';
   username: string | null = '';
   isAdmin: boolean = false;
+  isLoggedIn: boolean = false;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
   }
 
   onSubmit() {
     if (this.loginForm.valid) {
-      const email = this.loginForm.value.email;
+      const email = this.loginForm.value.email.toLowerCase();
       const password = this.loginForm.value.password;
       this.authService.login(email, password).subscribe(
         (response: LoginResponseDTO) => {
           if (response.isValid) {
             this.username = response.username;
             this.isAdmin = response.isAdmin;
+            this.isLoggedIn = true;
             console.log('Login exitoso', this.username, this.isAdmin);
-            // Redirige a la página de dashboard después de un login exitoso
-            //this.router.navigate(['/dashboard']);
           } else {
             this.errorMessage = 'Credenciales inválidas';
             console.log('Login fallido');
@@ -50,4 +54,9 @@ export class LoginComponent {
       );
     }
   }
+
+  navigateTo(route: string) {
+    this.router.navigate([route]);
+  }
+
 }

@@ -4,5 +4,7 @@
     {
         public long Id { get; set; }
         public string Nombre { get; set; }
+        public string Anio { get; set; }
+        public string Semestre { get; set; }
     }
 }

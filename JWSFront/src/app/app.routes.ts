@@ -1,28 +1,29 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { UserRegistrationComponent } from './user-registration/user-registration.component';
-import { CycleSubjectComponent } from './cycle-subject/cycle-subject.component';
-import { TeacherComponent } from './teacher/teacher.component';
-import { StudentComponent } from './student/student.component';
-import { EnrollmentComponent } from './enrollment/enrollment.component';
-import { AttendanceComponent } from './attendance/attendance.component';
-import { GradesComponent } from './grades/grades.component';
-import { CheckGradesComponent } from './check-grades/check-grades.component';
 import { LoginComponent } from './login/login.component';
 
+import { UsuarioComponent } from './usuario/usuario.component';
+import { CicloComponent } from './ciclo/ciclo.component';
+import { ProfesorComponent } from './profesor/profesor.component';
+import { EstudianteComponent } from './estudiante/estudiante.component';
+import { MateriaComponent } from './materia/materia.component';
+import { PersonaResponsableComponent } from './persona-responsable/persona-responsable.component';
+import { MatriculaComponent } from './matricula/matricula.component';
+import { AsistenciaComponent } from './asistencia/asistencia.component';
+import { CalificacionComponent } from './calificacion/calificacion.component';
+import { CheckGradesComponent } from './check-grades/check-grades.component';
+
 export const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' }, 
-  { path: 'home', component: HomeComponent },
+  { path: '', component: HomeComponent },  // Ruta inicial
+  { path: 'usuarios', component: UsuarioComponent },
+  { path: 'ciclos', component: CicloComponent },
+  { path: 'profesores', component: ProfesorComponent },
+  { path: 'estudiantes', component: EstudianteComponent },
+  { path: 'materias', component: MateriaComponent },
+  { path: 'personas-responsables', component: PersonaResponsableComponent },
+  { path: 'matriculas', component: MatriculaComponent },
+  { path: 'asistencias', component: AsistenciaComponent },
+  { path: 'calificaciones', component: CalificacionComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'user-registration', component: UserRegistrationComponent },
-  { path: 'cycle-subject', component: CycleSubjectComponent },
-  { path: 'teacher', component: TeacherComponent },
-  { path: 'student', component: StudentComponent },
-  { path: 'enrollment', component: EnrollmentComponent },
-  { path: 'attendance', component: AttendanceComponent },
-  { path: 'grades', component: GradesComponent },
   { path: 'check-grades', component: CheckGradesComponent },
-  
-
-
 ];

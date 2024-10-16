@@ -1,6 +1,7 @@
 ﻿using JWS.Data;
 using JWS.DTOs;
 using JWS.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -60,25 +61,36 @@ namespace JWS.Controllers
 
         // POST: api/usuarios
         [HttpPost]
-        public async Task<ActionResult<UsuarioDTO>> PostUsuario(UsuarioDTO usuarioDTO)
+        public async Task<ActionResult<UsuarioDTO>> PostUsuario(UsuarioCreateDTO usuarioCreateDTO)
         {
+            var hashedPassword = PasswordHasher.HashPassword(usuarioCreateDTO.Password);
+
             var usuario = new Usuario
             {
-                Username = usuarioDTO.Username,
-                Email = usuarioDTO.Email,
-                Password = "hashed_password",  // Aquí puedes agregar la lógica para el hashing
-                Nombres = usuarioDTO.Nombres,
-                Apellidos = usuarioDTO.Apellidos,
-                IsAdmin = usuarioDTO.IsAdmin
+                Username = usuarioCreateDTO.Username,
+                Email = usuarioCreateDTO.Email,
+                Password = hashedPassword,
+                Nombres = usuarioCreateDTO.Nombres,
+                Apellidos = usuarioCreateDTO.Apellidos,
+                IsAdmin = usuarioCreateDTO.IsAdmin
             };
 
             _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            usuarioDTO.Id = usuario.Id;
+            var usuarioDTO = new UsuarioDTO
+            {
+                Id = usuario.Id,
+                Username = usuario.Username,
+                Email = usuario.Email,
+                Nombres = usuario.Nombres,
+                Apellidos = usuario.Apellidos,
+                IsAdmin = usuario.IsAdmin
+            };
 
             return CreatedAtAction(nameof(GetUsuario), new { id = usuario.Id }, usuarioDTO);
         }
+
 
         // PUT: api/usuarios/{id}
         [HttpPut("{id}")]
@@ -122,33 +134,26 @@ namespace JWS.Controllers
             return NoContent();
         }
 
-        //[HttpPost("validate-credentials")]
-        //public async Task<ActionResult<bool>> ValidateUserCredentials(LoginDTO loginDTO)
-        //{
-        //    var usuario = await _context.Usuarios
-        //        .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.Password == loginDTO.Password);
-
-        //    if (usuario == null)
-        //    {
-        //        return false; 
-        //    }
-
-        //    return true; 
-        //}
-
         [HttpPost("validate-credentials")]
         public async Task<ActionResult<LoginResponseDTO>> ValidateUserCredentials(LoginDTO loginDTO)
         {
             var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email && u.Password == loginDTO.Password);
+                .FirstOrDefaultAsync(u => u.Email == loginDTO.Email);
 
-            if (usuario == null)
+            if (usuario == null || !VerifyPassword(loginDTO.Password, usuario.Password))
             {
                 return new LoginResponseDTO { IsValid = false, Username = null, IsAdmin = false };
             }
 
             return new LoginResponseDTO { IsValid = true, Username = usuario.Username, IsAdmin = usuario.IsAdmin };
         }
+
+        private bool VerifyPassword(string inputPassword, string storedHash)
+        {
+            return PasswordHasher.VerifyPassword(inputPassword, storedHash);
+        }
+
+
 
 
 
