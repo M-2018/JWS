@@ -26,7 +26,7 @@ namespace JWS.Controllers
             var ciclosDTO = ciclos.Select(c => new CicloDTO
             {
                 Id = c.Id,
-                Nombre = c.Nombre, // Cambiado a string
+                Nombre = c.Nombre,
                 Anio = c.Anio,
                 Semestre = c.Semestre
             }).ToList();
@@ -48,7 +48,7 @@ namespace JWS.Controllers
             var cicloDTO = new CicloDTO
             {
                 Id = ciclo.Id,
-                Nombre = ciclo.Nombre, // Cambiado a string
+                Nombre = ciclo.Nombre,
                 Anio = ciclo.Anio,
                 Semestre = ciclo.Semestre
             };
@@ -62,7 +62,7 @@ namespace JWS.Controllers
         {
             var ciclo = new Ciclo
             {
-                Nombre = cicloDTO.Nombre, // Cambiado a string
+                Nombre = cicloDTO.Nombre,
                 Anio = cicloDTO.Anio,
                 Semestre = cicloDTO.Semestre
             };
@@ -88,7 +88,7 @@ namespace JWS.Controllers
                 return NotFound();
             }
 
-            ciclo.Nombre = cicloDTO.Nombre; // Cambiado a string
+            ciclo.Nombre = cicloDTO.Nombre;
             ciclo.Anio = cicloDTO.Anio;
             ciclo.Semestre = cicloDTO.Semestre;
 
