@@ -12,6 +12,7 @@ namespace JWS.Data
         public DbSet<Estudiante> Estudiantes { get; set; }
         public DbSet<Ciclo> Ciclos { get; set; }
         public DbSet<Materia> Materias { get; set; }
+        public DbSet<CicloMateria> CicloMaterias { get; set; } // Nuevo DbSet para la entidad intermedia
         public DbSet<Matricula> Matriculas { get; set; }
         public DbSet<Calificacion> Calificaciones { get; set; }
         public DbSet<Asistencia> Asistencias { get; set; }
@@ -21,6 +22,23 @@ namespace JWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Configuración de la entidad intermedia CicloMateria (muchos a muchos)
+            modelBuilder.Entity<CicloMateria>()
+                .HasKey(cm => new { cm.CicloId, cm.MateriaId }); // Llave compuesta
+
+            modelBuilder.Entity<CicloMateria>()
+                .HasOne(cm => cm.Ciclo)
+                .WithMany(c => c.CicloMaterias)
+                .HasForeignKey(cm => cm.CicloId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<CicloMateria>()
+                .HasOne(cm => cm.Materia)
+                .WithMany(m => m.CicloMaterias)
+                .HasForeignKey(cm => cm.MateriaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // Configuración de relaciones existentes
             modelBuilder.Entity<Estudiante>()
                 .HasOne(e => e.Ciclo)
                 .WithMany(c => c.Estudiantes)
@@ -37,12 +55,6 @@ namespace JWS.Data
                 .HasOne(m => m.Profesor)
                 .WithMany(p => p.Materias)
                 .HasForeignKey(m => m.ProfesorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Materia>()
-                .HasOne(m => m.Ciclo)
-                .WithMany(c => c.Materias)
-                .HasForeignKey(m => m.CicloId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Asistencia>()

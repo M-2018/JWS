@@ -56,6 +56,23 @@ namespace JWS.Controllers
             return Ok(cicloDTO);
         }
 
+        //// POST: api/Ciclos
+        //[HttpPost]
+        //public async Task<ActionResult<CicloDTO>> PostCiclo(CicloDTO cicloDTO)
+        //{
+        //    var ciclo = new Ciclo
+        //    {
+        //        Nombre = cicloDTO.Nombre,
+        //        Anio = cicloDTO.Anio,
+        //        Semestre = cicloDTO.Semestre
+        //    };
+
+        //    _context.Ciclos.Add(ciclo);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction(nameof(GetCiclo), new { id = ciclo.Id }, cicloDTO);
+        //}
+
         // POST: api/Ciclos
         [HttpPost]
         public async Task<ActionResult<CicloDTO>> PostCiclo(CicloDTO cicloDTO)
@@ -64,7 +81,11 @@ namespace JWS.Controllers
             {
                 Nombre = cicloDTO.Nombre,
                 Anio = cicloDTO.Anio,
-                Semestre = cicloDTO.Semestre
+                Semestre = cicloDTO.Semestre,
+                CicloMaterias = cicloDTO.MateriasIds?.Select(mId => new CicloMateria
+                {
+                    MateriaId = mId
+                }).ToList() // Asociar materias
             };
 
             _context.Ciclos.Add(ciclo);
@@ -72,6 +93,7 @@ namespace JWS.Controllers
 
             return CreatedAtAction(nameof(GetCiclo), new { id = ciclo.Id }, cicloDTO);
         }
+
 
         // PUT: api/Ciclos/5
         [HttpPut("{id}")]

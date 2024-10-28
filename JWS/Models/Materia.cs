@@ -13,10 +13,7 @@ namespace JWS.Models
         [JsonIgnore]
         public Profesor Profesor { get; set; }
 
-        public long CicloId { get; set; }
         [JsonIgnore]
-        public Ciclo Ciclo { get; set; }
-
-        
+        public ICollection<CicloMateria> CicloMaterias { get; set; }
     }
 }

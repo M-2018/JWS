@@ -21,6 +21,6 @@ namespace JWS.Models
         public ICollection<Estudiante> Estudiantes { get; set; }
 
         [JsonIgnore]
-        public ICollection<Materia> Materias { get; set; }
+        public ICollection<CicloMateria> CicloMaterias { get; set; }
     }
 }

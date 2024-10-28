@@ -1,1 +1,252 @@
-<p>estudiante works!</p>
+<div class="home-card">
+  <div class="text-center mb-4">
+    <img
+      src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+      alt="Logo"
+      class="login-logo"
+    />
+  </div>
+  <h2 class="home-title text-center mb-4">Gestión de Estudiantes</h2>
+
+  <!-- Formulario para crear/editar estudiante -->
+  <form
+    [formGroup]="estudianteForm"
+    (ngSubmit)="onSubmit()"
+    #form="ngForm"
+    class="profesor-form"
+  >
+    <div class="form-group">
+      <label for="nombres">Nombres</label>
+      <input
+        type="text"
+        id="nombres"
+        formControlName="nombres"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="apellidos">Apellidos</label>
+      <input
+        type="text"
+        id="apellidos"
+        formControlName="apellidos"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="nroDocumento">Número de Documento</label>
+      <input
+        type="text"
+        id="nroDocumento"
+        formControlName="nroDocumento"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <!-- <div class="form-group">
+      <label for="tipoDocumento">Tipo de Documento</label>
+      <input
+        type="text"
+        id="tipoDocumento"
+        formControlName="tipoDocumento"
+        class="form-control login-input"
+        required
+      />
+    </div> -->
+
+    <div class="form-group">
+      <label for="tipoDocumento">Tipo de Documento</label>
+      <select
+        id="tipoDocumento"
+        formControlName="tipoDocumento"
+        class="form-control login-input"
+        required
+      >
+        <option value="" disabled selected>
+          Seleccione un tipo de documento
+        </option>
+        <option value="CC">Cédula de Ciudadanía</option>
+        <option value="TI">Tarjeta de Identidad</option>
+        <option value="RC">Registro Civil</option>
+        <option value="CE">Cédula de Extranjería</option>
+        <option value="PPT">Pasaporte</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha de Nacimiento</label>
+      <input
+        type="date"
+        id="fechaNacimiento"
+        formControlName="fechaNacimiento"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección</label>
+      <input
+        type="text"
+        id="direccion"
+        formControlName="direccion"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono</label>
+      <input
+        type="text"
+        id="telefono"
+        formControlName="telefono"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="semestrePagado">Semestre Pagado</label>
+      <input
+        type="checkbox"
+        id="semestrePagado"
+        formControlName="semestrePagado"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="cicloId">Ciclo</label>
+      <select
+        id="cicloId"
+        formControlName="cicloId"
+        class="form-control login-input"
+        required
+        (change)="onCicloChange($event)"
+      >
+        <option value="" disabled selected>Seleccione un ciclo</option>
+        <option *ngFor="let ciclo of ciclos" [value]="ciclo.id">
+          {{ ciclo.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <!-- <div class="form-group">
+      <label for="cicloId">Ciclo ID</label>
+      <input
+        type="number"
+        id="cicloId"
+        formControlName="cicloId"
+        class="form-control login-input"
+        required
+      />
+    </div> -->
+
+    <div class="button-container">
+      <button type="submit" class="btn-home small-button">
+        {{ editMode ? 'Editar Estudiante' : 'Guardar Estudiante' }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Tabla para listar estudiantes -->
+  <div *ngIf="estudiantes.length > 0" class="mt-5">
+    <h3 class="home-title text-center">Lista de Estudiantes</h3>
+    
+    <!-- Mover los filtros fuera de la tabla -->
+    <div class="filters-container mb-3">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="filtroSemestrePagado">Filtro por Semestre Pagado</label>
+            <select
+              id="filtroSemestrePagado"
+              [(ngModel)]="filtroSemestrePagado"
+              class="form-control login-input"
+              (change)="aplicarFiltros()"
+            >
+              <option value="todos">Todos</option>
+              <option value="pagado">Pagado</option>
+              <option value="noPagado">No Pagado</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="filtroCiclo">Filtro por Ciclo</label>
+            <select
+              id="filtroCiclo"
+              [(ngModel)]="filtroCiclo"
+              class="form-control login-input"
+              (change)="aplicarFiltros()"
+            >
+              <option [ngValue]="null">Todos los ciclos</option>
+              <option *ngFor="let ciclo of ciclos" [ngValue]="ciclo.id">
+                {{ ciclo.nombre }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Número Documento</th>
+          <th>Tipo Documento</th>
+          <th>Dirección</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Semestre Pagado</th>
+          <th>Ciclo</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estudiante of estudiantesFiltrados">
+          <td>{{ estudiante.id }}</td>
+          <td>{{ estudiante.nombres }}</td>
+          <td>{{ estudiante.apellidos }}</td>
+          <td>{{ estudiante.nroDocumento }}</td>
+          <td>{{ estudiante.tipoDocumento }}</td>
+          <td>{{ estudiante.direccion }}</td>
+          <td>{{ estudiante.telefono }}</td>
+          <td>{{ estudiante.email }}</td>
+          <td>{{ estudiante.semestrePagado ? "Sí" : "No" }}</td>
+          <td>{{ getNombreCiclo(estudiante.cicloId) }}</td>
+          <td>
+            <div class="d-flex gap-2">
+              <button class="btn btn-home" (click)="onEdit(estudiante)">
+                Editar
+              </button>
+              <button class="btn btn-home" (click)="onDelete(estudiante.id)">
+                Eliminar
+              </button>
+            </div>
+          </td>
+          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

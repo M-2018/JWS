@@ -10,7 +10,7 @@ namespace JWS.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
-        public string CodigoUnico { get; set; }
+        //public string CodigoUnico { get; set; }
         public string Nombres { get; set; }
         public string Apellidos { get; set; }
         public string NroDocumento { get; set; }

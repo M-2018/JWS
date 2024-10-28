@@ -106,3 +106,125 @@ body {
 .btn-login:hover {
   background-color: #e68900; /* Color del botón al pasar el mouse */
 }
+
+/* -------- Estilos para el Componente Profesor -------- */
+
+.profesor-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 40px auto;
+}
+
+/* Formulario Profesor */
+.profesor-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ff9800;
+}
+
+/* Inputs del Formulario */
+.profesor-form input[type="text"],
+.profesor-form input[type="date"],
+.profesor-form input[type="email"],
+.profesor-form input[type="checkbox"] {
+  background-color: #444;
+  border: 1px solid #ff9800;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/* Botones del Formulario */
+.btn-profesor {
+  background-color: #ff9800;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.btn-profesor:hover {
+  background-color: #e68900;
+}
+
+/* Lista de Profesores */
+.profesor-list-container {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border: 1px solid #ff9800;
+}
+
+.profesor-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.profesor-item {
+  background-color: #444;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #ff9800;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px; /* Espaciado entre los elementos */
+}
+
+.profesor-item h5 {
+  margin: 0 0 10px;
+  color: #ff9800;
+}
+
+.profesor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.profesor-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.profesor-actions button {
+  width: 120px; /* Para asegurar uniformidad */
+  align-self: flex-end; /* Alinear a la derecha */
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.small-button {
+  padding: 8px 16px; /* Ajusta el tamaño según lo necesario */
+  font-size: 14px; /* Tamaño de fuente más pequeño */
+  text-align: center; /* Centrar texto dentro del botón */
+  display: flex; /* Usar flex para alinear el contenido */
+  justify-content: center; /* Centrar horizontalmente el contenido */
+  align-items: center; /* Centrar verticalmente el contenido */
+}
+
+.profesor-item button {
+  margin: 5px 0;
+  width: 80%;
+  align-self: center;
+}
+
+

@@ -45,14 +45,6 @@ export class CicloComponent implements OnInit {
     }
 
     const cicloData = this.cicloForm.value;
-
-
-    // if (this.editMode && this.selectedCicloId !== null) {
-    //   // Actualizar ciclo
-    //   this.http.put(`${this.apiUrl}/${this.selectedCicloId}`, cicloData).subscribe(() => {
-    //     this.getCiclos();
-    //     this.resetForm();
-    //   });
     if (this.editMode && this.selectedCicloId !== null) {
       // Asegúrate de incluir el id en los datos enviados
       const cicloDataToUpdate = {

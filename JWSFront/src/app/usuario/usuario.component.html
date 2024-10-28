@@ -1,1 +1,122 @@
-<p>usuario works!</p>
+<div class="home-card">
+    <h2 class="home-title text-center mb-4">Gestión de Usuarios</h2>
+  
+    <!-- Formulario para crear/editar usuario -->
+    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()" class="mb-5">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="username" class="form-label">Nombre de Usuario</label>
+          <input
+            type="text"
+            class="form-control login-input"
+            formControlName="username"
+            placeholder="Ingrese el nombre de usuario"
+            required
+          />
+          <div *ngIf="usuarioForm.get('username')?.invalid && usuarioForm.get('username')?.touched" class="text-danger">
+            El nombre de usuario es obligatorio.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="email" class="form-label">Correo Electrónico</label>
+          <input
+            type="email"
+            class="form-control login-input"
+            formControlName="email"
+            placeholder="Ingrese el correo electrónico"
+            required
+          />
+          <div *ngIf="usuarioForm.get('email')?.invalid && usuarioForm.get('email')?.touched" class="text-danger">
+            Ingrese un correo electrónico válido.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input
+            type="password"
+            class="form-control login-input"
+            formControlName="password"
+            placeholder="Ingrese la contraseña"
+            required
+          />
+          <div *ngIf="usuarioForm.get('password')?.invalid && usuarioForm.get('password')?.touched" class="text-danger">
+            La contraseña es obligatoria.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="nombres" class="form-label">Nombres</label>
+          <input
+            type="text"
+            class="form-control login-input"
+            formControlName="nombres"
+            placeholder="Ingrese los nombres"
+            required
+          />
+          <div *ngIf="usuarioForm.get('nombres')?.invalid && usuarioForm.get('nombres')?.touched" class="text-danger">
+            Los nombres son obligatorios.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="apellidos" class="form-label">Apellidos</label>
+          <input
+            type="text"
+            class="form-control login-input"
+            formControlName="apellidos"
+            placeholder="Ingrese los apellidos"
+            required
+          />
+          <div *ngIf="usuarioForm.get('apellidos')?.invalid && usuarioForm.get('apellidos')?.touched" class="text-danger">
+            Los apellidos son obligatorios.
+          </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="isAdmin" class="form-label">¿Es Administrador?</label>
+          <select class="form-control login-input" formControlName="isAdmin">
+            <option [value]="true">Sí</option>
+            <option [value]="false">No</option>
+          </select>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-login w-100">
+        {{ editMode ? 'Actualizar Usuario' : 'Crear Usuario' }}
+      </button>
+    </form>
+  
+    <!-- Tabla para listar usuarios -->
+    <div *ngIf="usuarios.length > 0">
+      <h3 class="home-title text-center">Lista de Usuarios</h3>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre de Usuario</th>
+            <th>Email</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Administrador</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let usuario of usuarios">
+            <td>{{ usuario.id }}</td>
+            <td>{{ usuario.username }}</td>
+            <td>{{ usuario.email }}</td>
+            <td>{{ usuario.nombres }}</td>
+            <td>{{ usuario.apellidos }}</td>
+            <td>{{ usuario.isAdmin ? 'Sí' : 'No' }}</td>
+            <td>
+              <button class="btn btn-home" (click)="onEdit(usuario)">
+                Editar
+              </button>
+              <button class="btn btn-home" (click)="onDelete(usuario.id)">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

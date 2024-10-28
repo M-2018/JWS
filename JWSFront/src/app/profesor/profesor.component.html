@@ -1,1 +1,143 @@
-<p>profesor works!</p>
+<div class="home-card">
+  <div class="text-center mb-4">
+    <img
+      src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+      alt="Logo"
+      class="login-logo"
+    />
+  </div>
+  <h2 class="home-title">{{ isUpdating ? 'Actualizar' : 'Crear' }} Profesor</h2>
+
+  <form [formGroup]="profesorForm" (ngSubmit)="submitForm()" #form="ngForm" class="profesor-form">
+    <div class="form-group">
+      <label for="nombres">Nombres:</label>
+      <input id="nombres" formControlName="Nombres" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('Nombres')?.invalid && profesorForm.get('Nombres')?.touched" class="error-message">
+        Nombres es requerido y debe tener al menos 2 caracteres.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="apellidos">Apellidos:</label>
+      <input id="apellidos" formControlName="Apellidos" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('Apellidos')?.invalid && profesorForm.get('Apellidos')?.touched" class="error-message">
+        Apellidos es requerido y debe tener al menos 2 caracteres.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="nroDocumento">Nro. Documento:</label>
+      <input id="nroDocumento" formControlName="NroDocumento" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('NroDocumento')?.invalid && profesorForm.get('NroDocumento')?.touched" class="error-message">
+        Nro. Documento es requerido y debe tener al menos 5 caracteres.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="tipoDocumento">Tipo Documento:</label>
+      <input id="tipoDocumento" formControlName="TipoDocumento" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('TipoDocumento')?.invalid && profesorForm.get('TipoDocumento')?.touched" class="error-message">
+        Tipo Documento es requerido.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fechaNacimiento">Fecha Nacimiento:</label>
+      <input id="fechaNacimiento" type="date" formControlName="FechaNacimiento" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('FechaNacimiento')?.invalid && profesorForm.get('FechaNacimiento')?.touched" class="error-message">
+        Fecha de Nacimiento es requerida.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="direccion">Dirección:</label>
+      <input id="direccion" formControlName="Direccion" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('Direccion')?.invalid && profesorForm.get('Direccion')?.touched" class="error-message">
+        Dirección es requerida.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefono">Teléfono:</label>
+      <input id="telefono" formControlName="Telefono" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('Telefono')?.invalid && profesorForm.get('Telefono')?.touched" class="error-message">
+        Teléfono es requerido y debe tener 9 dígitos.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input id="email" formControlName="Email" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('Email')?.invalid && profesorForm.get('Email')?.touched" class="error-message">
+        Email es requerido y debe ser válido.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="especialidad">Especialidad:</label>
+      <input id="especialidad" formControlName="Especialidad" class="form-control login-input" />
+      <div *ngIf="profesorForm.get('Especialidad')?.invalid && profesorForm.get('Especialidad')?.touched" class="error-message">
+        Especialidad es requerida.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="activo">Activo:</label>
+      <input id="activo" type="checkbox" formControlName="Activo" />
+    </div>
+
+    <!-- <div class="button-container">
+      <button 
+        type="submit" 
+        class="btn-home small-button" 
+        [disabled]="profesorForm.invalid">
+        {{ isUpdating ? 'Actualizar' : 'Crear' }} Profesor
+      </button>
+    </div> -->
+
+    <div class="button-container">
+      <button 
+        type="button" 
+        (click)="submitForm()"
+        class="btn-home small-button">
+        {{ isUpdating ? 'Actualizar' : 'Crear' }} Profesor
+      </button>
+    </div>
+
+  </form>
+
+  <div *ngIf="isUpdating" class="button-container">
+    <button 
+      (click)="deleteProfesor(profesorForm.get('Id')?.value)" 
+      class="btn-home small-button">
+      Eliminar Profesor
+    </button>
+  </div>
+</div>
+
+<div class="home-card mt-4">
+  <h2 class="home-title">Lista de Profesores</h2>
+  <div *ngIf="profesores.length === 0">No hay profesores registrados.</div>
+  
+  <div *ngFor="let prof of profesores" class="profesor-item">
+    <h5>{{ prof.nombres }} {{ prof.apellidos }}</h5>
+    <p>Documento: {{ prof.tipoDocumento }} {{ prof.nroDocumento }}</p>
+    <p>Email: {{ prof.email }}</p>
+    <p>Especialidad: {{ prof.especialidad }}</p>
+    <p>Activo: {{ prof.activo ? 'Sí' : 'No' }}</p>
+    
+    <div class="button-container">
+      <button 
+        (click)="editProfesor(prof)" 
+        class="btn-home small-button me-2">
+        Editar
+      </button>
+    
+      <button 
+        (click)="deleteProfesor(prof.id)" 
+        class="btn-home small-button">
+        Eliminar
+      </button>
+    </div>
+  </div>
+</div>
