@@ -7,5 +7,8 @@
         public string Apellidos { get; set; }
         public string Relacion { get; set; }
         public long EstudianteId { get; set; }
+
+        public string Telefono { get; set; }
+        public string CorreoElectronico { get; set; }
     }
 }

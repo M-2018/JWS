@@ -14,5 +14,10 @@ namespace JWS.Models
         public long EstudianteId { get; set; }
         [JsonIgnore]
         public Estudiante Estudiante { get; set; }
+
+        [EmailAddress] 
+        public string CorreoElectronico { get; set; }
+
+        public string Telefono { get; set; }
     }
 }

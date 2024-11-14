@@ -143,16 +143,16 @@ export class EstudianteComponent implements OnInit {
     this.editMode = true;
     this.selectedEstudianteId = estudiante.id;
     this.estudianteForm.patchValue({
-      nombres: estudiante.nombres, // Cambiado a "nombres"
-      apellidos: estudiante.apellidos, // Cambiado a "apellidos"
-      nroDocumento: estudiante.nroDocumento, // Cambiado a "nroDocumento"
-      tipoDocumento: estudiante.tipoDocumento, // Cambiado a "tipoDocumento"
-      fechaNacimiento: estudiante.fechaNacimiento, // Cambiado a "fechaNacimiento"
-      direccion: estudiante.direccion, // Cambiado a "direccion"
-      telefono: estudiante.telefono, // Cambiado a "telefono"
-      email: estudiante.email, // Cambiado a "email"
-      semestrePagado: estudiante.semestrePagado, // Cambiado a "semestrePagado"
-      cicloId: estudiante.cicloId, // Cambiado a "cicloId"
+      nombres: estudiante.nombres, 
+      apellidos: estudiante.apellidos, 
+      nroDocumento: estudiante.nroDocumento, 
+      tipoDocumento: estudiante.tipoDocumento, 
+      fechaNacimiento: estudiante.fechaNacimiento,
+      direccion: estudiante.direccion,
+      telefono: estudiante.telefono, 
+      email: estudiante.email, 
+      semestrePagado: estudiante.semestrePagado, 
+      cicloId: estudiante.cicloId, 
     });
   }
 

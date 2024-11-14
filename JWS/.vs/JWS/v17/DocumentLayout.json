@@ -3,8 +3,16 @@
   "WorkspaceRootPath": "C:\\Alucard\\Practicas\\JWS\\JWS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\cicloscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\cicloscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\ciclodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\ciclodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\ciclo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\ciclo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "EstudianteController.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\EstudianteController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EstudianteController.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\EstudianteController.cs",
-              "RelativeToolTip": "Controllers\\EstudianteController.cs",
-              "ViewState": "AQIAAEsAAAAAAAAAAAAAAGIAAAAJAAAA",
+              "Title": "CiclosController.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CiclosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CiclosController.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CiclosController.cs",
+              "RelativeToolTip": "Controllers\\CiclosController.cs",
+              "ViewState": "AQIAAJQAAAAAAAAAAAAuwKcAAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-27T20:16:28.7Z",
+              "WhenOpened": "2024-11-08T22:41:10.064Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CicloDTO.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CicloDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\CicloDTO.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CicloDTO.cs",
+              "RelativeToolTip": "DTOs\\CicloDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAIAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T22:41:01.986Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Ciclo.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Ciclo.cs",
+              "RelativeDocumentMoniker": "Models\\Ciclo.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Ciclo.cs",
+              "RelativeToolTip": "Models\\Ciclo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-08T22:40:53.616Z"
             }
           ]
         }

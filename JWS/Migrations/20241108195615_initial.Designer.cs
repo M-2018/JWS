@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JWS.Migrations
 {
     [DbContext(typeof(APIAppDbContext))]
-    [Migration("20241016225008_third")]
-    partial class third
+    [Migration("20241108195615_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -142,6 +142,21 @@ namespace JWS.Migrations
                     b.ToTable("Ciclos");
                 });
 
+            modelBuilder.Entity("JWS.Models.CicloMateria", b =>
+                {
+                    b.Property<long>("CicloId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("MateriaId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("CicloId", "MateriaId");
+
+                    b.HasIndex("MateriaId");
+
+                    b.ToTable("CicloMaterias");
+                });
+
             modelBuilder.Entity("JWS.Models.Estudiante", b =>
                 {
                     b.Property<long>("Id")
@@ -156,10 +171,6 @@ namespace JWS.Migrations
 
                     b.Property<long>("CicloId")
                         .HasColumnType("bigint");
-
-                    b.Property<string>("CodigoUnico")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -209,9 +220,6 @@ namespace JWS.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("CicloId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -220,8 +228,6 @@ namespace JWS.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CicloId");
 
                     b.HasIndex("ProfesorId");
 
@@ -266,6 +272,10 @@ namespace JWS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CorreoElectronico")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("EstudianteId")
                         .HasColumnType("bigint");
 
@@ -274,6 +284,10 @@ namespace JWS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Relacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -425,6 +439,25 @@ namespace JWS.Migrations
                     b.Navigation("Materia");
                 });
 
+            modelBuilder.Entity("JWS.Models.CicloMateria", b =>
+                {
+                    b.HasOne("JWS.Models.Ciclo", "Ciclo")
+                        .WithMany("CicloMaterias")
+                        .HasForeignKey("CicloId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("JWS.Models.Materia", "Materia")
+                        .WithMany("CicloMaterias")
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Ciclo");
+
+                    b.Navigation("Materia");
+                });
+
             modelBuilder.Entity("JWS.Models.Estudiante", b =>
                 {
                     b.HasOne("JWS.Models.Ciclo", "Ciclo")
@@ -438,19 +471,11 @@ namespace JWS.Migrations
 
             modelBuilder.Entity("JWS.Models.Materia", b =>
                 {
-                    b.HasOne("JWS.Models.Ciclo", "Ciclo")
-                        .WithMany("Materias")
-                        .HasForeignKey("CicloId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("JWS.Models.Profesor", "Profesor")
                         .WithMany("Materias")
                         .HasForeignKey("ProfesorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Ciclo");
 
                     b.Navigation("Profesor");
                 });
@@ -487,14 +512,19 @@ namespace JWS.Migrations
 
             modelBuilder.Entity("JWS.Models.Ciclo", b =>
                 {
-                    b.Navigation("Estudiantes");
+                    b.Navigation("CicloMaterias");
 
-                    b.Navigation("Materias");
+                    b.Navigation("Estudiantes");
                 });
 
             modelBuilder.Entity("JWS.Models.Estudiante", b =>
                 {
                     b.Navigation("PersonasResponsables");
+                });
+
+            modelBuilder.Entity("JWS.Models.Materia", b =>
+                {
+                    b.Navigation("CicloMaterias");
                 });
 
             modelBuilder.Entity("JWS.Models.Profesor", b =>

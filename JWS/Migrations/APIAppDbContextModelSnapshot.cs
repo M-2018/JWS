@@ -269,6 +269,10 @@ namespace JWS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CorreoElectronico")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<long>("EstudianteId")
                         .HasColumnType("bigint");
 
@@ -277,6 +281,10 @@ namespace JWS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Relacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telefono")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

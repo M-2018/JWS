@@ -33,13 +33,24 @@
       </div>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label for="tipoDocumento">Tipo Documento:</label>
       <input id="tipoDocumento" formControlName="TipoDocumento" class="form-control login-input" />
       <div *ngIf="profesorForm.get('TipoDocumento')?.invalid && profesorForm.get('TipoDocumento')?.touched" class="error-message">
         Tipo Documento es requerido.
       </div>
+    </div> -->
+
+    <div class="form-group">
+      <label for="tipoDocumento">Tipo Documento:</label>
+      <select id="tipoDocumento" formControlName="TipoDocumento" class="form-control login-input">
+        <option *ngFor="let tipo of tiposDocumento" [value]="tipo">{{ tipo }}</option>
+      </select>
+      <div *ngIf="profesorForm.get('TipoDocumento')?.invalid && profesorForm.get('TipoDocumento')?.touched" class="error-message">
+        Tipo Documento es requerido.
+      </div>
     </div>
+    
 
     <div class="form-group">
       <label for="fechaNacimiento">Fecha Nacimiento:</label>

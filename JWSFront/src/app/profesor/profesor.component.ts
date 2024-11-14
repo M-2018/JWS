@@ -26,6 +26,15 @@ interface Profesor {
   styleUrls: ['./profesor.component.css']
 })
 export class ProfesorComponent implements OnInit {
+
+  tiposDocumento: string[] = [
+    'Registro civil',
+    'Tarjeta de identidad',
+    'Cedula de ciudadania',
+    'Cedula de extranjeria',
+    'Pasaporte',
+    'Otro'
+  ];
   profesores: Profesor[] = [];
   profesorForm: FormGroup;
   isUpdating: boolean = false;

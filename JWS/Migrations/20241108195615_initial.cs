@@ -17,9 +17,9 @@ namespace JWS.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<int>(type: "int", nullable: false),
-                    Anio = table.Column<int>(type: "int", nullable: false),
-                    Semestre = table.Column<int>(type: "int", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Anio = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Semestre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,7 +72,6 @@ namespace JWS.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CodigoUnico = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Apellidos = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NroDocumento = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -103,18 +102,11 @@ namespace JWS.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfesorId = table.Column<long>(type: "bigint", nullable: false),
-                    CicloId = table.Column<long>(type: "bigint", nullable: false)
+                    ProfesorId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Materias", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Materias_Ciclos_CicloId",
-                        column: x => x.CicloId,
-                        principalTable: "Ciclos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Materias_Profesores_ProfesorId",
                         column: x => x.ProfesorId,
@@ -159,7 +151,9 @@ namespace JWS.Migrations
                     Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Apellidos = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Relacion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EstudianteId = table.Column<long>(type: "bigint", nullable: false)
+                    EstudianteId = table.Column<long>(type: "bigint", nullable: false),
+                    CorreoElectronico = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -244,6 +238,30 @@ namespace JWS.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CicloMaterias",
+                columns: table => new
+                {
+                    CicloId = table.Column<long>(type: "bigint", nullable: false),
+                    MateriaId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CicloMaterias", x => new { x.CicloId, x.MateriaId });
+                    table.ForeignKey(
+                        name: "FK_CicloMaterias_Ciclos_CicloId",
+                        column: x => x.CicloId,
+                        principalTable: "Ciclos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_CicloMaterias_Materias_MateriaId",
+                        column: x => x.MateriaId,
+                        principalTable: "Materias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Asistencias_CicloId",
                 table: "Asistencias",
@@ -275,13 +293,13 @@ namespace JWS.Migrations
                 column: "MateriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Estudiantes_CicloId",
-                table: "Estudiantes",
-                column: "CicloId");
+                name: "IX_CicloMaterias_MateriaId",
+                table: "CicloMaterias",
+                column: "MateriaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Materias_CicloId",
-                table: "Materias",
+                name: "IX_Estudiantes_CicloId",
+                table: "Estudiantes",
                 column: "CicloId");
 
             migrationBuilder.CreateIndex(
@@ -313,6 +331,9 @@ namespace JWS.Migrations
 
             migrationBuilder.DropTable(
                 name: "Calificaciones");
+
+            migrationBuilder.DropTable(
+                name: "CicloMaterias");
 
             migrationBuilder.DropTable(
                 name: "Matriculas");

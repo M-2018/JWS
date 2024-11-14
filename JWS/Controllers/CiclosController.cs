@@ -22,13 +22,18 @@ namespace JWS.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CicloDTO>>> GetCiclos()
         {
-            var ciclos = await _context.Ciclos.ToListAsync();
+            var ciclos = await _context.Ciclos
+                .Include(c => c.CicloMaterias)
+                .ThenInclude(cm => cm.Materia)
+                .ToListAsync();
+
             var ciclosDTO = ciclos.Select(c => new CicloDTO
             {
                 Id = c.Id,
                 Nombre = c.Nombre,
                 Anio = c.Anio,
-                Semestre = c.Semestre
+                Semestre = c.Semestre,
+                MateriasIds = c.CicloMaterias.Select(cm => cm.MateriaId).ToList()
             }).ToList();
 
             return Ok(ciclosDTO);
@@ -38,7 +43,10 @@ namespace JWS.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CicloDTO>> GetCiclo(long id)
         {
-            var ciclo = await _context.Ciclos.FindAsync(id);
+            var ciclo = await _context.Ciclos
+                .Include(c => c.CicloMaterias)
+                .ThenInclude(cm => cm.Materia)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (ciclo == null)
             {
@@ -50,50 +58,49 @@ namespace JWS.Controllers
                 Id = ciclo.Id,
                 Nombre = ciclo.Nombre,
                 Anio = ciclo.Anio,
-                Semestre = ciclo.Semestre
+                Semestre = ciclo.Semestre,
+                MateriasIds = ciclo.CicloMaterias.Select(cm => cm.MateriaId).ToList()
             };
 
             return Ok(cicloDTO);
         }
 
-        //// POST: api/Ciclos
-        //[HttpPost]
-        //public async Task<ActionResult<CicloDTO>> PostCiclo(CicloDTO cicloDTO)
-        //{
-        //    var ciclo = new Ciclo
-        //    {
-        //        Nombre = cicloDTO.Nombre,
-        //        Anio = cicloDTO.Anio,
-        //        Semestre = cicloDTO.Semestre
-        //    };
-
-        //    _context.Ciclos.Add(ciclo);
-        //    await _context.SaveChangesAsync();
-
-        //    return CreatedAtAction(nameof(GetCiclo), new { id = ciclo.Id }, cicloDTO);
-        //}
-
         // POST: api/Ciclos
         [HttpPost]
         public async Task<ActionResult<CicloDTO>> PostCiclo(CicloDTO cicloDTO)
         {
+            // Verificar que las materias existan
+            var materias = await _context.Materias
+                .Where(m => cicloDTO.MateriasIds.Contains(m.Id))
+                .ToListAsync();
+
+            if (materias.Count != cicloDTO.MateriasIds.Count)
+            {
+                return BadRequest("Una o más materias no existen.");
+            }
+
+            // Crear el ciclo
             var ciclo = new Ciclo
             {
                 Nombre = cicloDTO.Nombre,
                 Anio = cicloDTO.Anio,
-                Semestre = cicloDTO.Semestre,
-                CicloMaterias = cicloDTO.MateriasIds?.Select(mId => new CicloMateria
-                {
-                    MateriaId = mId
-                }).ToList() // Asociar materias
+                Semestre = cicloDTO.Semestre
             };
+
+            // Crear la relación en la tabla intermedia CicloMateria para cada materia
+            var cicloMaterias = materias.Select(m => new CicloMateria
+            {
+                MateriaId = m.Id,
+                Ciclo = ciclo
+            }).ToList();
+
+            ciclo.CicloMaterias = cicloMaterias;
 
             _context.Ciclos.Add(ciclo);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetCiclo), new { id = ciclo.Id }, cicloDTO);
         }
-
 
         // PUT: api/Ciclos/5
         [HttpPut("{id}")]
@@ -104,15 +111,28 @@ namespace JWS.Controllers
                 return BadRequest();
             }
 
-            var ciclo = await _context.Ciclos.FindAsync(id);
+            var ciclo = await _context.Ciclos
+                .Include(c => c.CicloMaterias)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (ciclo == null)
             {
                 return NotFound();
             }
 
+            // Actualizar datos del ciclo
             ciclo.Nombre = cicloDTO.Nombre;
             ciclo.Anio = cicloDTO.Anio;
             ciclo.Semestre = cicloDTO.Semestre;
+
+            // Actualizar la relación de materias
+            ciclo.CicloMaterias.Clear();
+            var cicloMaterias = cicloDTO.MateriasIds.Select(mId => new CicloMateria
+            {
+                CicloId = id,
+                MateriaId = mId
+            }).ToList();
+            ciclo.CicloMaterias = cicloMaterias;
 
             _context.Entry(ciclo).State = EntityState.Modified;
 
@@ -136,7 +156,10 @@ namespace JWS.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCiclo(long id)
         {
-            var ciclo = await _context.Ciclos.FindAsync(id);
+            var ciclo = await _context.Ciclos
+                .Include(c => c.CicloMaterias)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
             if (ciclo == null)
             {
                 return NotFound();

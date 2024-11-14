@@ -1,1 +1,112 @@
-<p>materia works!</p>
+<div class="home-card">
+  <div class="text-center mb-4">
+    <img
+      src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+      alt="Logo"
+      class="login-logo"
+    />
+  </div>
+  <h2 class="home-title text-center mb-4">Gestión de Ciclos</h2>
+
+  <!-- Formulario para crear/editar ciclo -->
+  <form [formGroup]="materiaForm" (ngSubmit)="onSubmit()" class="mb-5">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="nombre" class="form-label">Nombre del Ciclo</label>
+        <input
+          type="text"
+          class="form-control login-input"
+          formControlName="nombre"
+          placeholder="Ingrese el nombre del ciclo"
+          required
+        />
+        <div
+          *ngIf="materiaForm.get('nombre')?.invalid && materiaForm.get('nombre')?.touched"
+          class="text-danger"
+        >
+          El nombre es obligatorio.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="anio" class="form-label">Año</label>
+        <input
+          type="number"
+          class="form-control login-input"
+          formControlName="anio"
+          placeholder="Ingrese el año"
+          required
+        />
+        <div
+          *ngIf="materiaForm.get('anio')?.invalid && materiaForm.get('anio')?.touched"
+          class="text-danger"
+        >
+          El año es obligatorio.
+        </div>
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="semestre" class="form-label">Semestre</label>
+        <input
+          type="number"
+          class="form-control login-input"
+          formControlName="semestre"
+          placeholder="Ingrese el semestre"
+          required
+        />
+        <div
+          *ngIf="materiaForm.get('semestre')?.invalid && materiaForm.get('semestre')?.touched"
+          class="text-danger"
+        >
+          El semestre es obligatorio.
+        </div>
+      </div>
+      <div class="col-md-12 mb-3">
+        <label for="materias" class="form-label">Materias</label>
+        <select
+          class="form-control login-input"
+          formControlName="materiasIds"
+          multiple
+        >
+          <option *ngFor="let materia of todasMaterias" [value]="materia.id">
+            {{ materia.nombre }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-login w-100">
+      {{ editMode ? 'Actualizar Ciclo' : 'Crear Ciclo' }}
+    </button>
+  </form>
+
+  <!-- Tabla para listar ciclos -->
+  <div *ngIf="ciclos.length > 0">
+    <h3 class="home-title text-center">Lista de Ciclos</h3>
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Año</th>
+          <th>Semestre</th>
+          <th>Materias</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ciclo of ciclos">
+          <td>{{ ciclo.nombre }}</td>
+          <td>{{ ciclo.anio }}</td>
+          <td>{{ ciclo.semestre }}</td>
+          <td>{{ getMateriasNombresByIds(ciclo.materiasIds) }}</td>
+          <td>
+            <button class="btn btn-home" (click)="onEdit(ciclo)">
+              Editar
+            </button>
+            <button class="btn btn-home" (click)="onDelete(ciclo.id)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

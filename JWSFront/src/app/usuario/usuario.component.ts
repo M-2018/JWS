@@ -7,7 +7,7 @@ import { catchError, throwError } from 'rxjs';
 @Component({
   selector: 'app-usuario',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // Asegúrate de incluir ReactiveFormsModule aquí
+  imports: [CommonModule, ReactiveFormsModule], 
   templateUrl: './usuario.component.html',
   styleUrls: ['./usuario.component.css']
 })

@@ -1,1 +1,138 @@
-<p>persona-responsable works!</p>
+<div class="home-card">
+  <div class="home-card">
+    <div class="text-center mb-4">
+      <img
+        src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+        alt="Logo"
+        class="login-logo"
+      />
+    </div>
+  <h2 class="home-title text-center mb-4">Gestión de Responsables</h2>
+
+  <!-- Formulario para crear/editar responsable -->
+  <form
+    [formGroup]="responsableForm"
+    (ngSubmit)="onSubmit()"
+    class="responsable-form"
+  >
+    <div class="form-group">
+      <label for="nombres">Nombres</label>
+      <input
+        type="text"
+        id="nombres"
+        formControlName="nombres"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="apellidos">Apellidos</label>
+      <input
+        type="text"
+        id="apellidos"
+        formControlName="apellidos"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="relacion">Relación</label>
+      <input
+        type="text"
+        id="relacion"
+        formControlName="relacion"
+        class="form-control login-input"
+        required
+      />
+    </div>
+
+    <!-- <div class="form-group">
+        <label for="estudianteId">ID del Estudiante</label>
+        <input type="number" id="estudianteId" formControlName="estudianteId" class="form-control login-input" required />
+      </div> -->
+
+      <div class="form-group">
+        <label for="estudianteId">Estudiante</label>
+        <select
+          id="estudianteId"
+          formControlName="estudianteId"
+          class="form-control login-input"
+          required
+        >
+          <option value="" disabled selected>Seleccione un estudiante</option>
+          <option *ngFor="let estudiante of estudiantes" [value]="estudiante.id">
+            {{ estudiante.nombres }} {{ estudiante.apellidos }}
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="telefono">Teléfono</label>
+        <input
+          type="text"
+          id="telefono"
+          formControlName="telefono"
+          class="form-control login-input"
+          required
+        />
+      </div>
+      
+      <div class="form-group">
+        <label for="correoElectronico">Correo Electrónico</label>
+        <input
+          type="email"
+          id="correoElectronico"
+          formControlName="correoElectronico"
+          class="form-control login-input"
+          required
+        />
+      </div>
+      
+
+    <div class="button-container">
+      <button type="submit" class="btn-home small-button">
+        {{ editMode ? "Editar Responsable" : "Guardar Responsable" }}
+      </button>
+    </div>
+  </form>
+
+  <!-- Tabla para listar responsables -->
+  <div *ngIf="responsables.length > 0" class="mt-5">
+    <h3 class="home-title text-center">Lista de Responsables</h3>
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Relación</th>
+          <th>Estudiante</th>
+          <th>Teléfono</th>
+          <th>Email</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let responsable of responsables">
+          <td>{{ responsable.id }}</td>
+          <td>{{ responsable.nombres }}</td>
+          <td>{{ responsable.apellidos }}</td>
+          <td>{{ responsable.relacion }}</td>
+          <td>{{ getEstudianteNombre(responsable.estudianteId) }}</td>
+          <td>{{ responsable.telefono }}</td>
+          <td>{{ responsable.correoElectronico }}</td>
+          <td>
+            <button class="btn btn-home" (click)="onEdit(responsable)">
+              Editar
+            </button>
+            <button class="btn btn-home" (click)="onDelete(responsable.id)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
