@@ -6,18 +6,18 @@
       class="login-logo"
     />
   </div>
-  <h2 class="home-title text-center mb-4">Gestión de Ciclos</h2>
+  <h2 class="home-title text-center mb-4">Gestión de Materias</h2>
 
-  <!-- Formulario para crear/editar ciclo -->
+  <!-- Formulario para crear/editar materia -->
   <form [formGroup]="materiaForm" (ngSubmit)="onSubmit()" class="mb-5">
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label for="nombre" class="form-label">Nombre del Ciclo</label>
+        <label for="nombre" class="form-label">Nombre de la Materia</label>
         <input
           type="text"
           class="form-control login-input"
           formControlName="nombre"
-          placeholder="Ingrese el nombre del ciclo"
+          placeholder="Ingrese el nombre de la materia"
           required
         />
         <div
@@ -27,81 +27,53 @@
           El nombre es obligatorio.
         </div>
       </div>
-      <div class="col-md-3 mb-3">
-        <label for="anio" class="form-label">Año</label>
-        <input
-          type="number"
-          class="form-control login-input"
-          formControlName="anio"
-          placeholder="Ingrese el año"
-          required
-        />
-        <div
-          *ngIf="materiaForm.get('anio')?.invalid && materiaForm.get('anio')?.touched"
-          class="text-danger"
-        >
-          El año es obligatorio.
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <label for="semestre" class="form-label">Semestre</label>
-        <input
-          type="number"
-          class="form-control login-input"
-          formControlName="semestre"
-          placeholder="Ingrese el semestre"
-          required
-        />
-        <div
-          *ngIf="materiaForm.get('semestre')?.invalid && materiaForm.get('semestre')?.touched"
-          class="text-danger"
-        >
-          El semestre es obligatorio.
-        </div>
-      </div>
-      <div class="col-md-12 mb-3">
-        <label for="materias" class="form-label">Materias</label>
+
+      <div class="col-md-6 mb-3">
+        <label for="profesorId" class="form-label">Profesor</label>
         <select
           class="form-control login-input"
-          formControlName="materiasIds"
-          multiple
+          formControlName="profesorId"
+          required
         >
-          <option *ngFor="let materia of todasMaterias" [value]="materia.id">
-            {{ materia.nombre }}
+          <option value="" disabled selected>Seleccione un profesor</option>
+          <option *ngFor="let profesor of profesores" [value]="profesor.id">
+            {{ profesor.nombres }} {{ profesor.apellidos }}
           </option>
         </select>
+        <div
+          *ngIf="materiaForm.get('profesorId')?.invalid && materiaForm.get('profesorId')?.touched"
+          class="text-danger"
+        >
+          Seleccionar un profesor es obligatorio.
+        </div>
       </div>
     </div>
 
     <button type="submit" class="btn btn-login w-100">
-      {{ editMode ? 'Actualizar Ciclo' : 'Crear Ciclo' }}
+      {{ editMode ? 'Actualizar Materia' : 'Crear Materia' }}
     </button>
   </form>
 
-  <!-- Tabla para listar ciclos -->
-  <div *ngIf="ciclos.length > 0">
-    <h3 class="home-title text-center">Lista de Ciclos</h3>
+  <!-- Tabla para listar materias -->
+  <div *ngIf="materias.length > 0">
+    <h3 class="home-title text-center">Lista de Materias</h3>
     <table class="table table-dark table-striped">
       <thead>
         <tr>
           <th>Nombre</th>
-          <th>Año</th>
-          <th>Semestre</th>
-          <th>Materias</th>
+          <th>Profesor</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let ciclo of ciclos">
-          <td>{{ ciclo.nombre }}</td>
-          <td>{{ ciclo.anio }}</td>
-          <td>{{ ciclo.semestre }}</td>
-          <td>{{ getMateriasNombresByIds(ciclo.materiasIds) }}</td>
+        <tr *ngFor="let materia of materias">
+          <td>{{ materia.nombre }}</td>
+          <td>{{ getProfesorNombreById(materia.profesorId) }}</td>
           <td>
-            <button class="btn btn-home" (click)="onEdit(ciclo)">
+            <button class="btn btn-home" (click)="onEdit(materia)">
               Editar
             </button>
-            <button class="btn btn-home" (click)="onDelete(ciclo.id)">
+            <button class="btn btn-home" (click)="onDelete(materia.id)">
               Eliminar
             </button>
           </td>

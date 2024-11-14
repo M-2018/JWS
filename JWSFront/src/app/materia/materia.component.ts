@@ -14,50 +14,46 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './materia.component.html',
-  styleUrl: './materia.component.css',
+  styleUrls: ['./materia.component.css'],
 })
 export class MateriaComponent implements OnInit {
   materiaForm: FormGroup;
   materias: any[] = [];
-  ciclos: any[] = [];
-  todasMaterias: any[] = []; // Lista para almacenar todas las materias disponibles
+  profesores: any[] = [];
   editMode = false;
-  selectedCicloId: number | null = null;
+  selectedMateriaId: number | null = null;
 
   private apiUrl = 'https://localhost:7246/api/Materia';
-  private cicloApiUrl = 'https://localhost:7246/api/Ciclos';
-  private materiasApiUrl = 'https://localhost:7246/api/Materias';
+  private profesoresApiUrl = 'https://localhost:7246/api/Profesor';
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.materiaForm = this.fb.group({
       nombre: ['', Validators.required],
-      anio: ['', Validators.required],
-      semestre: ['', Validators.required],
-      materiasIds: [[], Validators.required] // Campo para múltiples materias seleccionadas
+      profesorId: ['', Validators.required] // Campo para el profesor seleccionado
     });
   }
 
   ngOnInit(): void {
-    this.getCiclos();
-    this.getTodasMaterias(); // Obtener todas las materias al inicializar
+    this.getMaterias();
+    this.getProfesores(); // Obtener todos los profesores al inicializar
   }
 
-  // Obtener todas las materias para el selector múltiple
-  getTodasMaterias() {
-    this.http.get<any[]>(this.materiasApiUrl).subscribe({
+  // Obtener todos los profesores para el selector desplegable
+  getProfesores() {
+    this.http.get<any[]>(this.profesoresApiUrl).subscribe({
       next: (data) => {
-        this.todasMaterias = data;
+        this.profesores = data;
       },
       error: (error) => {
-        console.error('Error al obtener todas las materias:', error);
+        console.error('Error al obtener profesores:', error);
       }
     });
   }
 
-  // Obtener ciclos de la API
-  getCiclos(): void {
-    this.http.get<any[]>(this.cicloApiUrl).subscribe((data) => {
-      this.ciclos = data;
+  // Obtener materias de la API
+  getMaterias(): void {
+    this.http.get<any[]>(this.apiUrl).subscribe((data) => {
+      this.materias = data;
     });
   }
 
@@ -67,67 +63,73 @@ export class MateriaComponent implements OnInit {
       return;
     }
 
-    const cicloData = this.materiaForm.value;
-    if (this.editMode && this.selectedCicloId !== null) {
-      // Actualizar ciclo existente
+    const materiaData = {
+      ...this.materiaForm.value,
+      cicloId: 0 // Añadir CicloId con valor 0
+    };
+
+    //const materiaData = this.materiaForm.value;
+    if (this.editMode && this.selectedMateriaId !== null) {
+
+      materiaData.id = this.selectedMateriaId;
+      
+      console.log('Datos enviados:', materiaData); 
+
+      // Actualizar materia existente
       this.http
-        .put(`${this.cicloApiUrl}/${this.selectedCicloId}`, cicloData)
+        .put(`${this.apiUrl}/${this.selectedMateriaId}`, materiaData)
         .subscribe({
           next: () => {
-            this.getCiclos();
+            this.getMaterias();
             this.resetForm();
           },
           error: (err) => {
-            console.error('Error al actualizar ciclo:', err);
+            console.error('Error al actualizar materia:', err);
           }
         });
     } else {
-      // Crear un nuevo ciclo
-      this.http.post(this.cicloApiUrl, cicloData).subscribe({
+      // Crear una nueva materia
+      this.http.post(this.apiUrl, materiaData).subscribe({
         next: () => {
-          this.getCiclos();
+          this.getMaterias();
           this.resetForm();
         },
         error: (err) => {
-          console.error('Error al crear ciclo:', err);
+          console.error('Error al crear materia:', err);
         }
       });
     }
   }
 
-  // Editar ciclo
-  onEdit(ciclo: any): void {
+  // Editar materia
+  onEdit(materia: any): void {
     this.editMode = true;
-    this.selectedCicloId = ciclo.id;
+    this.selectedMateriaId = materia.id;
     this.materiaForm.patchValue({
-      nombre: ciclo.nombre,
-      anio: ciclo.anio,
-      semestre: ciclo.semestre,
-      materiasIds: ciclo.materiasIds
+      nombre: materia.nombre,
+      profesorId: materia.profesorId
     });
   }
 
-  // Eliminar ciclo
+  // Eliminar materia
   onDelete(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este ciclo?')) {
-      this.http.delete(`${this.cicloApiUrl}/${id}`).subscribe(() => {
-        this.getCiclos();
+    if (confirm('¿Estás seguro de que deseas eliminar esta materia?')) {
+      this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
+        this.getMaterias();
       });
     }
   }
 
-  // Obtener los nombres de las materias a partir de una lista de IDs
-  getMateriasNombresByIds(ids: number[]): string {
-    return this.todasMaterias
-      .filter((materia) => ids.includes(materia.id))
-      .map((materia) => materia.nombre)
-      .join(', ');
+  // Obtener el nombre del profesor a partir de su ID
+  getProfesorNombreById(id: number): string {
+    const profesor = this.profesores.find((p) => p.id === id);
+    return profesor ? `${profesor.nombres} ${profesor.apellidos}` : '';
   }
 
   // Reiniciar formulario
   resetForm(): void {
     this.editMode = false;
-    this.selectedCicloId = null;
+    this.selectedMateriaId = null;
     this.materiaForm.reset();
   }
 }
