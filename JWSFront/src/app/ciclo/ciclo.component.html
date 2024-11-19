@@ -21,7 +21,12 @@
           required
         />
         <!-- Mensaje de error para nombre -->
-        <div *ngIf="cicloForm.get('nombre')?.invalid && cicloForm.get('nombre')?.touched" class="text-danger">
+        <div
+          *ngIf="
+            cicloForm.get('nombre')?.invalid && cicloForm.get('nombre')?.touched
+          "
+          class="text-danger"
+        >
           El nombre es obligatorio.
         </div>
       </div>
@@ -35,18 +40,33 @@
           required
         />
         <!-- Mensaje de error para año -->
-        <div *ngIf="cicloForm.get('anio')?.invalid && cicloForm.get('anio')?.touched" class="text-danger">
+        <div
+          *ngIf="
+            cicloForm.get('anio')?.invalid && cicloForm.get('anio')?.touched
+          "
+          class="text-danger"
+        >
           Ingrese un año válido entre 2000 y 2100.
         </div>
       </div>
       <div class="col-md-3 mb-3">
         <label for="semestre" class="form-label">Semestre</label>
-        <select class="form-control login-input" formControlName="semestre" required>
+        <select
+          class="form-control login-input"
+          formControlName="semestre"
+          required
+        >
           <option value="1">1er Semestre</option>
           <option value="2">2do Semestre</option>
         </select>
         <!-- Mensaje de error para semestre -->
-        <div *ngIf="cicloForm.get('semestre')?.invalid && cicloForm.get('semestre')?.touched" class="text-danger">
+        <div
+          *ngIf="
+            cicloForm.get('semestre')?.invalid &&
+            cicloForm.get('semestre')?.touched
+          "
+          class="text-danger"
+        >
           Selecciona un semestre.
         </div>
       </div>
@@ -59,13 +79,13 @@
         <div class="row">
           <div *ngFor="let materia of materias" class="col-md-4 mb-2">
             <div class="form-check">
-              <input 
-                type="checkbox" 
-                class="form-check-input" 
+              <input
+                type="checkbox"
+                class="form-check-input"
                 [id]="'materia-' + materia.id"
                 (change)="toggleMateriaSelection(materia.id)"
                 [checked]="isMateriaSelected(materia.id)"
-              >
+              />
               <label class="form-check-label" [for]="'materia-' + materia.id">
                 {{ materia.nombre }}
               </label>
@@ -76,7 +96,7 @@
     </div>
 
     <button type="submit" class="btn btn-login w-100">
-      {{ editMode ? 'Actualizar Ciclo' : 'Crear Ciclo' }}
+      {{ editMode ? "Actualizar Ciclo" : "Crear Ciclo" }}
     </button>
   </form>
 
@@ -90,7 +110,6 @@
           <th>Nombre</th>
           <th>Año</th>
           <th>Semestre</th>
-          <th>Materias</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -101,9 +120,15 @@
           <td>{{ ciclo.anio }}</td>
           <td>{{ ciclo.semestre }}</td>
           <td>
-            <button class="btn btn-home" (click)="onEdit(ciclo)">
-              Editar
+            <button
+              class="btn btn-home"
+              data-bs-toggle="modal"
+              data-bs-target="#materiasModal"
+              (click)="showMateriasModal(ciclo)"
+            >
+              Ver materias
             </button>
+            <button class="btn btn-home" (click)="onEdit(ciclo)">Editar</button>
             <button class="btn btn-home" (click)="onDelete(ciclo.id)">
               Eliminar
             </button>
@@ -112,4 +137,52 @@
       </tbody>
     </table>
   </div>
+
+  <!-- INICIO MODAL -->
+
+  <div
+    class="modal fade"
+    id="materiasModal"
+    tabindex="-1"
+    aria-labelledby="materiasModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content home-card">
+        <div class="modal-header">
+          <h5 class="modal-title home-title" id="materiasModalLabel">
+            Materias del Ciclo: {{ selectedCicloNombre }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre de Materia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let materiaId of selectedMaterias">
+                <td>{{ materiaId }}</td>
+                <td>{{ getMateriaNombreById(materiaId) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-login" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- FIN MODAL -->
 </div>

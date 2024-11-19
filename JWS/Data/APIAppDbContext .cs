@@ -92,6 +92,13 @@ namespace JWS.Data
                 .WithMany()
                 .HasForeignKey(c => c.MateriaId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            //Configuro la eliminación en cascada cuando se elimina un ciclo
+            modelBuilder.Entity<Ciclo>()
+                .HasMany(c => c.CicloMaterias)
+                .WithOne(cm => cm.Ciclo)
+                .HasForeignKey(cm => cm.CicloId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

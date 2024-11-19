@@ -29,6 +29,7 @@ export class CicloComponent implements OnInit {
   selectedMaterias: number[] = [];
   editMode = false;
   selectedCicloId: number | null = null;
+  selectedCicloNombre: string = '';
 
   private apiUrl = 'https://localhost:7246/api/Ciclos';
   private materiasApiUrl = 'https://localhost:7246/api/Materia'; 
@@ -50,7 +51,8 @@ export class CicloComponent implements OnInit {
   getCiclos(): void {
     this.http.get<any[]>(this.apiUrl).subscribe((data) => {
       this.ciclos = data;
-    });
+      console.log("Ciclos: " + JSON.stringify(this.ciclos));
+    });    
   }
 
   // Obtener materias de la API y mostrarlas en la consola
@@ -66,6 +68,12 @@ export class CicloComponent implements OnInit {
     });
   }
 
+  showMateriasModal(ciclo: any): void {
+    this.selectedCicloNombre = ciclo.nombre;
+    this.selectedMaterias = ciclo.materiasIds || [];
+  } 
+
+  
   // Toggle materia selection
   toggleMateriaSelection(materiaId: number): void {
     const index = this.selectedMaterias.indexOf(materiaId);
@@ -155,6 +163,7 @@ export class CicloComponent implements OnInit {
 
   // Eliminar ciclo
   onDelete(id: number): void {
+    console.log("id del ciclo a eliminar: " + id);
     if (confirm('¿Estás seguro de que deseas eliminar este ciclo?')) {
       this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
         this.getCiclos();
@@ -172,5 +181,10 @@ export class CicloComponent implements OnInit {
   isMateriaSelected(materiaId: number): boolean {
     console.log("Materias seleccionadas: " + this.selectedMaterias);
     return this.selectedMaterias.includes(materiaId);
+  }
+
+  getMateriaNombreById(materiaId: number): string {
+    const materia = this.materias.find(m => m.id === materiaId);
+    return materia ? materia.nombre : 'Materia no encontrada';
   }
 }
