@@ -52,6 +52,29 @@
       </div>
     </div>
 
+    <!-- Materias Selection -->
+    <div class="row mb-3">
+      <div class="col-12">
+        <h4>Seleccionar Materias</h4>
+        <div class="row">
+          <div *ngFor="let materia of materias" class="col-md-4 mb-2">
+            <div class="form-check">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                [id]="'materia-' + materia.id"
+                (change)="toggleMateriaSelection(materia.id)"
+                [checked]="isMateriaSelected(materia.id)"
+              >
+              <label class="form-check-label" [for]="'materia-' + materia.id">
+                {{ materia.nombre }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <button type="submit" class="btn btn-login w-100">
       {{ editMode ? 'Actualizar Ciclo' : 'Crear Ciclo' }}
     </button>
@@ -67,6 +90,7 @@
           <th>Nombre</th>
           <th>Año</th>
           <th>Semestre</th>
+          <th>Materias</th>
           <th>Acciones</th>
         </tr>
       </thead>

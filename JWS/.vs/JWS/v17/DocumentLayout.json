@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Alucard\\Practicas\\JWS\\JWS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\materiadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\materiadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\ciclodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\ciclodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\materiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\materiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\cicloscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\cicloscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\materia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\materia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\ciclo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\ciclo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,40 +27,39 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Materia.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Materia.cs",
-              "RelativeDocumentMoniker": "Models\\Materia.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Materia.cs",
-              "RelativeToolTip": "Models\\Materia.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAAAAAAA",
+              "Title": "Ciclo.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Ciclo.cs",
+              "RelativeDocumentMoniker": "Models\\Ciclo.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Ciclo.cs",
+              "RelativeToolTip": "Models\\Ciclo.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T19:49:41.526Z"
+              "WhenOpened": "2024-11-15T21:08:19.651Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "MateriaDTO.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\MateriaDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\MateriaDTO.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\MateriaDTO.cs",
-              "RelativeToolTip": "DTOs\\MateriaDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Title": "CicloDTO.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CicloDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\CicloDTO.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CicloDTO.cs",
+              "RelativeToolTip": "DTOs\\CicloDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T19:49:26.341Z",
+              "WhenOpened": "2024-11-15T21:08:15.526Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MateriaController.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\MateriaController.cs",
-              "RelativeDocumentMoniker": "Controllers\\MateriaController.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\MateriaController.cs",
-              "RelativeToolTip": "Controllers\\MateriaController.cs",
-              "ViewState": "AQIAAJgAAAAAAAAAAAAuwLcAAAAAAAAA",
+              "Title": "CiclosController.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CiclosController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CiclosController.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CiclosController.cs",
+              "RelativeToolTip": "Controllers\\CiclosController.cs",
+              "ViewState": "AQIAAJQAAAAAAAAAAAAuwLMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-14T19:49:09.752Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-11-15T21:08:11.128Z"
             }
           ]
         }

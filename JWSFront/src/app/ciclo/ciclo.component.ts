@@ -1,7 +1,19 @@
-import { Component, OnInit  } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+
+interface Materia {
+  id: number;
+  nombre: string;
+  profesorId: number;
+  cicloId: number;
+}
 
 @Component({
   selector: 'app-ciclo',
@@ -13,10 +25,13 @@ import { CommonModule } from '@angular/common';
 export class CicloComponent implements OnInit {
   cicloForm: FormGroup;
   ciclos: any[] = [];
+  materias: Materia[] = [];
+  selectedMaterias: number[] = [];
   editMode = false;
   selectedCicloId: number | null = null;
 
   private apiUrl = 'https://localhost:7246/api/Ciclos';
+  private materiasApiUrl = 'https://localhost:7246/api/Materia'; 
 
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.cicloForm = this.fb.group({
@@ -28,6 +43,7 @@ export class CicloComponent implements OnInit {
 
   ngOnInit(): void {
     this.getCiclos();
+    this.getMaterias(); 
   }
 
   // Obtener ciclos de la API
@@ -37,16 +53,68 @@ export class CicloComponent implements OnInit {
     });
   }
 
+  // Obtener materias de la API y mostrarlas en la consola
+  getMaterias(): void {
+    this.http.get<Materia[]>(this.materiasApiUrl).subscribe({
+      next: (data) => {
+        this.materias = data;
+        console.log('Materias:', this.materias);
+      },
+      error: (error) => {
+        console.error('Error al obtener materias:', error);
+      }
+    });
+  }
+
+  // Toggle materia selection
+  toggleMateriaSelection(materiaId: number): void {
+    const index = this.selectedMaterias.indexOf(materiaId);
+    if (index > -1) {
+      // If already selected, remove it
+      this.selectedMaterias.splice(index, 1);
+    } else {
+      // If not selected, add it
+      this.selectedMaterias.push(materiaId);
+    }
+  }
+
   // Enviar formulario para crear o actualizar ciclo
+  // onSubmit(): void {
+  //   if (this.cicloForm.invalid) {
+  //     this.cicloForm.markAllAsTouched();
+  //     return;
+  //   }
+
+  //   const cicloData = this.cicloForm.value;
+  //   if (this.editMode && this.selectedCicloId !== null) {
+  //     const cicloDataToUpdate = {
+  //       ...cicloData,
+  //       id: this.selectedCicloId
+  //     };
+  //     this.http.put(`${this.apiUrl}/${this.selectedCicloId}`, cicloDataToUpdate).subscribe(() => {
+  //       this.getCiclos();
+  //       this.resetForm();
+  //     });
+  //   } else {
+  //     this.http.post(this.apiUrl, cicloData).subscribe(() => {
+  //       this.getCiclos();
+  //       this.resetForm();
+  //     });
+  //   }
+  // }
+
   onSubmit(): void {
     if (this.cicloForm.invalid) {
-      this.cicloForm.markAllAsTouched(); // Marca todos los campos como tocados para mostrar errores
+      this.cicloForm.markAllAsTouched();
       return;
     }
 
-    const cicloData = this.cicloForm.value;
+    const cicloData = {
+      ...this.cicloForm.value,
+      materiasIds: this.selectedMaterias // Include selected materias
+    };
+
     if (this.editMode && this.selectedCicloId !== null) {
-      // Asegúrate de incluir el id en los datos enviados
       const cicloDataToUpdate = {
         ...cicloData,
         id: this.selectedCicloId
@@ -56,7 +124,6 @@ export class CicloComponent implements OnInit {
         this.resetForm();
       });
     } else {
-      // Crear ciclo
       this.http.post(this.apiUrl, cicloData).subscribe(() => {
         this.getCiclos();
         this.resetForm();
@@ -65,9 +132,20 @@ export class CicloComponent implements OnInit {
   }
 
   // Editar ciclo
+  // onEdit(ciclo: any): void {
+  //   this.editMode = true;
+  //   this.selectedCicloId = ciclo.id;
+  //   this.cicloForm.patchValue({
+  //     nombre: ciclo.nombre,
+  //     anio: ciclo.anio,
+  //     semestre: ciclo.semestre
+  //   });
+  // }
+
   onEdit(ciclo: any): void {
     this.editMode = true;
     this.selectedCicloId = ciclo.id;
+    this.selectedMaterias = ciclo.materiasIds || []; // Populate selected materias
     this.cicloForm.patchValue({
       nombre: ciclo.nombre,
       anio: ciclo.anio,
@@ -89,5 +167,10 @@ export class CicloComponent implements OnInit {
     this.editMode = false;
     this.selectedCicloId = null;
     this.cicloForm.reset();
+  }
+  // Check if a materia is selected
+  isMateriaSelected(materiaId: number): boolean {
+    console.log("Materias seleccionadas: " + this.selectedMaterias);
+    return this.selectedMaterias.includes(materiaId);
   }
 }
