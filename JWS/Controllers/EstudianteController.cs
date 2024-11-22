@@ -8,7 +8,7 @@ namespace JWS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EstudianteController : Controller
+    public class EstudianteController : ControllerBase
     {
         private readonly APIAppDbContext _context;
 
