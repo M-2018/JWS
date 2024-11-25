@@ -9,7 +9,7 @@ namespace JWS.Models
         public long Id { get; set; }
         public DateTime? Fecha { get; set; }
         public bool? Presente { get; set; }
-        public bool? Ausente { get; set; }
+        //public bool? Ausente { get; set; }
 
         public long EstudianteId { get; set; }
         [JsonIgnore]

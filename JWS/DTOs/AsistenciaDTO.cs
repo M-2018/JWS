@@ -7,5 +7,6 @@
         public bool? Presente { get; set; }
         public long EstudianteId { get; set; }
         public long MateriaId { get; set; }
+        public long CicloId { get; set; }
     }
 }
