@@ -59,23 +59,49 @@ namespace JWS.Controllers
         }
 
         // POST: api/Asistencias
-        [HttpPost]
-        public async Task<ActionResult<Asistencia>> PostAsistencia(AsistenciaDTO asistenciaDTO)
-        {
-            var asistencia = new Asistencia
-            {
-                Fecha = asistenciaDTO.Fecha,
-                Presente = asistenciaDTO.Presente,
-                EstudianteId = asistenciaDTO.EstudianteId,
-                MateriaId = asistenciaDTO.MateriaId,
-                CicloId = asistenciaDTO.CicloId
-            };
+        //[HttpPost]
+        //public async Task<ActionResult<Asistencia>> PostAsistencia(AsistenciaDTO asistenciaDTO)
+        //{
+        //    var asistencia = new Asistencia
+        //    {
+        //        Fecha = asistenciaDTO.Fecha,
+        //        Presente = asistenciaDTO.Presente,
+        //        EstudianteId = asistenciaDTO.EstudianteId,
+        //        MateriaId = asistenciaDTO.MateriaId,
+        //        CicloId = asistenciaDTO.CicloId
+        //    };
 
-            _context.Asistencias.Add(asistencia);
+        //    _context.Asistencias.Add(asistencia);
+        //    await _context.SaveChangesAsync();
+
+        //    return CreatedAtAction(nameof(GetAsistencia), new { id = asistencia.Id }, asistencia);
+        //}
+
+        // POST: api/Asistencias
+        [HttpPost]
+        public async Task<ActionResult> PostAsistencias(IEnumerable<AsistenciaDTO> asistenciasDTO)
+        {
+            if (asistenciasDTO == null || !asistenciasDTO.Any())
+            {
+                return BadRequest("Debe proporcionar al menos un registro.");
+            }
+
+            var asistencias = asistenciasDTO.Select(dto => new Asistencia
+            {
+                Fecha = dto.Fecha,
+                Presente = dto.Presente,
+                EstudianteId = dto.EstudianteId,
+                MateriaId = dto.MateriaId,
+                CicloId = dto.CicloId
+            }).ToList();
+
+            await _context.Asistencias.AddRangeAsync(asistencias);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetAsistencia), new { id = asistencia.Id }, asistencia);
+            return CreatedAtAction(nameof(GetAsistencias), null);
         }
+
+
 
         // PUT: api/Asistencias/{id}
         [HttpPut("{id}")]

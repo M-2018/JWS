@@ -79,4 +79,10 @@
   <div *ngIf="estudiantesFiltrados.length === 0" class="text-center mt-4">
     <p>No hay estudiantes disponibles para el ciclo seleccionado.</p>
   </div>
+
+  <!-- Botón de guardar asistencias -->
+<div *ngIf="estudiantesFiltrados.length > 0" class="text-center mt-4">
+  <button class="btn btn-primary" (click)="guardarAsistencias()">Guardar Asistencias</button>
+</div>
+
 </div>

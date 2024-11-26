@@ -73,7 +73,7 @@ namespace JWS.Data
                 .HasOne(a => a.Ciclo)
                 .WithMany()
                 .HasForeignKey(a => a.CicloId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Calificacion>()
                 .HasOne(c => c.Estudiante)

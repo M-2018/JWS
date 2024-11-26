@@ -14,6 +14,7 @@ export class AsistenciaComponent implements OnInit {
   private EstudianteUrl = 'https://localhost:7246/api/Estudiante';
   private ciclosUrl = 'https://localhost:7246/api/Ciclos';
   private MateriasUrl = 'https://localhost:7246/api/Materia';
+  private AsistenciasUrl = 'https://localhost:7246/api/Asistencias';
 
   estudiantes: any[] = [];
   ciclos: any[] = [];
@@ -21,8 +22,8 @@ export class AsistenciaComponent implements OnInit {
   estudiantesFiltrados: any[] = [];
 
   fechaSeleccionada: string = '';
-  cicloSeleccionado: number | null = null; // ID del ciclo seleccionado
-  materiaSeleccionada: number | null = null; // ID de la materia seleccionada
+  cicloSeleccionado: number | null = null; 
+  materiaSeleccionada: number | null = null; 
 
   constructor(private http: HttpClient) {}
 
@@ -110,4 +111,34 @@ export class AsistenciaComponent implements OnInit {
   private formatDate(dateString: string): string {
     return dateString.split('T')[0]; // Devuelve solo la parte de la fecha
   }
+
+   // Método para guardar asistencias
+   guardarAsistencias(): void {
+    // Asegurarnos de que todos los estudiantes tengan un valor de asistencia
+    const asistencias = this.estudiantesFiltrados.map((estudiante) => ({
+      fecha: this.fechaSeleccionada,
+      presente: estudiante.asistencia !== undefined ? estudiante.asistencia : false,  // Asigna 'false' si no está marcado
+      estudianteId: estudiante.id,
+      materiaId: this.materiaSeleccionada,
+      cicloId: this.cicloSeleccionado,
+    }));
+  
+    if (asistencias.length > 0) {
+      // Enviar las asistencias al backend
+      this.http.post(this.AsistenciasUrl, asistencias).subscribe({
+        next: () => {
+          console.log('Asistencias guardadas con éxito');
+          alert('Asistencias guardadas con éxito');
+        },
+        error: (err) => {
+          console.error('Error al guardar asistencias:', err);
+          alert('Ocurrió un error al guardar las asistencias');
+        },
+      });
+    } else {
+      alert('Debe seleccionar al menos una asistencia');
+    }
+  }
+  
+
 }
