@@ -74,6 +74,39 @@ namespace JWS.Controllers
             return Ok(estudianteDTO);
         }
 
+        // GET: api/Estudiante/Ciclo/5
+        [HttpGet("Ciclo/{cicloId}")]
+        public async Task<ActionResult<IEnumerable<EstudianteDTO>>> GetEstudiantesPorCiclo(long cicloId)
+        {
+            var estudiantes = await _context.Estudiantes
+                .Where(e => e.CicloId == cicloId) // Filtrar por CicloId
+                .Include(e => e.Ciclo) // Incluir información del ciclo
+                .ToListAsync();
+
+            if (!estudiantes.Any())
+            {
+                return NotFound($"No se encontraron estudiantes para el ciclo con ID {cicloId}.");
+            }
+
+            var estudiantesDTO = estudiantes.Select(e => new EstudianteDTO
+            {
+                Id = e.Id,
+                Nombres = e.Nombres,
+                Apellidos = e.Apellidos,
+                NroDocumento = e.NroDocumento,
+                TipoDocumento = e.TipoDocumento,
+                FechaNacimiento = e.FechaNacimiento,
+                Direccion = e.Direccion,
+                Telefono = e.Telefono,
+                Email = e.Email,
+                SemestrePagado = e.SemestrePagado,
+                CicloId = e.CicloId
+            }).ToList();
+
+            return Ok(estudiantesDTO);
+        }
+
+
         // POST: api/Estudiante
         [HttpPost]
         public async Task<ActionResult<EstudianteDTO>> PostEstudiante(EstudianteDTO estudianteDTO)

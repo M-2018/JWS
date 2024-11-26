@@ -1,1 +1,82 @@
-<p>asistencia works!</p>
+<div class="home-card">
+  <div class="text-center mb-4">
+    <img
+      src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+      alt="Logo"
+      class="login-logo"
+    />
+  </div>
+  <h2 class="home-title text-center mb-4">Asistencia de Estudiantes</h2>
+
+  <!-- Campo para seleccionar la fecha -->
+  <div class="mb-4">
+    <label for="fecha" class="form-label">Seleccione la fecha:</label>
+    <input
+      type="date"
+      id="fecha"
+      class="form-control login-input"
+      [(ngModel)]="fechaSeleccionada"
+    />
+  </div>
+
+  <!-- Selección de Materia -->
+  <div class="mb-4">
+    <label for="materia" class="form-label">Seleccione materia</label>
+    <select
+      id="materia"
+      class="form-control login-input"
+      (change)="seleccionarMateria($event)"
+    >
+      <option value="" disabled selected>Seleccione una materia</option>
+      <option *ngFor="let materia of materias" [value]="materia.id">
+        {{ materia.nombre }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Selección de Ciclo -->
+  <div class="mb-4">
+    <label for="ciclo" class="form-label">Seleccione ciclo</label>
+    <select
+      id="ciclo"
+      class="form-control login-input"
+      (change)="getEstudiantesXCiclo($event)"
+    >
+      <option value="" disabled selected>Seleccione un ciclo</option>
+      <option *ngFor="let ciclo of ciclos" [value]="ciclo.id">
+        {{ ciclo.nombre }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Tabla para mostrar estudiantes -->
+  <div *ngIf="estudiantesFiltrados.length > 0">
+    <h3 class="home-title text-center">Lista de Estudiantes</h3>
+    <table class="table table-dark table-sm">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Asistencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estudiante of estudiantesFiltrados">
+          <td class="text-center">{{ estudiante.id }}</td>
+          <td class="text-center">{{ estudiante.nombres }}</td>
+          <td class="text-center">{{ estudiante.apellidos }}</td>
+          <td class="text-center">
+            <input
+              type="checkbox"
+              [(ngModel)]="estudiante.asistencia"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div *ngIf="estudiantesFiltrados.length === 0" class="text-center mt-4">
+    <p>No hay estudiantes disponibles para el ciclo seleccionado.</p>
+  </div>
+</div>
