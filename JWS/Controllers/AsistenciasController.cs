@@ -162,5 +162,48 @@ namespace JWS.Controllers
 
             return NoContent();
         }
+
+        // GET: api/Asistencias/filtrar
+        //Filtra asistencias por fecha, ciclo y materia
+        [HttpGet("filtrar")]
+        public async Task<ActionResult<IEnumerable<AsistenciaDTO>>> FiltrarAsistencias([FromQuery] long? cicloId, [FromQuery] DateTime? fecha, [FromQuery] long? materiaId)
+        {
+            var query = _context.Asistencias.AsQueryable();
+
+            if (cicloId.HasValue)
+            {
+                query = query.Where(a => a.CicloId == cicloId.Value);
+            }
+
+            if (fecha.HasValue)
+            {
+                query = query.Where(a => a.Fecha.HasValue && a.Fecha.Value.Date == fecha.Value.Date);
+            }
+
+            if (materiaId.HasValue)
+            {
+                query = query.Where(a => a.MateriaId == materiaId.Value);
+            }
+
+            var asistenciasFiltradas = await query
+                .Select(a => new AsistenciaDTO
+                {
+                    Id = a.Id,
+                    Fecha = a.Fecha,
+                    Presente = a.Presente,
+                    EstudianteId = a.EstudianteId,
+                    MateriaId = a.MateriaId,
+                    CicloId = a.CicloId
+                })
+                .ToListAsync();
+
+            if (!asistenciasFiltradas.Any())
+            {
+                return NotFound("No se encontraron asistencias con los filtros proporcionados.");
+            }
+
+            return Ok(asistenciasFiltradas);
+        }
+
     }
 }
