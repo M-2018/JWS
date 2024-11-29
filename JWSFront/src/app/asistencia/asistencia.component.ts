@@ -25,6 +25,12 @@ export class AsistenciaComponent implements OnInit {
   cicloSeleccionado: number | null = null; 
   materiaSeleccionada: number | null = null; 
 
+  editFechaSeleccionada: string = '';
+editMateriaSeleccionada: number | null = null;
+editCicloSeleccionado: number | null = null;
+editEstudiantes: any[] = [];
+mensajeError: string = '';
+
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
@@ -138,6 +144,39 @@ export class AsistenciaComponent implements OnInit {
     } else {
       alert('Debe seleccionar al menos una asistencia');
     }
+  }
+
+  fetchAssistanceData(): void {
+    if (!this.editFechaSeleccionada || !this.editMateriaSeleccionada || !this.editCicloSeleccionado) {
+      return; // No realiza ninguna acción si falta algún dato
+    }
+  
+    const url = `${this.AsistenciasUrl}/filtrar?fecha=${this.editFechaSeleccionada}&cicloId=${this.editCicloSeleccionado}&materiaId=${this.editMateriaSeleccionada}`;
+  
+    this.http.get<any[]>(url).subscribe({
+      next: (data) => {
+        console.log('Datos de asistencia:', data);
+        this.editEstudiantes = data;
+        this.mensajeError = '';
+      },
+      error: () => {
+        this.editEstudiantes = [];
+        this.mensajeError = 'No se encontraron asistencias para los filtros seleccionados.';
+      },
+    });
+  }
+  
+  guardarCambiosAsistencia(): void {
+    const url = this.AsistenciasUrl;
+  
+    this.http.put(url, this.editEstudiantes).subscribe({
+      next: () => {
+        alert('Asistencias actualizadas correctamente');
+      },
+      error: () => {
+        alert('Error al actualizar asistencias');
+      },
+    });
   }
   
 

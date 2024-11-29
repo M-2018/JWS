@@ -1,88 +1,224 @@
-<div class="home-card">
-  <div class="text-center mb-4">
-    <img
-      src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
-      alt="Logo"
-      class="login-logo"
-    />
-  </div>
-  <h2 class="home-title text-center mb-4">Registrar Asistencia De Estudiantes</h2>
+<div class="container mt-4">
+  <!-- Navegación de Tabs -->
+  <ul class="nav nav-tabs" id="tabs-container" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link active"
+        id="register-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#register-assistance-tab"
+        type="button"
+        role="tab"
+        aria-controls="register-assistance-tab"
+        aria-selected="true"
+      >
+        Registrar Asistencia
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button
+        class="nav-link"
+        id="edit-tab"
+        data-bs-toggle="tab"
+        data-bs-target="#edit-assistance-tab"
+        type="button"
+        role="tab"
+        aria-controls="edit-assistance-tab"
+        aria-selected="false"
+      >
+        Editar Asistencia
+      </button>
+    </li>
+  </ul>
 
-  <!-- Campo para seleccionar la fecha -->
-  <div class="mb-4">
-    <label for="fecha" class="form-label">Seleccione la fecha:</label>
-    <input
-      type="date"
-      id="fecha"
-      class="form-control login-input"
-      [(ngModel)]="fechaSeleccionada"
-    />
-  </div>
-
-  <!-- Selección de Materia -->
-  <div class="mb-4">
-    <label for="materia" class="form-label">Seleccione materia</label>
-    <select
-      id="materia"
-      class="form-control login-input"
-      (change)="seleccionarMateria($event)"
+  <!-- Contenido de Tabs -->
+  <div class="tab-content" id="tabs-content">
+    <!-- Contenido de la primera pestaña -->
+    <div
+      class="tab-pane fade show active"
+      id="register-assistance-tab"
+      role="tabpanel"
+      aria-labelledby="register-tab"
     >
-      <option value="" disabled selected>Seleccione una materia</option>
-      <option *ngFor="let materia of materias" [value]="materia.id">
-        {{ materia.nombre }}
-      </option>
-    </select>
-  </div>
+      <div class="home-card mt-4">
+        <div class="text-center mb-4">
+          <img
+            src="https://i.ibb.co/Kr4pkgM/logo-removebg-preview.png"
+            alt="Logo"
+            class="login-logo"
+          />
+        </div>
+        <h2 class="home-title text-center mb-4">
+          Registrar Asistencia De Estudiantes
+        </h2>
 
-  <!-- Selección de Ciclo -->
-  <div class="mb-4">
-    <label for="ciclo" class="form-label">Seleccione ciclo</label>
-    <select
-      id="ciclo"
-      class="form-control login-input"
-      (change)="getEstudiantesXCiclo($event)"
+        <!-- Campo para seleccionar la fecha -->
+        <div class="mb-4">
+          <label for="fecha" class="form-label">Seleccione la fecha:</label>
+          <input
+            type="date"
+            id="fecha"
+            class="form-control login-input"
+            [(ngModel)]="fechaSeleccionada"
+          />
+        </div>
+
+        <!-- Selección de Materia -->
+        <div class="mb-4">
+          <label for="materia" class="form-label">Seleccione materia</label>
+          <select
+            id="materia"
+            class="form-control login-input"
+            (change)="seleccionarMateria($event)"
+          >
+            <option value="" disabled selected>Seleccione una materia</option>
+            <option *ngFor="let materia of materias" [value]="materia.id">
+              {{ materia.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Selección de Ciclo -->
+        <div class="mb-4">
+          <label for="ciclo" class="form-label">Seleccione ciclo</label>
+          <select
+            id="ciclo"
+            class="form-control login-input"
+            (change)="getEstudiantesXCiclo($event)"
+          >
+            <option value="" disabled selected>Seleccione un ciclo</option>
+            <option *ngFor="let ciclo of ciclos" [value]="ciclo.id">
+              {{ ciclo.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Tabla para mostrar estudiantes -->
+        <div *ngIf="estudiantesFiltrados.length > 0">
+          <h3 class="home-title text-center">Lista de Estudiantes</h3>
+          <table class="table table-dark table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Asistencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let estudiante of estudiantesFiltrados">
+                <td class="text-center">{{ estudiante.id }}</td>
+                <td class="text-center">{{ estudiante.nombres }}</td>
+                <td class="text-center">{{ estudiante.apellidos }}</td>
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="estudiante.asistencia" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="estudiantesFiltrados.length === 0" class="text-center mt-4">
+          <p>No hay estudiantes disponibles para el ciclo seleccionado.</p>
+        </div>
+
+        <!-- Botón de guardar asistencias -->
+        <div *ngIf="estudiantesFiltrados.length > 0" class="text-center mt-4">
+          <button class="btn btn-primary" (click)="guardarAsistencias()">
+            Guardar Asistencias
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contenido de la segunda pestaña -->
+    <div
+      class="tab-pane fade"
+      id="edit-assistance-tab"
+      role="tabpanel"
+      aria-labelledby="edit-tab"
     >
-      <option value="" disabled selected>Seleccione un ciclo</option>
-      <option *ngFor="let ciclo of ciclos" [value]="ciclo.id">
-        {{ ciclo.nombre }}
-      </option>
-    </select>
-  </div>
+      <div class="home-card mt-4">
+        <h2 class="home-title text-center mb-4">Editar Asistencia</h2>
 
-  <!-- Tabla para mostrar estudiantes -->
-  <div *ngIf="estudiantesFiltrados.length > 0">
-    <h3 class="home-title text-center">Lista de Estudiantes</h3>
-    <table class="table table-dark table-sm">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>Asistencia</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let estudiante of estudiantesFiltrados">
-          <td class="text-center">{{ estudiante.id }}</td>
-          <td class="text-center">{{ estudiante.nombres }}</td>
-          <td class="text-center">{{ estudiante.apellidos }}</td>
-          <td class="text-center">
-            <input
-              type="checkbox"
-              [(ngModel)]="estudiante.asistencia"
-            />
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div *ngIf="estudiantesFiltrados.length === 0" class="text-center mt-4">
-    <p>No hay estudiantes disponibles para el ciclo seleccionado.</p>
-  </div>
+        <!-- Campo para seleccionar la fecha -->
+        <div class="mb-4">
+          <label for="edit-date" class="form-label">Seleccione la fecha:</label>
+          <input
+            type="date"
+            id="edit-date"
+            class="form-control login-input"
+            [(ngModel)]="editFechaSeleccionada"
+            (change)="fetchAssistanceData()"
+          />
+        </div>
 
-  <!-- Botón de guardar asistencias -->
-<div *ngIf="estudiantesFiltrados.length > 0" class="text-center mt-4">
-  <button class="btn btn-primary" (click)="guardarAsistencias()">Guardar Asistencias</button>
-</div>
+        <!-- Selección de Materia -->
+        <div class="mb-4">
+          <label for="edit-materia" class="form-label">Seleccione materia:</label>
+          <select
+            id="edit-materia"
+            class="form-control login-input"
+            [(ngModel)]="editMateriaSeleccionada"
+            (change)="fetchAssistanceData()"
+          >
+            <option value="" disabled selected>Seleccione una materia</option>
+            <option *ngFor="let materia of materias" [value]="materia.id">
+              {{ materia.nombre }}
+            </option>
+          </select>
+        </div>
 
+        <!-- Selección de Ciclo -->
+        <div class="mb-4">
+          <label for="edit-ciclo" class="form-label">Seleccione ciclo:</label>
+          <select
+            id="edit-ciclo"
+            class="form-control login-input"
+            [(ngModel)]="editCicloSeleccionado"
+            (change)="fetchAssistanceData()"
+          >
+            <option value="" disabled selected>Seleccione un ciclo</option>
+            <option *ngFor="let ciclo of ciclos" [value]="ciclo.id">
+              {{ ciclo.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Tabla para mostrar estudiantes -->
+        <div *ngIf="editEstudiantes.length > 0">
+          <h3 class="home-title text-center">Editar Lista de Estudiantes</h3>
+          <table class="table table-dark table-sm">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Asistencia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let estudiante of editEstudiantes">
+                <td class="text-center">{{ estudiante.id }}</td>
+                <td class="text-center">{{ estudiante.nombres }}</td>
+                <td class="text-center">{{ estudiante.apellidos }}</td>
+                <td class="text-center">
+                  <input type="checkbox" [(ngModel)]="estudiante.presente" />
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="editEstudiantes.length === 0" class="text-center mt-4">
+          <p>{{ mensajeError }}</p>
+        </div>
+
+        <!-- Botón para guardar cambios -->
+        <div *ngIf="editEstudiantes.length > 0" class="text-center mt-4">
+          <button class="btn btn-primary" (click)="guardarCambiosAsistencia()">
+            Guardar Cambios
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
