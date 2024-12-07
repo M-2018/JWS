@@ -60,24 +60,28 @@ namespace JWS.Controllers
 
         // POST: api/Asistencias
         //[HttpPost]
-        //public async Task<ActionResult<Asistencia>> PostAsistencia(AsistenciaDTO asistenciaDTO)
+        //public async Task<ActionResult> PostAsistencias(IEnumerable<AsistenciaDTO> asistenciasDTO)
         //{
-        //    var asistencia = new Asistencia
+        //    if (asistenciasDTO == null || !asistenciasDTO.Any())
         //    {
-        //        Fecha = asistenciaDTO.Fecha,
-        //        Presente = asistenciaDTO.Presente,
-        //        EstudianteId = asistenciaDTO.EstudianteId,
-        //        MateriaId = asistenciaDTO.MateriaId,
-        //        CicloId = asistenciaDTO.CicloId
-        //    };
+        //        return BadRequest("Debe proporcionar al menos un registro.");
+        //    }
 
-        //    _context.Asistencias.Add(asistencia);
+        //    var asistencias = asistenciasDTO.Select(dto => new Asistencia
+        //    {
+        //        Fecha = dto.Fecha,
+        //        Presente = dto.Presente,
+        //        EstudianteId = dto.EstudianteId,
+        //        MateriaId = dto.MateriaId,
+        //        CicloId = dto.CicloId
+        //    }).ToList();
+
+        //    await _context.Asistencias.AddRangeAsync(asistencias);
         //    await _context.SaveChangesAsync();
 
-        //    return CreatedAtAction(nameof(GetAsistencia), new { id = asistencia.Id }, asistencia);
+        //    return CreatedAtAction(nameof(GetAsistencias), null);
         //}
 
-        // POST: api/Asistencias
         [HttpPost]
         public async Task<ActionResult> PostAsistencias(IEnumerable<AsistenciaDTO> asistenciasDTO)
         {
@@ -95,11 +99,27 @@ namespace JWS.Controllers
                 CicloId = dto.CicloId
             }).ToList();
 
+            // Verificar duplicados antes de agregar
+            foreach (var asistencia in asistencias)
+            {
+                bool existe = await _context.Asistencias
+                    .AnyAsync(a => a.EstudianteId == asistencia.EstudianteId &&
+                                   a.MateriaId == asistencia.MateriaId &&
+                                   a.CicloId == asistencia.CicloId &&
+                                   a.Fecha.HasValue && a.Fecha.Value.Date == asistencia.Fecha.Value.Date);
+
+                if (existe)
+                {
+                    return Conflict($"Ya existe una asistencia para el estudiante {asistencia.EstudianteId} en la materia {asistencia.MateriaId} para el ciclo {asistencia.CicloId} en la fecha {asistencia.Fecha?.ToString("yyyy-MM-dd")}");
+                }
+            }
+
             await _context.Asistencias.AddRangeAsync(asistencias);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetAsistencias), null);
         }
+
 
 
 

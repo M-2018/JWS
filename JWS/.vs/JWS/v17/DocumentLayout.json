@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\asistenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EstudianteController.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\EstudianteController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EstudianteController.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\EstudianteController.cs",
+              "RelativeToolTip": "Controllers\\EstudianteController.cs",
+              "ViewState": "AQIAAE4AAAAAAAAAAAAAAEYAAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-07T20:33:00.464Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -32,14 +49,14 @@
               "RelativeDocumentMoniker": "Controllers\\AsistenciasController.cs",
               "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\AsistenciasController.cs",
               "RelativeToolTip": "Controllers\\AsistenciasController.cs",
-              "ViewState": "AQIAAN4AAAAAAAAAAAAuwPMAAABFAAAA",
+              "ViewState": "AQIAAPQAAAAAAAAAAAAAAA0BAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T15:40:06.61Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "AsistenciaDTO.cs",
               "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\AsistenciaDTO.cs",
               "RelativeDocumentMoniker": "DTOs\\AsistenciaDTO.cs",
@@ -58,7 +75,7 @@
               "RelativeDocumentMoniker": "Models\\Asistencia.cs",
               "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Asistencia.cs",
               "RelativeToolTip": "Models\\Asistencia.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-22T15:30:42.839Z",
               "EditorCaption": ""
