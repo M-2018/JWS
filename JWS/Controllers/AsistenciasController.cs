@@ -205,5 +205,49 @@ namespace JWS.Controllers
             return Ok(asistenciasFiltradas);
         }
 
+        // PUT: api/Asistencias/ActualizarAsistencias
+        [HttpPut("ActualizarAsistencias")]
+        public async Task<IActionResult> PutAsistencias(IEnumerable<AsistenciaDTO> asistenciasDTO)
+        {
+            if (asistenciasDTO == null || !asistenciasDTO.Any())
+            {
+                return BadRequest("Debe proporcionar al menos un registro para actualizar.");
+            }
+
+            var asistenciasIds = asistenciasDTO.Select(dto => dto.Id).ToList();
+            var asistenciasExistentes = await _context.Asistencias
+                .Where(a => asistenciasIds.Contains(a.Id))
+                .ToDictionaryAsync(a => a.Id);
+
+            // Actualizar cada asistencia
+            foreach (var asistenciaDTO in asistenciasDTO)
+            {
+                if (!asistenciasExistentes.TryGetValue(asistenciaDTO.Id, out var asistencia))
+                {
+                    return NotFound($"No se encontró la asistencia con ID {asistenciaDTO.Id}");
+                }
+
+                // Actualizar propiedades
+                asistencia.Presente = asistenciaDTO.Presente;
+                // Opcionalmente, puedes descomentar y ajustar otras propiedades si es necesario
+                // asistencia.Fecha = asistenciaDTO.Fecha;
+                // asistencia.EstudianteId = asistenciaDTO.EstudianteId;
+                // asistencia.MateriaId = asistenciaDTO.MateriaId;
+                // asistencia.CicloId = asistenciaDTO.CicloId;
+
+                _context.Entry(asistencia).State = EntityState.Modified;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+                return Ok("Asistencias actualizadas correctamente.");
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return StatusCode(500, "Error al actualizar las asistencias.");
+            }
+        }
+
     }
 }
