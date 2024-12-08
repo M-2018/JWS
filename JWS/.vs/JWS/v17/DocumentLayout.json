@@ -3,20 +3,16 @@
   "WorkspaceRootPath": "C:\\Alucard\\Practicas\\JWS\\JWS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\asistenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\asistenciascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\calificacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\calificacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\calificacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\calificacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\asistencia.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\asistenciadto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\calificaciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\calificaciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +22,45 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EstudianteController.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\EstudianteController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EstudianteController.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\EstudianteController.cs",
-              "RelativeToolTip": "Controllers\\EstudianteController.cs",
-              "ViewState": "AQIAAE4AAAAAAAAAAAAAAEYAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-07T20:33:00.464Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AsistenciasController.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\AsistenciasController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AsistenciasController.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\AsistenciasController.cs",
-              "RelativeToolTip": "Controllers\\AsistenciasController.cs",
-              "ViewState": "AQIAAPQAAAAAAAAAAAAAAA0BAAAJAAAA",
+              "Title": "CalificacionController.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CalificacionController.cs",
+              "RelativeDocumentMoniker": "Controllers\\CalificacionController.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CalificacionController.cs",
+              "RelativeToolTip": "Controllers\\CalificacionController.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAAALMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T15:40:06.61Z",
+              "WhenOpened": "2024-12-08T21:25:55.843Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AsistenciaDTO.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\AsistenciaDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\AsistenciaDTO.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\AsistenciaDTO.cs",
-              "RelativeToolTip": "DTOs\\AsistenciaDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
+              "DocumentIndex": 1,
+              "Title": "Calificacion.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Calificacion.cs",
+              "RelativeDocumentMoniker": "Models\\Calificacion.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Calificacion.cs",
+              "RelativeToolTip": "Models\\Calificacion.cs",
+              "ViewState": "AQIAABkAAAAAAAAAAAAuwCQAAAAdAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T15:34:48.515Z",
+              "WhenOpened": "2024-12-08T20:44:08.779Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Asistencia.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Asistencia.cs",
-              "RelativeDocumentMoniker": "Models\\Asistencia.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Asistencia.cs",
-              "RelativeToolTip": "Models\\Asistencia.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAAAAAA",
+              "Title": "CalificacionDTO.cs",
+              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CalificacionDTO.cs",
+              "RelativeDocumentMoniker": "DTOs\\CalificacionDTO.cs",
+              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CalificacionDTO.cs",
+              "RelativeToolTip": "DTOs\\CalificacionDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-22T15:30:42.839Z",
+              "WhenOpened": "2024-12-08T20:44:01.572Z",
               "EditorCaption": ""
             }
           ]

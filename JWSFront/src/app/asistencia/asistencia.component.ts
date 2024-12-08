@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { catchError, of, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-asistencia',
   standalone: true,
@@ -125,7 +124,7 @@ export class AsistenciaComponent implements OnInit {
 
   // Método para guardar asistencias
   guardarAsistencias(): void {
-        // Asegurarnos de que todos los estudiantes tengan un valor de asistencia
+    // Asegurarnos de que todos los estudiantes tengan un valor de asistencia
     const asistencias = this.estudiantesFiltrados.map((estudiante) => ({
       fecha: this.fechaSeleccionada,
       presente:
@@ -213,34 +212,33 @@ export class AsistenciaComponent implements OnInit {
       MateriaId: this.editMateriaSeleccionada,
       CicloId: this.editCicloSeleccionado,
     }));
-  
+
     const url = `${this.AsistenciasUrl}/ActualizarAsistencias`;
-  
-    this.http.put(url, asistenciasActualizar).pipe(
-      // Manejo de errores más robusto
-      catchError((error: HttpErrorResponse) => {
-        // Si es un error HTTP 200 (OK), tratarlo como éxito
-        if (error.status === 200) {
-          return of(error.error.text); // Devolver el texto de la respuesta
-        }
-        // Para otros errores, relanzar la excepción
-        return throwError(() => error);
-      })
-    ).subscribe({
-      next: (response: any) => {
-        console.log('Asistencias actualizadas:', response);
-        alert('Asistencias actualizadas correctamente');
-      },
-      error: (err) => {
-        console.error('Error al actualizar asistencias:', err);
-        alert('Error al actualizar las asistencias');
-      }
-    });
+
+    this.http
+      .put(url, asistenciasActualizar)
+      .pipe(
+        // Manejo de errores más robusto
+        catchError((error: HttpErrorResponse) => {
+          // Si es un error HTTP 200 (OK), tratarlo como éxito
+          if (error.status === 200) {
+            return of(error.error.text); // Devolver el texto de la respuesta
+          }
+          // Para otros errores, relanzar la excepción
+          return throwError(() => error);
+        })
+      )
+      .subscribe({
+        next: (response: any) => {
+          console.log('Asistencias actualizadas:', response);
+          alert('Asistencias actualizadas correctamente');
+        },
+        error: (err) => {
+          console.error('Error al actualizar asistencias:', err);
+          alert('Error al actualizar las asistencias');
+        },
+      });
   }
-
-
-
-
 
   // Modificar fetchAssistanceData para asegurar que se recuperen todos los datos necesarios
   // fetchAssistanceData(): void {

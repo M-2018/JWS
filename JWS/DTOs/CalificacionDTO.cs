@@ -11,9 +11,11 @@
         public decimal? NotaExamenFinal { get; set; }
         public decimal? NotaDefinitiva { get; set; }
         public bool? Recuperacion { get; set; }
+        public decimal? NotaRecuperacion { get; set; }
         public bool? Habilitacion { get; set; }
-        public long MatriculaId { get; set; }
+        public decimal? NotaHabilitacion { get; set; }
+        public long EstudianteId { get; set; }
+        public long CicloId { get; set; }
         public long MateriaId { get; set; }
-        public long ProfesorId { get; set; }
     }
 }
