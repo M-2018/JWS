@@ -1,1 +1,48 @@
-<p>calificacion works!</p>
+<div class="home-card">
+  <h2 class="home-title text-center mb-4">Asignación de Ciclo y Materia</h2>
+
+  <form class="profesor-form">
+    <div class="form-group">
+      <label for="ciclo-select">Seleccione un ciclo:</label>
+      <select
+        id="ciclo-select"
+        name="ciclo"
+        [(ngModel)]="selectedCicloId"
+        (ngModelChange)="onCicloChange()"
+        class="form-control login-input"
+        required
+      >
+        <option value="" disabled>Seleccione un ciclo</option>
+        <option *ngFor="let ciclo of ciclos" [value]="ciclo.id">
+          {{ ciclo.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="materia-select">Seleccione una materia:</label>
+      <select
+        id="materia-select"
+        name="materia"
+        [(ngModel)]="selectedMateriaId"
+        (ngModelChange)="onMateriaChange()"
+        class="form-control login-input"
+        required
+      >
+        <option value="" disabled>Seleccione una materia</option>
+        <option *ngFor="let materia of materiasFiltradas" [value]="materia.id">
+          {{ materia.nombre }}
+        </option>
+      </select>
+    </div>
+
+    <div class="button-container">
+      <button
+        type="button"
+        class="btn-home small-button"
+      >
+        Guardar Selección
+      </button>
+    </div>
+  </form>
+</div>

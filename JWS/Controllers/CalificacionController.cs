@@ -78,66 +78,164 @@ namespace JWS.Controllers
             return Ok(calificacionDTO);
         }
 
-        // POST: api/Calificacion
-        [HttpPost]
-        public async Task<ActionResult<CalificacionDTO>> CreateCalificacion(CalificacionDTO calificacionDTO)
-        {
-            var calificacion = new Calificacion
-            {
-                NotaTrabajo1 = calificacionDTO.NotaTrabajo1,
-                NotaTrabajo2 = calificacionDTO.NotaTrabajo2,
-                NotaEvaluacion1 = calificacionDTO.NotaEvaluacion1,
-                NotaEvaluacion2 = calificacionDTO.NotaEvaluacion2,
-                NotaActitudinal = calificacionDTO.NotaActitudinal,
-                NotaExamenFinal = calificacionDTO.NotaExamenFinal,
-                NotaDefinitiva = calificacionDTO.NotaDefinitiva,
-                Recuperacion = calificacionDTO.Recuperacion,
-                NotaRecuperacion = calificacionDTO.NotaRecuperacion,
-                Habilitacion = calificacionDTO.Habilitacion,
-                NotaHabilitacion = calificacionDTO.NotaHabilitacion,
-                EstudianteId = calificacionDTO.EstudianteId,
-                CicloId = calificacionDTO.CicloId,
-                MateriaId = calificacionDTO.MateriaId
-            };
+        //// POST: api/Calificacion
+        //[HttpPost]
+        //public async Task<ActionResult<CalificacionDTO>> CreateCalificacion(CalificacionDTO calificacionDTO)
+        //{
+        //    var calificacion = new Calificacion
+        //    {
+        //        NotaTrabajo1 = calificacionDTO.NotaTrabajo1,
+        //        NotaTrabajo2 = calificacionDTO.NotaTrabajo2,
+        //        NotaEvaluacion1 = calificacionDTO.NotaEvaluacion1,
+        //        NotaEvaluacion2 = calificacionDTO.NotaEvaluacion2,
+        //        NotaActitudinal = calificacionDTO.NotaActitudinal,
+        //        NotaExamenFinal = calificacionDTO.NotaExamenFinal,
+        //        NotaDefinitiva = calificacionDTO.NotaDefinitiva,
+        //        Recuperacion = calificacionDTO.Recuperacion,
+        //        NotaRecuperacion = calificacionDTO.NotaRecuperacion,
+        //        Habilitacion = calificacionDTO.Habilitacion,
+        //        NotaHabilitacion = calificacionDTO.NotaHabilitacion,
+        //        EstudianteId = calificacionDTO.EstudianteId,
+        //        CicloId = calificacionDTO.CicloId,
+        //        MateriaId = calificacionDTO.MateriaId
+        //    };
 
-            _context.Calificaciones.Add(calificacion);
+        //    _context.Calificaciones.Add(calificacion);
+        //    await _context.SaveChangesAsync();
+
+        //    calificacionDTO.Id = calificacion.Id;
+
+        //    return CreatedAtAction(nameof(GetCalificacion), new { id = calificacionDTO.Id }, calificacionDTO);
+        //}
+
+        //// PUT: api/Calificacion/{id}
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateCalificacion(long id, CalificacionDTO calificacionDTO)
+        //{
+        //    if (id != calificacionDTO.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    var calificacion = await _context.Calificaciones.FindAsync(id);
+
+        //    if (calificacion == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    calificacion.NotaTrabajo1 = calificacionDTO.NotaTrabajo1;
+        //    calificacion.NotaTrabajo2 = calificacionDTO.NotaTrabajo2;
+        //    calificacion.NotaEvaluacion1 = calificacionDTO.NotaEvaluacion1;
+        //    calificacion.NotaEvaluacion2 = calificacionDTO.NotaEvaluacion2;
+        //    calificacion.NotaActitudinal = calificacionDTO.NotaActitudinal;
+        //    calificacion.NotaExamenFinal = calificacionDTO.NotaExamenFinal;
+        //    calificacion.NotaDefinitiva = calificacionDTO.NotaDefinitiva;
+        //    calificacion.Recuperacion = calificacionDTO.Recuperacion;
+        //    calificacion.NotaRecuperacion = calificacionDTO.NotaRecuperacion;
+        //    calificacion.Habilitacion = calificacionDTO.Habilitacion;
+        //    calificacion.NotaHabilitacion = calificacionDTO.NotaHabilitacion;
+        //    calificacion.EstudianteId = calificacionDTO.EstudianteId;
+        //    calificacion.CicloId = calificacionDTO.CicloId;
+        //    calificacion.MateriaId = calificacionDTO.MateriaId;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!CalificacionExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            throw;
+        //        }
+        //    }
+
+        //    return NoContent();
+        //}
+
+        [HttpPost]
+        public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
+        {
+            var calificaciones = calificacionesDTO.Select(dto => new Calificacion
+            {
+                NotaTrabajo1 = dto.NotaTrabajo1,
+                NotaTrabajo2 = dto.NotaTrabajo2,
+                NotaEvaluacion1 = dto.NotaEvaluacion1,
+                NotaEvaluacion2 = dto.NotaEvaluacion2,
+                NotaActitudinal = dto.NotaActitudinal,
+                NotaExamenFinal = dto.NotaExamenFinal,
+                NotaDefinitiva = dto.NotaDefinitiva,
+                Recuperacion = dto.Recuperacion,
+                NotaRecuperacion = dto.NotaRecuperacion,
+                Habilitacion = dto.Habilitacion,
+                NotaHabilitacion = dto.NotaHabilitacion,
+                EstudianteId = dto.EstudianteId,
+                CicloId = dto.CicloId,
+                MateriaId = dto.MateriaId
+            }).ToList();
+
+            await _context.Calificaciones.AddRangeAsync(calificaciones);
             await _context.SaveChangesAsync();
 
-            calificacionDTO.Id = calificacion.Id;
+            var createdDTOs = calificaciones.Select(c => new CalificacionDTO
+            {
+                Id = c.Id,
+                NotaTrabajo1 = c.NotaTrabajo1,
+                NotaTrabajo2 = c.NotaTrabajo2,
+                NotaEvaluacion1 = c.NotaEvaluacion1,
+                NotaEvaluacion2 = c.NotaEvaluacion2,
+                NotaActitudinal = c.NotaActitudinal,
+                NotaExamenFinal = c.NotaExamenFinal,
+                NotaDefinitiva = c.NotaDefinitiva,
+                Recuperacion = c.Recuperacion,
+                NotaRecuperacion = c.NotaRecuperacion,
+                Habilitacion = c.Habilitacion,
+                NotaHabilitacion = c.NotaHabilitacion,
+                EstudianteId = c.EstudianteId,
+                CicloId = c.CicloId,
+                MateriaId = c.MateriaId
+            }).ToList();
 
-            return CreatedAtAction(nameof(GetCalificacion), new { id = calificacionDTO.Id }, calificacionDTO);
+            return CreatedAtAction(nameof(GetCalificaciones), createdDTOs);
         }
 
-        // PUT: api/Calificacion/{id}
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCalificacion(long id, CalificacionDTO calificacionDTO)
+        [HttpPut]
+        public async Task<IActionResult> UpdateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         {
-            if (id != calificacionDTO.Id)
+            var ids = calificacionesDTO.Select(dto => dto.Id).ToList();
+            var calificaciones = await _context.Calificaciones.Where(c => ids.Contains(c.Id)).ToListAsync();
+
+            if (calificaciones.Count != calificacionesDTO.Count())
             {
-                return BadRequest();
+                return NotFound("Algunas calificaciones no fueron encontradas.");
             }
 
-            var calificacion = await _context.Calificaciones.FindAsync(id);
-
-            if (calificacion == null)
+            foreach (var dto in calificacionesDTO)
             {
-                return NotFound();
+                var calificacion = calificaciones.FirstOrDefault(c => c.Id == dto.Id);
+                if (calificacion != null)
+                {
+                    calificacion.NotaTrabajo1 = dto.NotaTrabajo1;
+                    calificacion.NotaTrabajo2 = dto.NotaTrabajo2;
+                    calificacion.NotaEvaluacion1 = dto.NotaEvaluacion1;
+                    calificacion.NotaEvaluacion2 = dto.NotaEvaluacion2;
+                    calificacion.NotaActitudinal = dto.NotaActitudinal;
+                    calificacion.NotaExamenFinal = dto.NotaExamenFinal;
+                    calificacion.NotaDefinitiva = dto.NotaDefinitiva;
+                    calificacion.Recuperacion = dto.Recuperacion;
+                    calificacion.NotaRecuperacion = dto.NotaRecuperacion;
+                    calificacion.Habilitacion = dto.Habilitacion;
+                    calificacion.NotaHabilitacion = dto.NotaHabilitacion;
+                    calificacion.EstudianteId = dto.EstudianteId;
+                    calificacion.CicloId = dto.CicloId;
+                    calificacion.MateriaId = dto.MateriaId;
+                }
             }
-
-            calificacion.NotaTrabajo1 = calificacionDTO.NotaTrabajo1;
-            calificacion.NotaTrabajo2 = calificacionDTO.NotaTrabajo2;
-            calificacion.NotaEvaluacion1 = calificacionDTO.NotaEvaluacion1;
-            calificacion.NotaEvaluacion2 = calificacionDTO.NotaEvaluacion2;
-            calificacion.NotaActitudinal = calificacionDTO.NotaActitudinal;
-            calificacion.NotaExamenFinal = calificacionDTO.NotaExamenFinal;
-            calificacion.NotaDefinitiva = calificacionDTO.NotaDefinitiva;
-            calificacion.Recuperacion = calificacionDTO.Recuperacion;
-            calificacion.NotaRecuperacion = calificacionDTO.NotaRecuperacion;
-            calificacion.Habilitacion = calificacionDTO.Habilitacion;
-            calificacion.NotaHabilitacion = calificacionDTO.NotaHabilitacion;
-            calificacion.EstudianteId = calificacionDTO.EstudianteId;
-            calificacion.CicloId = calificacionDTO.CicloId;
-            calificacion.MateriaId = calificacionDTO.MateriaId;
 
             try
             {
@@ -145,18 +243,12 @@ namespace JWS.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CalificacionExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return BadRequest("Error al actualizar los registros.");
             }
 
             return NoContent();
         }
+
 
         // DELETE: api/Calificacion/{id}
         [HttpDelete("{id}")]
