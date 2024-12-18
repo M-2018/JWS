@@ -45,4 +45,14 @@
       </button>
     </div>
   </form>
+  <div class="form-group mt-4">
+    <h2 for="estudiantes-list" class="home-title">Lista De Estudiantes</h2>
+
+    <div *ngFor="let estudiante of estudiantesFiltrados" class="profesor-item">
+      <h5>{{ estudiante.nombres }} {{ estudiante.apellidos }}</h5>
+      </div>
+    <p *ngIf="estudiantesFiltrados.length === 0" class="text-muted">
+      No hay estudiantes asignados a este ciclo.
+    </p>
+  </div>
 </div>

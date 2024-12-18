@@ -11,20 +11,25 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./calificacion.component.css'],
 })
 export class CalificacionComponent implements OnInit {
-  materias: any[] = []; // Lista general de materias
-  materiasFiltradas: any[] = []; // Materias filtradas según ciclo seleccionado
-  ciclos: any[] = []; // Lista de ciclos
-  selectedCicloId: number | null = null; // ID del ciclo seleccionado
-  selectedMateriaId: number | null = null; // ID de la materia seleccionada
+  materias: any[] = []; 
+  materiasFiltradas: any[] = []; 
+  ciclos: any[] = []; 
+  selectedCicloId: number | null = null; 
+  selectedMateriaId: number | null = null; 
+  estudiantes: any[] = [];
+  estudiantesFiltrados: any[] = [];
 
   private ciclosUrl = 'https://localhost:7246/api/Ciclos';
   private materiasApiUrl = 'https://localhost:7246/api/Materia';
+  private apiUrl = 'https://localhost:7246/api/Estudiante';
+
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.getMaterias();
     this.getCiclos();
+    this.getEstudiantes();
   }
 
   // Obtener materias desde la API
@@ -82,10 +87,42 @@ export class CalificacionComponent implements OnInit {
   onCicloChange(): void {
     this.selectedMateriaId = null;
     this.filtrarMateriasPorCiclo();
+    this.filtrarEstudiantesPorCiclo();
   }
 
   onMateriaChange(): void {
     console.log("Materia seleccionada: ", this.selectedMateriaId);
   }
-  
+
+  // Obtener estudiantes de la API
+  getEstudiantes(): void {
+    this.http.get<any[]>(this.apiUrl).subscribe({
+      next: (data) => {
+        this.estudiantes = data.map(est => ({
+          ...est,
+          fechaNacimiento: this.formatDate(est.fechaNacimiento)
+        }));
+        console.log("Estudiantes: ", this.estudiantes);
+      },
+      error: (err) => {
+        console.error("Error al obtener estudiantes:", err);
+      }
+    });
+  }
+
+    // Método para formatear la fecha al mostrar
+    private formatDate(dateString: string): string {
+      return dateString.split('T')[0]; // Devuelve solo la parte de la fecha
+    }
+
+    // Filtrar estudiantes por ciclo seleccionado
+filtrarEstudiantesPorCiclo(): void {
+  const selectedId = Number(this.selectedCicloId);
+  if (selectedId) {
+    this.estudiantesFiltrados = this.estudiantes.filter(estudiante => estudiante.cicloId === selectedId);
+  } else {
+    this.estudiantesFiltrados = [];
+  }
+}
+
 }

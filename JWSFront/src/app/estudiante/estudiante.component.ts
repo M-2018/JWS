@@ -53,7 +53,7 @@ export class EstudianteComponent implements OnInit {
           ...est,
           fechaNacimiento: this.formatDate(est.fechaNacimiento)
         }));
-        this.aplicarFiltros(); // Aplicar filtros cada vez que se obtienen los estudiantes
+        this.aplicarFiltros(); 
       },
       error: (err) => {
         console.error("Error al obtener estudiantes:", err);
