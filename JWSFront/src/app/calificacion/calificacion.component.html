@@ -45,12 +45,80 @@
       </button>
     </div>
   </form>
-  <div class="form-group mt-4">
-    <h2 for="estudiantes-list" class="home-title">Lista De Estudiantes</h2>
 
-    <div *ngFor="let estudiante of estudiantesFiltrados" class="profesor-item">
-      <h5>{{ estudiante.nombres }} {{ estudiante.apellidos }}</h5>
-      </div>
+  <div class="form-group mt-4">
+    <h2 class="home-title text-orange">Lista De Estudiantes</h2>
+
+    <table class="table table-bordered text-center custom-table" style="background-color: transparent;">
+      <!-- Encabezados principales -->
+      <thead>
+        <tr>
+          <th rowspan="2" class="text-orange">Nombre Completo</th>
+          <th colspan="6" class="text-orange">Trabajos / Tareas / Exposiciones 40%</th>
+          <th colspan="4" class="text-orange">Quiz 20%</th>
+          <th colspan="2" class="text-orange">Actitudinal 10%</th>
+          <th colspan="2" class="text-orange">Examen Final 30%</th>
+          <th colspan="2" class="text-orange">DEFINITIVA 100%</th>
+        </tr>
+        <!-- Subencabezados -->
+        <tr>
+          <th class="text-orange">Taller</th>
+          <th class="text-orange">Trab</th>
+          <th class="text-orange">Expos</th>
+          <th class="text-orange">Tarea</th>
+          <th class="text-orange">Ponderado</th>
+          <th class="text-orange">Des</th>
+
+          <th class="text-orange">Quiz 1</th>
+          <th class="text-orange">Quiz 2</th>
+          <th class="text-orange">Ponderado</th>
+          <th class="text-orange">Des</th>
+
+          <th class="text-orange">Val</th>
+          <th class="text-orange">Des</th>
+
+          <th class="text-orange">Val</th>
+          <th class="text-orange">Des</th>
+
+          <th class="text-orange">Val</th>
+          <th class="text-orange">Des</th>
+        </tr>
+      </thead>
+
+      <!-- Filas dinámicas para los estudiantes -->
+      <tbody>
+        <tr *ngFor="let estudiante of estudiantesFiltrados">
+          <td class="custom-row">{{ estudiante.nombres }} {{ estudiante.apellidos }}</td>
+
+          <!-- Trabajos / Tareas / Exposiciones -->
+          <td><input type="text" class="form-control custom-textbox" style="color: white;" style="color: white;font-weight: bold;margin: 1px;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;" style="color: white;font-weight: bold;margin: 1px;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;" style="color: white;font-weight: bold;margin: 1px;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;" style="color: white;font-weight: bold;margin: 1px;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;" style="color: white;font-weight: bold;margin: 1px;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;" style="color: white;font-weight: bold;margin: 1px;"></td>
+
+          <!-- Quiz -->
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+
+          <!-- Actitudinal -->
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+
+          <!-- Examen Final -->
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+
+          <!-- Definitiva -->
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+          <td><input type="text" class="form-control custom-textbox" style="color: white;"></td>
+        </tr>
+      </tbody>
+    </table>
+
     <p *ngIf="estudiantesFiltrados.length === 0" class="text-muted">
       No hay estudiantes asignados a este ciclo.
     </p>

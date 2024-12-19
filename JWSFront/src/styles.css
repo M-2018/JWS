@@ -284,3 +284,36 @@ body {
 .navbar-logo {
   font-weight: bold;
 }
+
+/*Estilos para calificaciones*/
+/* Fondo igual al textbox */
+.custom-textbox {
+  background-color: #444;
+  color: orange;
+  border: 1px solid #444;
+}
+
+.custom-textbox:focus {
+  background-color: #444;
+  border-color: #66afe9;
+  outline: none;
+}
+
+.text-orange {
+  color: orange;
+}
+
+.custom-row {
+  background-color: #444;
+  color: orange;
+}
+
+.custom-table th {
+  background-color: #444;
+  color: orange;
+}
+
+.custom-table td {
+  background-color: #444;
+  color: orange;
+}
