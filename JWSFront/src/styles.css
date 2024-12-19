@@ -317,3 +317,27 @@ body {
   background-color: #444;
   color: orange;
 }
+
+th.text-yellow {
+padding: 0px;
+}
+
+td input.calificacion-textbox{
+  border: 1px solid #555;
+  
+}
+
+/* Centrar verticalmente el contenido de las celdas de la tabla */
+table.custom-table td, 
+table.custom-table th {
+  vertical-align: middle; /* Asegura que el contenido de las celdas esté centrado verticalmente */
+  text-align: center; /* Mantiene el texto centrado horizontalmente */
+}
+
+/* Asegurar que los inputs dentro de las celdas estén alineados correctamente */
+table.custom-table input {
+  display: block; /* Para que los inputs se comporten como elementos de bloque */
+  margin: auto; /* Centra los inputs horizontalmente */
+  text-align: center; /* Centra el texto dentro del input */
+  height: 2rem; /* Ajusta la altura si es necesario para que se vea consistente */
+}
