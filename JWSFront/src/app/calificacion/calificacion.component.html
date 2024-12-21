@@ -37,90 +37,231 @@
     </div>
 
     <div class="button-container">
-      <button
-        type="button"
-        class="btn-home small-button"
-      >
+      <button type="button" class="btn-home small-button">
         Guardar Selección
       </button>
     </div>
   </form>
 
   <div class="form-group mt-4">
-    <h2 class="home-title text-yellow ">Lista De Estudiantes</h2>
+    <h2 class="home-title text-yellow">Lista De Estudiantes</h2>
+    <div class="table-responsive">
+      <table
+        class="table table-bordered text-center custom-table"
+        style="background-color: transparent"
+      >
+        <!-- Encabezados principales -->
+        <thead>
+          <tr>
+            <th rowspan="2" class="text-yellow">Nombre Completo</th>
+            <th colspan="6" class="text-yellow">
+              Trabajos / Tareas / Exposiciones 40%
+            </th>
+            <th colspan="4" class="text-yellow">Quiz 20%</th>
+            <th colspan="2" class="text-yellow">Actitudinal 10%</th>
+            <th colspan="2" class="text-yellow">Examen Final 30%</th>
+            <th colspan="2" class="text-yellow">DEFINITIVA 100%</th>
+          </tr>
+          <!-- Subencabezados -->
+          <tr>
+            <th class="text-yellow">Taller</th>
+            <th class="text-yellow">Trab</th>
+            <th class="text-yellow">Expos</th>
+            <th class="text-yellow">Tarea</th>
+            <th class="text-yellow">Ponderado</th>
+            <th class="text-yellow">Des</th>
 
-    <table class="table table-bordered text-center custom-table" style="background-color: transparent;">
-      <!-- Encabezados principales -->
-      <thead>
-        <tr>
-          <th rowspan="2" class="text-yellow ">Nombre Completo</th>
-          <th colspan="6" class="text-yellow ">Trabajos / Tareas / Exposiciones 40%</th>
-          <th colspan="4" class="text-yellow ">Quiz 20%</th>
-          <th colspan="2" class="text-yellow ">Actitudinal 10%</th>
-          <th colspan="2" class="text-yellow ">Examen Final 30%</th>
-          <th colspan="2" class="text-yellow ">DEFINITIVA 100%</th>
-        </tr>
-        <!-- Subencabezados -->
-        <tr>
-          <th class="text-yellow ">Taller</th>
-          <th class="text-yellow ">Trab</th>
-          <th class="text-yellow ">Expos</th>
-          <th class="text-yellow ">Tarea</th>
-          <th class="text-yellow ">Ponderado</th>
-          <th class="text-yellow ">Des</th>
+            <th class="text-yellow">Quiz 1</th>
+            <th class="text-yellow">Quiz 2</th>
+            <th class="text-yellow">Ponderado</th>
+            <th class="text-yellow">Des</th>
 
-          <th class="text-yellow ">Quiz 1</th>
-          <th class="text-yellow ">Quiz 2</th>
-          <th class="text-yellow ">Ponderado</th>
-          <th class="text-yellow ">Des</th>
+            <th class="text-yellow">Val</th>
+            <th class="text-yellow">Des</th>
 
-          <th class="text-yellow ">Val</th>
-          <th class="text-yellow ">Des</th>
+            <th class="text-yellow">Val</th>
+            <th class="text-yellow">Des</th>
 
-          <th class="text-yellow ">Val</th>
-          <th class="text-yellow ">Des</th>
+            <th class="text-yellow">Val</th>
+            <th class="text-yellow">Des</th>
+          </tr>
+        </thead>
 
-          <th class="text-yellow ">Val</th>
-          <th class="text-yellow ">Des</th>
-        </tr>
-      </thead>
+        <!-- Filas dinámicas para los estudiantes -->
+        <tbody>
+          <tr *ngFor="let estudiante of estudiantesFiltrados; let i = index">
+            <td class="custom-row nombre-columna">
+              {{ estudiante.nombres }} {{ estudiante.apellidos }}
+            </td>
 
-      <!-- Filas dinámicas para los estudiantes -->
-      <tbody>
-        <tr *ngFor="let estudiante of estudiantesFiltrados">
-          <td class="custom-row nombre-columna">{{ estudiante.nombres }} {{ estudiante.apellidos }}</td>
+            <!-- Trabajos / Tareas / Exposiciones -->
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaTaller"
+                [value]="estudiante.notas.notaTaller"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaTrabajo"
+                [value]="estudiante.notas.notaTrabajo"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaExposicion"
+                [value]="estudiante.notas.notaExposicion"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaTarea"
+                [value]="estudiante.notas.notaTarea"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.promedioTrabajos }}</label
+              >
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.desTrabajos }}</label
+              >
+            </td>
 
-          <!-- Trabajos / Tareas / Exposiciones -->
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;font-weight: bold;margin: 1px;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;font-weight: bold;margin: 1px;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;font-weight: bold;margin: 1px;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;font-weight: bold;margin: 1px;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;font-weight: bold;margin: 1px;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;font-weight: bold;margin: 1px;"></td>
+            <!-- Quiz -->
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaQuiz1"
+                [value]="estudiante.notas.notaQuiz1"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaQuiz2"
+                [value]="estudiante.notas.notaQuiz2"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.promedioQuizes }}</label
+              >
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.desQuizes }}</label
+              >
+            </td>
 
-          <!-- Quiz -->
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
+            <!-- Actitudinal -->
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaActitudinal"
+                [value]="estudiante.notas.notaActitudinal"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.desActitudinal }}</label
+              >
+            </td>
 
-          <!-- Actitudinal -->
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
+            <!-- Examen Final -->
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaExamFinal"
+                [value]="estudiante.notas.notaExamFinal"
+                (change)="calcularPromedio(estudiante)"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.desExamenFinal }}</label
+              >
+            </td>
 
-          <!-- Examen Final -->
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
+            <!-- Definitiva -->
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white"
+                >{{ estudiante.notas.definitiva }}</label
+              >
+            </td>
+            <td>
+              <label
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                >{{ estudiante.notas.desDefinitiva }}</label
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-          <!-- Definitiva -->
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-          <td><input type="text" class="form-control custom-textbox calificacion-textbox" style="color: white;"></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <p *ngIf="estudiantesFiltrados.length === 0" class="text-muted">
-      No hay estudiantes asignados a este ciclo.
-    </p>
+      <p *ngIf="estudiantesFiltrados.length === 0" class="text-muted">
+        No hay estudiantes asignados a este ciclo.
+      </p>
+    </div>
   </div>
 </div>

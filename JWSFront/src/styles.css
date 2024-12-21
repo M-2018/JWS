@@ -319,11 +319,12 @@ body {
 }
 
 th.text-yellow {
-padding: 0px;
+padding: 1em;
 }
 
 td input.calificacion-textbox{
   border: 1px solid #555;
+  width: auto;
   
 }
 
@@ -341,3 +342,23 @@ table.custom-table input {
   text-align: center; /* Centra el texto dentro del input */
   height: 2rem; /* Ajusta la altura si es necesario para que se vea consistente */
 }
+
+/*INICIO Eliminar las flechas de los input number */
+/* Para Chrome, Safari y Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Para Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+/*FIN Eliminar las flechas de los input number */
+
+
+.table-responsive {
+  overflow-x: auto;
+}
+
