@@ -34,6 +34,7 @@ export class CalificacionComponent implements OnInit {
   private ciclosUrl = 'https://localhost:7246/api/Ciclos';
   private materiasApiUrl = 'https://localhost:7246/api/Materia';
   private apiUrl = 'https://localhost:7246/api/Estudiante';
+  private calificacionUrl = 'https://localhost:7246/api/Calificacion';
 
   constructor(
     private http: HttpClient,
@@ -104,9 +105,52 @@ export class CalificacionComponent implements OnInit {
     this.filtrarEstudiantesPorCiclo();
   }
 
-  onMateriaChange(): void {
-    console.log('Materia seleccionada: ', this.selectedMateriaId);
+ // Agregar este método en CalificacionComponent
+cargarCalificacionesExistentes(): void {
+  if (!this.selectedCicloId || !this.selectedMateriaId) {
+    return;
   }
+
+  this.http.get<any[]>(this.calificacionUrl).subscribe({
+    next: (calificaciones) => {
+      // Filtrar calificaciones por ciclo y materia
+      const calificacionesFiltradas = calificaciones.filter(c => 
+        c.cicloId === this.selectedCicloId && 
+        c.materiaId === this.selectedMateriaId
+      );
+
+      // Actualizar las notas de los estudiantes con las calificaciones existentes
+      this.estudiantesFiltrados.forEach(estudiante => {
+        const calificacionExistente = calificacionesFiltradas.find(c => 
+          c.estudianteId === estudiante.id
+        );
+
+        if (calificacionExistente) {
+          estudiante.notas = {
+            notaTaller: calificacionExistente.notaTrabajo1,
+            notaTrabajo: calificacionExistente.notaTrabajo2,
+            notaQuiz1: calificacionExistente.notaEvaluacion1,
+            notaQuiz2: calificacionExistente.notaEvaluacion2,
+            notaActitudinal: calificacionExistente.notaActitudinal,
+            notaExamFinal: calificacionExistente.notaExamenFinal,
+            definitiva: calificacionExistente.notaDefinitiva,
+            // ... actualizar el resto de las propiedades según sea necesario
+          };
+          this.calcularPromedio(estudiante);
+        }
+      });
+    },
+    error: (error) => {
+      console.error('Error al cargar calificaciones:', error);
+    }
+  });
+}
+
+// Modificar onMateriaChange para cargar las calificaciones
+onMateriaChange(): void {
+  console.log('Materia seleccionada: ', this.selectedMateriaId);
+  this.cargarCalificacionesExistentes();
+}
 
   getEstudiantes(): void {
     this.http.get<any[]>(this.apiUrl).subscribe({
@@ -168,14 +212,38 @@ export class CalificacionComponent implements OnInit {
       notaExamFinal,
     } = estudiante.notas;
 
-  estudiante.notas.notaTaller = this.validarNota(estudiante.notas.notaTaller, 'Taller');
-    estudiante.notas.notaTrabajo = this.validarNota(estudiante.notas.notaTrabajo, 'Trabajo');
-    estudiante.notas.notaExposicion = this.validarNota(estudiante.notas.notaExposicion, 'Exposición');
-    estudiante.notas.notaTarea = this.validarNota(estudiante.notas.notaTarea, 'Tarea');
-    estudiante.notas.notaQuiz1 = this.validarNota(estudiante.notas.notaQuiz1, 'Quiz 1');
-    estudiante.notas.notaQuiz2 = this.validarNota(estudiante.notas.notaQuiz2, 'Quiz 2');
-    estudiante.notas.notaActitudinal = this.validarNota(estudiante.notas.notaActitudinal, 'Actitudinal');
-    estudiante.notas.notaExamFinal = this.validarNota(estudiante.notas.notaExamFinal, 'Examen Final');
+    estudiante.notas.notaTaller = this.validarNota(
+      estudiante.notas.notaTaller,
+      'Taller'
+    );
+    estudiante.notas.notaTrabajo = this.validarNota(
+      estudiante.notas.notaTrabajo,
+      'Trabajo'
+    );
+    estudiante.notas.notaExposicion = this.validarNota(
+      estudiante.notas.notaExposicion,
+      'Exposición'
+    );
+    estudiante.notas.notaTarea = this.validarNota(
+      estudiante.notas.notaTarea,
+      'Tarea'
+    );
+    estudiante.notas.notaQuiz1 = this.validarNota(
+      estudiante.notas.notaQuiz1,
+      'Quiz 1'
+    );
+    estudiante.notas.notaQuiz2 = this.validarNota(
+      estudiante.notas.notaQuiz2,
+      'Quiz 2'
+    );
+    estudiante.notas.notaActitudinal = this.validarNota(
+      estudiante.notas.notaActitudinal,
+      'Actitudinal'
+    );
+    estudiante.notas.notaExamFinal = this.validarNota(
+      estudiante.notas.notaExamFinal,
+      'Examen Final'
+    );
 
     // Cálculo de promedios
     estudiante.notas.promedioTrabajos =
@@ -211,14 +279,66 @@ export class CalificacionComponent implements OnInit {
     );
   }
 
-  
-
   // Validar que la nota esté en el rango correcto
   private validarNota(nota: number | null, categoria: string): number {
     if (nota === null || nota < 0 || nota > 10) {
-      alert(`Se ingresó un valor inválido para ${categoria}. La nota será establecida en 0.`);
+      alert(
+        `Se ingresó un valor inválido para ${categoria}. La nota será establecida en 0.`
+      );
       return 0;
     }
     return nota;
   }
+
+  // isSelectionValid(): boolean {
+  //   return this.selectedCicloId !== null && this.selectedMateriaId !== null;
+  // }
+
+  // Método para guardar la selección de ciclo, materia y calificaciones
+  guardarSeleccion(): void {
+    if (!this.selectedCicloId || !this.selectedMateriaId) {
+      alert('Por favor, seleccione un ciclo y una materia antes de guardar.');
+      return;
+    }
+  
+    // Crear array de CalificacionDTO
+    const calificaciones = this.estudiantesFiltrados.map(estudiante => ({
+      id: 0, // Para nuevos registros
+      notaTrabajo1: estudiante.notas.notaTaller || 0,
+      notaTrabajo2: estudiante.notas.notaTrabajo || 0,
+      notaEvaluacion1: estudiante.notas.notaQuiz1 || 0,
+      notaEvaluacion2: estudiante.notas.notaQuiz2 || 0,
+      notaActitudinal: estudiante.notas.notaActitudinal || 0,
+      notaExamenFinal: estudiante.notas.notaExamFinal || 0,
+      notaDefinitiva: estudiante.notas.definitiva || 0,
+      recuperacion: false,
+      notaRecuperacion: null,
+      habilitacion: false,
+      notaHabilitacion: null,
+      estudianteId: estudiante.id,
+      cicloId: this.selectedCicloId,
+      materiaId: this.selectedMateriaId
+    }));
+  
+    // Enviar el array de calificaciones directamente
+    this.http.post(this.calificacionUrl, calificaciones).subscribe({
+      next: (response) => {
+        alert('Calificaciones guardadas exitosamente.');
+      },
+      error: (error) => {
+        console.error('Error al guardar los datos:', error);
+        alert('Ocurrió un error al guardar las calificaciones. Por favor, verifique los datos e intente nuevamente.');
+      }
+    });
+  }
+
+  // Método para validar si la selección es válida (opcional)
+  isSelectionValid(): boolean {
+    return (
+      this.selectedCicloId !== null &&
+      this.selectedMateriaId !== null &&
+      this.estudiantesFiltrados.length > 0
+    );
+  }
+
 }

@@ -78,131 +78,263 @@ namespace JWS.Controllers
             return Ok(calificacionDTO);
         }
 
-        //// POST: api/Calificacion
         //[HttpPost]
-        //public async Task<ActionResult<CalificacionDTO>> CreateCalificacion(CalificacionDTO calificacionDTO)
+        //public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         //{
-        //    var calificacion = new Calificacion
+        //    var calificaciones = calificacionesDTO.Select(dto => new Calificacion
         //    {
-        //        NotaTrabajo1 = calificacionDTO.NotaTrabajo1,
-        //        NotaTrabajo2 = calificacionDTO.NotaTrabajo2,
-        //        NotaEvaluacion1 = calificacionDTO.NotaEvaluacion1,
-        //        NotaEvaluacion2 = calificacionDTO.NotaEvaluacion2,
-        //        NotaActitudinal = calificacionDTO.NotaActitudinal,
-        //        NotaExamenFinal = calificacionDTO.NotaExamenFinal,
-        //        NotaDefinitiva = calificacionDTO.NotaDefinitiva,
-        //        Recuperacion = calificacionDTO.Recuperacion,
-        //        NotaRecuperacion = calificacionDTO.NotaRecuperacion,
-        //        Habilitacion = calificacionDTO.Habilitacion,
-        //        NotaHabilitacion = calificacionDTO.NotaHabilitacion,
-        //        EstudianteId = calificacionDTO.EstudianteId,
-        //        CicloId = calificacionDTO.CicloId,
-        //        MateriaId = calificacionDTO.MateriaId
-        //    };
+        //        NotaTrabajo1 = dto.NotaTrabajo1,
+        //        NotaTrabajo2 = dto.NotaTrabajo2,
+        //        NotaEvaluacion1 = dto.NotaEvaluacion1,
+        //        NotaEvaluacion2 = dto.NotaEvaluacion2,
+        //        NotaActitudinal = dto.NotaActitudinal,
+        //        NotaExamenFinal = dto.NotaExamenFinal,
+        //        NotaDefinitiva = dto.NotaDefinitiva,
+        //        Recuperacion = dto.Recuperacion,
+        //        NotaRecuperacion = dto.NotaRecuperacion,
+        //        Habilitacion = dto.Habilitacion,
+        //        NotaHabilitacion = dto.NotaHabilitacion,
+        //        EstudianteId = dto.EstudianteId,
+        //        CicloId = dto.CicloId,
+        //        MateriaId = dto.MateriaId
+        //    }).ToList();
 
-        //    _context.Calificaciones.Add(calificacion);
+        //    await _context.Calificaciones.AddRangeAsync(calificaciones);
         //    await _context.SaveChangesAsync();
 
-        //    calificacionDTO.Id = calificacion.Id;
+        //    var createdDTOs = calificaciones.Select(c => new CalificacionDTO
+        //    {
+        //        Id = c.Id,
+        //        NotaTrabajo1 = c.NotaTrabajo1,
+        //        NotaTrabajo2 = c.NotaTrabajo2,
+        //        NotaEvaluacion1 = c.NotaEvaluacion1,
+        //        NotaEvaluacion2 = c.NotaEvaluacion2,
+        //        NotaActitudinal = c.NotaActitudinal,
+        //        NotaExamenFinal = c.NotaExamenFinal,
+        //        NotaDefinitiva = c.NotaDefinitiva,
+        //        Recuperacion = c.Recuperacion,
+        //        NotaRecuperacion = c.NotaRecuperacion,
+        //        Habilitacion = c.Habilitacion,
+        //        NotaHabilitacion = c.NotaHabilitacion,
+        //        EstudianteId = c.EstudianteId,
+        //        CicloId = c.CicloId,
+        //        MateriaId = c.MateriaId
+        //    }).ToList();
 
-        //    return CreatedAtAction(nameof(GetCalificacion), new { id = calificacionDTO.Id }, calificacionDTO);
+        //    return CreatedAtAction(nameof(GetCalificaciones), createdDTOs);
         //}
 
-        //// PUT: api/Calificacion/{id}
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateCalificacion(long id, CalificacionDTO calificacionDTO)
+        //[HttpPost]
+        //public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         //{
-        //    if (id != calificacionDTO.Id)
+        //    var calificacionesActualizadas = new List<Calificacion>();
+        //    var calificacionesNuevas = new List<Calificacion>();
+
+        //    foreach (var dto in calificacionesDTO)
         //    {
-        //        return BadRequest();
+        //        // Buscar si ya existe una calificación para este estudiante en esta materia y ciclo
+        //        var calificacionExistente = await _context.Calificaciones
+        //            .FirstOrDefaultAsync(c =>
+        //                c.EstudianteId == dto.EstudianteId &&
+        //                c.MateriaId == dto.MateriaId &&
+        //                c.CicloId == dto.CicloId);
+
+        //        if (calificacionExistente != null)
+        //        {
+        //            // Actualizar la calificación existente
+        //            calificacionExistente.NotaTrabajo1 = dto.NotaTrabajo1;
+        //            calificacionExistente.NotaTrabajo2 = dto.NotaTrabajo2;
+        //            calificacionExistente.NotaEvaluacion1 = dto.NotaEvaluacion1;
+        //            calificacionExistente.NotaEvaluacion2 = dto.NotaEvaluacion2;
+        //            calificacionExistente.NotaActitudinal = dto.NotaActitudinal;
+        //            calificacionExistente.NotaExamenFinal = dto.NotaExamenFinal;
+        //            calificacionExistente.NotaDefinitiva = dto.NotaDefinitiva;
+        //            calificacionExistente.Recuperacion = dto.Recuperacion;
+        //            calificacionExistente.NotaRecuperacion = dto.NotaRecuperacion;
+        //            calificacionExistente.Habilitacion = dto.Habilitacion;
+        //            calificacionExistente.NotaHabilitacion = dto.NotaHabilitacion;
+
+        //            calificacionesActualizadas.Add(calificacionExistente);
+        //        }
+        //        else
+        //        {
+        //            // Crear nueva calificación
+        //            var nuevaCalificacion = new Calificacion
+        //            {
+        //                NotaTrabajo1 = dto.NotaTrabajo1,
+        //                NotaTrabajo2 = dto.NotaTrabajo2,
+        //                NotaEvaluacion1 = dto.NotaEvaluacion1,
+        //                NotaEvaluacion2 = dto.NotaEvaluacion2,
+        //                NotaActitudinal = dto.NotaActitudinal,
+        //                NotaExamenFinal = dto.NotaExamenFinal,
+        //                NotaDefinitiva = dto.NotaDefinitiva,
+        //                Recuperacion = dto.Recuperacion,
+        //                NotaRecuperacion = dto.NotaRecuperacion,
+        //                Habilitacion = dto.Habilitacion,
+        //                NotaHabilitacion = dto.NotaHabilitacion,
+        //                EstudianteId = dto.EstudianteId,
+        //                CicloId = dto.CicloId,
+        //                MateriaId = dto.MateriaId
+        //            };
+
+        //            calificacionesNuevas.Add(nuevaCalificacion);
+        //        }
         //    }
 
-        //    var calificacion = await _context.Calificaciones.FindAsync(id);
-
-        //    if (calificacion == null)
+        //    // Agregar nuevas calificaciones si existen
+        //    if (calificacionesNuevas.Any())
         //    {
-        //        return NotFound();
+        //        await _context.Calificaciones.AddRangeAsync(calificacionesNuevas);
         //    }
-
-        //    calificacion.NotaTrabajo1 = calificacionDTO.NotaTrabajo1;
-        //    calificacion.NotaTrabajo2 = calificacionDTO.NotaTrabajo2;
-        //    calificacion.NotaEvaluacion1 = calificacionDTO.NotaEvaluacion1;
-        //    calificacion.NotaEvaluacion2 = calificacionDTO.NotaEvaluacion2;
-        //    calificacion.NotaActitudinal = calificacionDTO.NotaActitudinal;
-        //    calificacion.NotaExamenFinal = calificacionDTO.NotaExamenFinal;
-        //    calificacion.NotaDefinitiva = calificacionDTO.NotaDefinitiva;
-        //    calificacion.Recuperacion = calificacionDTO.Recuperacion;
-        //    calificacion.NotaRecuperacion = calificacionDTO.NotaRecuperacion;
-        //    calificacion.Habilitacion = calificacionDTO.Habilitacion;
-        //    calificacion.NotaHabilitacion = calificacionDTO.NotaHabilitacion;
-        //    calificacion.EstudianteId = calificacionDTO.EstudianteId;
-        //    calificacion.CicloId = calificacionDTO.CicloId;
-        //    calificacion.MateriaId = calificacionDTO.MateriaId;
 
         //    try
         //    {
         //        await _context.SaveChangesAsync();
+
+        //        // Combinar todas las calificaciones para la respuesta
+        //        var todasLasCalificaciones = calificacionesActualizadas.Concat(calificacionesNuevas);
+
+        //        // Convertir a DTOs para la respuesta
+        //        var responseDto = todasLasCalificaciones.Select(c => new CalificacionDTO
+        //        {
+        //            Id = c.Id,
+        //            NotaTrabajo1 = c.NotaTrabajo1,
+        //            NotaTrabajo2 = c.NotaTrabajo2,
+        //            NotaEvaluacion1 = c.NotaEvaluacion1,
+        //            NotaEvaluacion2 = c.NotaEvaluacion2,
+        //            NotaActitudinal = c.NotaActitudinal,
+        //            NotaExamenFinal = c.NotaExamenFinal,
+        //            NotaDefinitiva = c.NotaDefinitiva,
+        //            Recuperacion = c.Recuperacion,
+        //            NotaRecuperacion = c.NotaRecuperacion,
+        //            Habilitacion = c.Habilitacion,
+        //            NotaHabilitacion = c.NotaHabilitacion,
+        //            EstudianteId = c.EstudianteId,
+        //            CicloId = c.CicloId,
+        //            MateriaId = c.MateriaId
+        //        });
+
+        //        return Ok(responseDto);
         //    }
-        //    catch (DbUpdateConcurrencyException)
+        //    catch (DbUpdateException ex)
         //    {
-        //        if (!CalificacionExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
+        //        return BadRequest("Error al guardar las calificaciones: " + ex.InnerException?.Message);
         //    }
-
-        //    return NoContent();
         //}
-
         [HttpPost]
         public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         {
-            var calificaciones = calificacionesDTO.Select(dto => new Calificacion
+            // Primero, obtenemos todos los IDs relevantes
+            var estudianteIds = calificacionesDTO.Select(c => c.EstudianteId).ToList();
+            var materiaId = calificacionesDTO.First().MateriaId;
+            var cicloId = calificacionesDTO.First().CicloId;
+
+            // Buscamos todas las calificaciones existentes para estos estudiantes en esta materia y ciclo
+            var calificacionesExistentes = await _context.Calificaciones
+                .Where(c =>
+                    estudianteIds.Contains(c.EstudianteId) &&
+                    c.MateriaId == materiaId &&
+                    c.CicloId == cicloId)
+                .ToListAsync();
+
+            // Para diagnóstico
+            Console.WriteLine($"Calificaciones existentes encontradas: {calificacionesExistentes.Count}");
+
+            foreach (var dto in calificacionesDTO)
             {
-                NotaTrabajo1 = dto.NotaTrabajo1,
-                NotaTrabajo2 = dto.NotaTrabajo2,
-                NotaEvaluacion1 = dto.NotaEvaluacion1,
-                NotaEvaluacion2 = dto.NotaEvaluacion2,
-                NotaActitudinal = dto.NotaActitudinal,
-                NotaExamenFinal = dto.NotaExamenFinal,
-                NotaDefinitiva = dto.NotaDefinitiva,
-                Recuperacion = dto.Recuperacion,
-                NotaRecuperacion = dto.NotaRecuperacion,
-                Habilitacion = dto.Habilitacion,
-                NotaHabilitacion = dto.NotaHabilitacion,
-                EstudianteId = dto.EstudianteId,
-                CicloId = dto.CicloId,
-                MateriaId = dto.MateriaId
-            }).ToList();
+                var calificacionExistente = calificacionesExistentes
+                    .FirstOrDefault(c =>
+                        c.EstudianteId == dto.EstudianteId &&
+                        c.MateriaId == dto.MateriaId &&
+                        c.CicloId == dto.CicloId);
 
-            await _context.Calificaciones.AddRangeAsync(calificaciones);
-            await _context.SaveChangesAsync();
+                if (calificacionExistente != null)
+                {
+                    // Actualizar la calificación existente
+                    Console.WriteLine($"Actualizando calificación para estudiante {dto.EstudianteId}");
 
-            var createdDTOs = calificaciones.Select(c => new CalificacionDTO
+                    calificacionExistente.NotaTrabajo1 = dto.NotaTrabajo1;
+                    calificacionExistente.NotaTrabajo2 = dto.NotaTrabajo2;
+                    calificacionExistente.NotaEvaluacion1 = dto.NotaEvaluacion1;
+                    calificacionExistente.NotaEvaluacion2 = dto.NotaEvaluacion2;
+                    calificacionExistente.NotaActitudinal = dto.NotaActitudinal;
+                    calificacionExistente.NotaExamenFinal = dto.NotaExamenFinal;
+                    calificacionExistente.NotaDefinitiva = dto.NotaDefinitiva;
+                    calificacionExistente.Recuperacion = dto.Recuperacion;
+                    calificacionExistente.NotaRecuperacion = dto.NotaRecuperacion;
+                    calificacionExistente.Habilitacion = dto.Habilitacion;
+                    calificacionExistente.NotaHabilitacion = dto.NotaHabilitacion;
+
+                    _context.Calificaciones.Update(calificacionExistente);
+                }
+                else
+                {
+                    // Crear nueva calificación
+                    Console.WriteLine($"Creando nueva calificación para estudiante {dto.EstudianteId}");
+
+                    var nuevaCalificacion = new Calificacion
+                    {
+                        NotaTrabajo1 = dto.NotaTrabajo1,
+                        NotaTrabajo2 = dto.NotaTrabajo2,
+                        NotaEvaluacion1 = dto.NotaEvaluacion1,
+                        NotaEvaluacion2 = dto.NotaEvaluacion2,
+                        NotaActitudinal = dto.NotaActitudinal,
+                        NotaExamenFinal = dto.NotaExamenFinal,
+                        NotaDefinitiva = dto.NotaDefinitiva,
+                        Recuperacion = dto.Recuperacion,
+                        NotaRecuperacion = dto.NotaRecuperacion,
+                        Habilitacion = dto.Habilitacion,
+                        NotaHabilitacion = dto.NotaHabilitacion,
+                        EstudianteId = dto.EstudianteId,
+                        CicloId = dto.CicloId,
+                        MateriaId = dto.MateriaId
+                    };
+
+                    await _context.Calificaciones.AddAsync(nuevaCalificacion);
+                }
+            }
+
+            try
             {
-                Id = c.Id,
-                NotaTrabajo1 = c.NotaTrabajo1,
-                NotaTrabajo2 = c.NotaTrabajo2,
-                NotaEvaluacion1 = c.NotaEvaluacion1,
-                NotaEvaluacion2 = c.NotaEvaluacion2,
-                NotaActitudinal = c.NotaActitudinal,
-                NotaExamenFinal = c.NotaExamenFinal,
-                NotaDefinitiva = c.NotaDefinitiva,
-                Recuperacion = c.Recuperacion,
-                NotaRecuperacion = c.NotaRecuperacion,
-                Habilitacion = c.Habilitacion,
-                NotaHabilitacion = c.NotaHabilitacion,
-                EstudianteId = c.EstudianteId,
-                CicloId = c.CicloId,
-                MateriaId = c.MateriaId
-            }).ToList();
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCalificaciones), createdDTOs);
+                // Obtener todas las calificaciones actualizadas
+                var calificacionesActualizadas = await _context.Calificaciones
+                    .Where(c =>
+                        estudianteIds.Contains(c.EstudianteId) &&
+                        c.MateriaId == materiaId &&
+                        c.CicloId == cicloId)
+                    .Select(c => new CalificacionDTO
+                    {
+                        Id = c.Id,
+                        NotaTrabajo1 = c.NotaTrabajo1,
+                        NotaTrabajo2 = c.NotaTrabajo2,
+                        NotaEvaluacion1 = c.NotaEvaluacion1,
+                        NotaEvaluacion2 = c.NotaEvaluacion2,
+                        NotaActitudinal = c.NotaActitudinal,
+                        NotaExamenFinal = c.NotaExamenFinal,
+                        NotaDefinitiva = c.NotaDefinitiva,
+                        Recuperacion = c.Recuperacion,
+                        NotaRecuperacion = c.NotaRecuperacion,
+                        Habilitacion = c.Habilitacion,
+                        NotaHabilitacion = c.NotaHabilitacion,
+                        EstudianteId = c.EstudianteId,
+                        CicloId = c.CicloId,
+                        MateriaId = c.MateriaId
+                    })
+                    .ToListAsync();
+
+                return Ok(calificacionesActualizadas);
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"Error al guardar las calificaciones: {ex.Message}");
+                Console.WriteLine($"Inner exception: {ex.InnerException?.Message}");
+                return BadRequest($"Error al guardar las calificaciones: {ex.Message}");
+            }
         }
+
+
 
         [HttpPut]
         public async Task<IActionResult> UpdateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)

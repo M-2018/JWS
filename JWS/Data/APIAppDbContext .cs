@@ -22,6 +22,10 @@ namespace JWS.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Calificacion>()
+                .HasIndex(c => new { c.EstudianteId})
+                .IsUnique();
+
             // Configuración de la entidad intermedia CicloMateria (muchos a muchos)
             modelBuilder.Entity<CicloMateria>()
                 .HasKey(cm => new { cm.CicloId, cm.MateriaId }); // Llave compuesta
