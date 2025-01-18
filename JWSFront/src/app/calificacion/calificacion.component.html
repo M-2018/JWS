@@ -62,6 +62,7 @@
             <th colspan="2" class="text-yellow">Actitudinal 10%</th>
             <th colspan="2" class="text-yellow">Examen Final 30%</th>
             <th colspan="2" class="text-yellow">DEFINITIVA 100%</th>
+            <th colspan="2" class="text-yellow">Extra</th>
           </tr>
           <!-- Subencabezados -->
           <tr>
@@ -85,6 +86,9 @@
 
             <th class="text-yellow">Val</th>
             <th class="text-yellow">Des</th>
+
+            <th class="text-yellow">Recuperación</th>
+            <th class="text-yellow">Habilitación</th>
           </tr>
         </thead>
 
@@ -256,6 +260,30 @@
                 >{{ estudiante.notas.desDefinitiva }}</label
               >
             </td>
+
+            <!-- Extras -->
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaRecuperacion"
+                [value]="estudiante.notas.notaRecuperacion"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                min="1"
+                max="10"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                [(ngModel)]="estudiante.notas.notaHabilitacion"
+                [value]="estudiante.notas.notaHabilitacion"
+                class="form-control custom-textbox calificacion-textbox"
+                style="color: white; font-weight: bold; margin: 1px"
+                min="1"
+                max="10"
+              />
+            </td>
           </tr>
         </tbody>
       </table>
@@ -265,8 +293,12 @@
       </p>
     </div>
 
-    <div class="button-container" *ngIf="isSelectionValid()">
-      <button type="button" class="btn-home small-button" (click)="guardarSeleccion()">
+    <div class="button-container">
+      <button
+        type="button"
+        class="btn-home small-button"
+        (click)="guardarSeleccion()"
+      >
         Guardar Selección
       </button>
     </div>

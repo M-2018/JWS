@@ -30,6 +30,8 @@ export class CalificacionComponent implements OnInit {
   notaExamFinal: number | null = null;
   promedioTrabajos: number = 0;
   promedioQuizes: number = 0;
+  notaRecuperacion: number | null = null;
+  notaHabilitacion: number | null = null;
 
   private ciclosUrl = 'https://localhost:7246/api/Ciclos';
   private materiasApiUrl = 'https://localhost:7246/api/Materia';
@@ -295,6 +297,44 @@ onMateriaChange(): void {
   // }
 
   // Método para guardar la selección de ciclo, materia y calificaciones
+  // guardarSeleccion(): void {
+  //   if (!this.selectedCicloId || !this.selectedMateriaId) {
+  //     alert('Por favor, seleccione un ciclo y una materia antes de guardar.');
+  //     return;
+  //   }
+  
+  //   // Crear array de CalificacionDTO
+  //   const calificaciones = this.estudiantesFiltrados.map(estudiante => ({
+  //     id: 0,
+  //     notaTrabajo1: estudiante.notas.notaTaller || 0,
+  //     notaTrabajo2: estudiante.notas.notaTrabajo || 0,
+  //     notaEvaluacion1: estudiante.notas.notaQuiz1 || 0,
+  //     notaEvaluacion2: estudiante.notas.notaQuiz2 || 0,
+  //     notaActitudinal: estudiante.notas.notaActitudinal || 0,
+  //     notaExamenFinal: estudiante.notas.notaExamFinal || 0,
+  //     notaDefinitiva: estudiante.notas.definitiva || 0,
+  //     recuperacion: false,
+  //     notaRecuperacion: estudiante.notas.notaRecuperacion || 0,
+  //     habilitacion: false,
+  //     notaHabilitacion: estudiante.notas.notaHabilitacion || 0,
+  //     estudianteId: estudiante.id,
+  //     cicloId: this.selectedCicloId,
+  //     materiaId: this.selectedMateriaId
+  //   }));
+  
+  //   // Enviar el array de calificaciones directamente
+  //   this.http.post(this.calificacionUrl, calificaciones).subscribe({
+  //     next: (response) => {
+  //       alert('Calificaciones guardadas exitosamente.');
+  //       this.limpiarCampos();
+  //     },
+  //     error: (error) => {
+  //       console.error('Error al guardar los datos:', error);
+  //       alert('Ocurrió un error al guardar las calificaciones. Por favor, verifique los datos e intente nuevamente.');
+  //     }
+  //   });
+  // }
+
   guardarSeleccion(): void {
     if (!this.selectedCicloId || !this.selectedMateriaId) {
       alert('Por favor, seleccione un ciclo y una materia antes de guardar.');
@@ -302,28 +342,38 @@ onMateriaChange(): void {
     }
   
     // Crear array de CalificacionDTO
-    const calificaciones = this.estudiantesFiltrados.map(estudiante => ({
-      id: 0, // Para nuevos registros
-      notaTrabajo1: estudiante.notas.notaTaller || 0,
-      notaTrabajo2: estudiante.notas.notaTrabajo || 0,
-      notaEvaluacion1: estudiante.notas.notaQuiz1 || 0,
-      notaEvaluacion2: estudiante.notas.notaQuiz2 || 0,
-      notaActitudinal: estudiante.notas.notaActitudinal || 0,
-      notaExamenFinal: estudiante.notas.notaExamFinal || 0,
-      notaDefinitiva: estudiante.notas.definitiva || 0,
-      recuperacion: false,
-      notaRecuperacion: null,
-      habilitacion: false,
-      notaHabilitacion: null,
-      estudianteId: estudiante.id,
-      cicloId: this.selectedCicloId,
-      materiaId: this.selectedMateriaId
-    }));
+    const calificaciones = this.estudiantesFiltrados.map(estudiante => {
+      const notaRecuperacion = estudiante.notas.notaRecuperacion || 0;
+      const notaHabilitacion = estudiante.notas.notaHabilitacion || 0;
+  
+      // Determinar valores de recuperación y habilitación
+      const recuperacion = notaRecuperacion > 0;
+      const habilitacion = notaHabilitacion > 0;
+  
+      return {
+        id: 0,
+        notaTrabajo1: estudiante.notas.notaTaller || 0,
+        notaTrabajo2: estudiante.notas.notaTrabajo || 0,
+        notaEvaluacion1: estudiante.notas.notaQuiz1 || 0,
+        notaEvaluacion2: estudiante.notas.notaQuiz2 || 0,
+        notaActitudinal: estudiante.notas.notaActitudinal || 0,
+        notaExamenFinal: estudiante.notas.notaExamFinal || 0,
+        notaDefinitiva: estudiante.notas.definitiva || 0,
+        recuperacion,
+        notaRecuperacion,
+        habilitacion,
+        notaHabilitacion,
+        estudianteId: estudiante.id,
+        cicloId: this.selectedCicloId,
+        materiaId: this.selectedMateriaId
+      };
+    });
   
     // Enviar el array de calificaciones directamente
     this.http.post(this.calificacionUrl, calificaciones).subscribe({
       next: (response) => {
         alert('Calificaciones guardadas exitosamente.');
+        this.limpiarCampos();
       },
       error: (error) => {
         console.error('Error al guardar los datos:', error);
@@ -331,6 +381,35 @@ onMateriaChange(): void {
       }
     });
   }
+  
+  
+
+  limpiarCampos(): void {
+    this.estudiantesFiltrados.forEach((estudiante) => {
+      estudiante.notas = {
+        notaTaller: 0,
+        notaTrabajo: 0,
+        notaExposicion: 0,
+        notaTarea: 0,
+        promedioTrabajos: 0,
+        desTrabajos: '',
+        notaQuiz1: 0,
+        notaQuiz2: 0,
+        promedioQuizes: 0,
+        desQuizes: '',
+        notaActitudinal: 0,
+        desActitudinal: '',
+        notaExamFinal: 0,
+        desExamenFinal: '',
+        definitiva: 0,
+        desDefinitiva: '',
+        notaRecuperacion: 0,
+        notaHabilitacion: 0,
+      };
+    });
+  }
+  
+  
 
   // Método para validar si la selección es válida (opcional)
   isSelectionValid(): boolean {
