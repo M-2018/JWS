@@ -1,0 +1,51 @@
+Basado en las relaciones y dependencias mostradas en tu código, aquí está el orden recomendado para ingresar los datos y evitar conflictos con las llaves foráneas:
+
+1. Usuario ok
+   - No tiene dependencias de otras tablas
+
+2. Profesor ok
+   - No tiene dependencias de otras tablas
+
+3. Ciclo ok
+   - No tiene dependencias de otras tablas
+
+4. Materia ok
+   - Depende de Profesor
+
+5. CicloMateria
+   - Depende de Ciclo y Materia
+
+6. Estudiante ok
+   - Depende de Ciclo
+
+7. PersonaResponsable ok
+   - Depende de Estudiante
+No carga la lista de estudiantes
+Se debe agregar el filtrado por ciclo para que muestre los estudiantes
+En relación se debe agregar una combo con las opciones disponibles
+
+8. Matricula ok
+   - Depende de Estudiante y Ciclo
+
+9. Asistencia ok
+   - Depende de Estudiante, Materia y Ciclo
+
+10. Calificacion
+    - Depende de Estudiante, Materia y Ciclo
+
+----------------------------------------------------------
+Taller(NotaTrabajo1) 1
+Trabajo(NotaTrabajo2) 2
+Expo 3
+Tarea 4
+Ponderado 2.5
+Quiz1 5
+Quiz2 6
+Ponderado 5.5
+Actitudinal 7
+Examen Final 8
+Definitiva 5.2
+
+Recuperacion 9
+Habilitacion 10
+

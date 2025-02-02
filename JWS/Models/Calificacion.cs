@@ -9,22 +9,28 @@ namespace JWS.Models
         public long Id { get; set; }
 
         [Range(0, 10)]
-        public decimal? NotaTrabajo1 { get; set; }
+        public decimal? NotaTrabajo1 { get; set; } //Taller
 
         [Range(0, 10)]
-        public decimal? NotaTrabajo2 { get; set; }
+        public decimal? NotaTrabajo2 { get; set; } //Trabajo
 
         [Range(0, 10)]
-        public decimal? NotaEvaluacion1 { get; set; }
+        public decimal? NotaExposicion { get; set; } //Expo
 
         [Range(0, 10)]
-        public decimal? NotaEvaluacion2 { get; set; }
+        public decimal? NotaTarea { get; set; } //Tarea
 
         [Range(0, 10)]
-        public decimal? NotaActitudinal { get; set; }
+        public decimal? NotaEvaluacion1 { get; set; } //quiz1
 
         [Range(0, 10)]
-        public decimal? NotaExamenFinal { get; set; }
+        public decimal? NotaEvaluacion2 { get; set; } //quiz2
+
+        [Range(0, 10)]
+        public decimal? NotaActitudinal { get; set; } //Actitudinal
+
+        [Range(0, 10)]
+        public decimal? NotaExamenFinal { get; set; } //ExamFinal 
 
         [Range(0, 10)]
         public decimal? NotaDefinitiva { get; set; }
@@ -32,12 +38,12 @@ namespace JWS.Models
         public bool? Recuperacion { get; set; }
 
         [Range(0, 10)]
-        public decimal? NotaRecuperacion { get; set; }
+        public decimal? NotaRecuperacion { get; set; } //recuperacion  
 
         public bool? Habilitacion { get; set; }
 
         [Range(0, 10)]
-        public decimal? NotaHabilitacion { get; set; }
+        public decimal? NotaHabilitacion { get; set; } //habilitacion 
 
 
         public long EstudianteId { get; set; }

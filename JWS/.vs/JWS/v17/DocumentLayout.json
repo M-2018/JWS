@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Alucard\\Practicas\\JWS\\JWS\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\controllers\\calificacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:controllers\\calificacioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\models\\calificacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:models\\calificacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\data\\apiappdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:data\\apiappdbcontext .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|c:\\alucard\\practicas\\jws\\jws\\dtos\\calificaciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4EA68F86-A9CF-4336-8AB0-903C5110F801}|JWS.csproj|solutionrelative:dtos\\calificaciondto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,57 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "APIAppDbContext .cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Data\\APIAppDbContext .cs",
-              "RelativeDocumentMoniker": "Data\\APIAppDbContext .cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Data\\APIAppDbContext .cs",
-              "RelativeToolTip": "Data\\APIAppDbContext .cs",
-              "ViewState": "AQIAABAAAAAAAAAAAAAAABgAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-06T19:51:59.085Z"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CalificacionController.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CalificacionController.cs",
-              "RelativeDocumentMoniker": "Controllers\\CalificacionController.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CalificacionController.cs",
-              "RelativeToolTip": "Controllers\\CalificacionController.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAAAOEAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T21:25:55.843Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "Calificacion.cs",
               "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Calificacion.cs",
               "RelativeDocumentMoniker": "Models\\Calificacion.cs",
               "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Models\\Calificacion.cs",
               "RelativeToolTip": "Models\\Calificacion.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAAQwC4AAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T20:44:08.779Z",
+              "WhenOpened": "2025-02-01T21:07:04.905Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "CalificacionDTO.cs",
-              "DocumentMoniker": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CalificacionDTO.cs",
-              "RelativeDocumentMoniker": "DTOs\\CalificacionDTO.cs",
-              "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CalificacionDTO.cs",
-              "RelativeToolTip": "DTOs\\CalificacionDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-08T20:44:01.572Z"
             }
           ]
         }
