@@ -19,5 +19,7 @@
         public long EstudianteId { get; set; }
         public long CicloId { get; set; }
         public long MateriaId { get; set; }
+
+        public string? NombreCompleto { get; set; }
     }
 }

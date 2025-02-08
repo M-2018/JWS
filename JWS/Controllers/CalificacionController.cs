@@ -46,6 +46,52 @@ namespace JWS.Controllers
             return Ok(calificaciones);
         }
 
+        [HttpGet("Calificaciones")]
+        public async Task<ActionResult<IEnumerable<CalificacionDTO>>> GetCalificaciones(long cicloId, long materiaId)
+        {
+            var calificaciones = await _context.Estudiantes
+                .Where(e => e.CicloId == cicloId) // Filtrar por CicloId
+                .Join(
+                    _context.Calificaciones.Where(c => c.CicloId == cicloId && c.MateriaId == materiaId), // Filtrar las calificaciones por ciclo y materia
+                    e => e.Id,
+                    c => c.EstudianteId,
+                    (e, c) => new
+                    {
+                        NombreCompleto = e.Nombres + " " + e.Apellidos,
+                        Taller = c.Taller ?? 0,
+                        Trabajo = c.Trabajo ?? 0,
+                        Exposicion = c.Exposicion ?? 0,
+                        Tarea = c.Tarea ?? 0,
+                        Quiz1 = c.Quiz1 ?? 0,
+                        Quiz2 = c.Quiz2 ?? 0,
+                        Actitudinal = c.Actitudinal ?? 0,
+                        ExamenFinal = c.ExamenFinal ?? 0,
+                        Definitiva = c.Definitiva ?? 0,
+                        NotaRecuperacion = c.NotaRecuperacion ?? 0,
+                        NotaHabilitacion = c.NotaHabilitacion ?? 0
+                    })
+                .Select(e => new CalificacionDTO
+                {
+                    NombreCompleto = e.NombreCompleto,
+                    Taller = e.Taller,
+                    Trabajo = e.Trabajo,
+                    Exposicion = e.Exposicion,
+                    Tarea = e.Tarea,
+                    Quiz1 = e.Quiz1,
+                    Quiz2 = e.Quiz2,
+                    Actitudinal = e.Actitudinal,
+                    ExamenFinal = e.ExamenFinal,
+                    Definitiva = e.Definitiva,
+                    NotaRecuperacion = e.NotaRecuperacion,
+                    NotaHabilitacion = e.NotaHabilitacion
+                })
+                .ToListAsync();
+
+            return Ok(calificaciones);
+        }
+
+
+
         // GET: api/Calificacion/{id}
         [HttpGet("{id}")]
         public async Task<ActionResult<CalificacionDTO>> GetCalificacion(long id)
