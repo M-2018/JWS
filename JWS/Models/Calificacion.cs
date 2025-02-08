@@ -9,31 +9,31 @@ namespace JWS.Models
         public long Id { get; set; }
 
         [Range(0, 10)]
-        public decimal? NotaTrabajo1 { get; set; } //Taller
+        public decimal? Taller { get; set; } //Taller
 
         [Range(0, 10)]
-        public decimal? NotaTrabajo2 { get; set; } //Trabajo
+        public decimal? Trabajo { get; set; } //Trabajo
 
         [Range(0, 10)]
-        public decimal? NotaExposicion { get; set; } //Expo
+        public decimal? Exposicion { get; set; } //Expo
 
         [Range(0, 10)]
-        public decimal? NotaTarea { get; set; } //Tarea
+        public decimal? Tarea { get; set; } //Tarea
 
         [Range(0, 10)]
-        public decimal? NotaEvaluacion1 { get; set; } //quiz1
+        public decimal? Quiz1 { get; set; } //quiz1
 
         [Range(0, 10)]
-        public decimal? NotaEvaluacion2 { get; set; } //quiz2
+        public decimal? Quiz2 { get; set; } //quiz2
 
         [Range(0, 10)]
-        public decimal? NotaActitudinal { get; set; } //Actitudinal
+        public decimal? Actitudinal { get; set; } //Actitudinal
 
         [Range(0, 10)]
-        public decimal? NotaExamenFinal { get; set; } //ExamFinal 
+        public decimal? ExamenFinal { get; set; } //ExamFinal 
 
         [Range(0, 10)]
-        public decimal? NotaDefinitiva { get; set; }
+        public decimal? Definitiva { get; set; }
 
         public bool? Recuperacion { get; set; }
 

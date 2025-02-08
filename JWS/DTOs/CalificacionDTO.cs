@@ -3,13 +3,15 @@
     public class CalificacionDTO
     {
         public long Id { get; set; }
-        public decimal? NotaTrabajo1 { get; set; }
-        public decimal? NotaTrabajo2 { get; set; }
-        public decimal? NotaEvaluacion1 { get; set; }
-        public decimal? NotaEvaluacion2 { get; set; }
-        public decimal? NotaActitudinal { get; set; }
-        public decimal? NotaExamenFinal { get; set; }
-        public decimal? NotaDefinitiva { get; set; }
+        public decimal? Taller { get; set; }
+        public decimal? Trabajo { get; set; }
+        public decimal? Exposicion { get; set; }
+        public decimal? Tarea { get; set; }
+        public decimal? Quiz1 { get; set; }
+        public decimal? Quiz2 { get; set; }
+        public decimal? Actitudinal { get; set; }
+        public decimal? ExamenFinal { get; set; }
+        public decimal? Definitiva { get; set; }
         public bool? Recuperacion { get; set; }
         public decimal? NotaRecuperacion { get; set; }
         public bool? Habilitacion { get; set; }

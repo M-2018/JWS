@@ -24,14 +24,15 @@ namespace JWS.Controllers
             var calificaciones = await _context.Calificaciones
                 .Select(c => new CalificacionDTO
                 {
-                    Id = c.Id,
-                    NotaTrabajo1 = c.NotaTrabajo1,
-                    NotaTrabajo2 = c.NotaTrabajo2,
-                    NotaEvaluacion1 = c.NotaEvaluacion1,
-                    NotaEvaluacion2 = c.NotaEvaluacion2,
-                    NotaActitudinal = c.NotaActitudinal,
-                    NotaExamenFinal = c.NotaExamenFinal,
-                    NotaDefinitiva = c.NotaDefinitiva,
+                    Taller = c.Taller,
+                    Trabajo = c.Trabajo,
+                    Exposicion = c.Exposicion,
+                    Tarea = c.Tarea,
+                    Quiz1 = c.Quiz1,
+                    Quiz2 = c.Quiz2,
+                    Actitudinal = c.Actitudinal,
+                    ExamenFinal = c.ExamenFinal,
+                    Definitiva = c.Definitiva,
                     Recuperacion = c.Recuperacion,
                     NotaRecuperacion = c.NotaRecuperacion,
                     Habilitacion = c.Habilitacion,
@@ -59,13 +60,15 @@ namespace JWS.Controllers
             var calificacionDTO = new CalificacionDTO
             {
                 Id = calificacion.Id,
-                NotaTrabajo1 = calificacion.NotaTrabajo1,
-                NotaTrabajo2 = calificacion.NotaTrabajo2,
-                NotaEvaluacion1 = calificacion.NotaEvaluacion1,
-                NotaEvaluacion2 = calificacion.NotaEvaluacion2,
-                NotaActitudinal = calificacion.NotaActitudinal,
-                NotaExamenFinal = calificacion.NotaExamenFinal,
-                NotaDefinitiva = calificacion.NotaDefinitiva,
+                Taller = calificacion.Taller,
+                Trabajo = calificacion.Trabajo,
+                Exposicion = calificacion.Exposicion,
+                Tarea = calificacion.Tarea,
+                Quiz1 = calificacion.Quiz1,
+                Quiz2 = calificacion.Quiz2,
+                Actitudinal = calificacion.Actitudinal,
+                ExamenFinal = calificacion.ExamenFinal,
+                Definitiva = calificacion.Definitiva,
                 Recuperacion = calificacion.Recuperacion,
                 NotaRecuperacion = calificacion.NotaRecuperacion,
                 Habilitacion = calificacion.Habilitacion,
@@ -78,149 +81,6 @@ namespace JWS.Controllers
             return Ok(calificacionDTO);
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
-        //{
-        //    var calificaciones = calificacionesDTO.Select(dto => new Calificacion
-        //    {
-        //        NotaTrabajo1 = dto.NotaTrabajo1,
-        //        NotaTrabajo2 = dto.NotaTrabajo2,
-        //        NotaEvaluacion1 = dto.NotaEvaluacion1,
-        //        NotaEvaluacion2 = dto.NotaEvaluacion2,
-        //        NotaActitudinal = dto.NotaActitudinal,
-        //        NotaExamenFinal = dto.NotaExamenFinal,
-        //        NotaDefinitiva = dto.NotaDefinitiva,
-        //        Recuperacion = dto.Recuperacion,
-        //        NotaRecuperacion = dto.NotaRecuperacion,
-        //        Habilitacion = dto.Habilitacion,
-        //        NotaHabilitacion = dto.NotaHabilitacion,
-        //        EstudianteId = dto.EstudianteId,
-        //        CicloId = dto.CicloId,
-        //        MateriaId = dto.MateriaId
-        //    }).ToList();
-
-        //    await _context.Calificaciones.AddRangeAsync(calificaciones);
-        //    await _context.SaveChangesAsync();
-
-        //    var createdDTOs = calificaciones.Select(c => new CalificacionDTO
-        //    {
-        //        Id = c.Id,
-        //        NotaTrabajo1 = c.NotaTrabajo1,
-        //        NotaTrabajo2 = c.NotaTrabajo2,
-        //        NotaEvaluacion1 = c.NotaEvaluacion1,
-        //        NotaEvaluacion2 = c.NotaEvaluacion2,
-        //        NotaActitudinal = c.NotaActitudinal,
-        //        NotaExamenFinal = c.NotaExamenFinal,
-        //        NotaDefinitiva = c.NotaDefinitiva,
-        //        Recuperacion = c.Recuperacion,
-        //        NotaRecuperacion = c.NotaRecuperacion,
-        //        Habilitacion = c.Habilitacion,
-        //        NotaHabilitacion = c.NotaHabilitacion,
-        //        EstudianteId = c.EstudianteId,
-        //        CicloId = c.CicloId,
-        //        MateriaId = c.MateriaId
-        //    }).ToList();
-
-        //    return CreatedAtAction(nameof(GetCalificaciones), createdDTOs);
-        //}
-
-        //[HttpPost]
-        //public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
-        //{
-        //    var calificacionesActualizadas = new List<Calificacion>();
-        //    var calificacionesNuevas = new List<Calificacion>();
-
-        //    foreach (var dto in calificacionesDTO)
-        //    {
-        //        // Buscar si ya existe una calificación para este estudiante en esta materia y ciclo
-        //        var calificacionExistente = await _context.Calificaciones
-        //            .FirstOrDefaultAsync(c =>
-        //                c.EstudianteId == dto.EstudianteId &&
-        //                c.MateriaId == dto.MateriaId &&
-        //                c.CicloId == dto.CicloId);
-
-        //        if (calificacionExistente != null)
-        //        {
-        //            // Actualizar la calificación existente
-        //            calificacionExistente.NotaTrabajo1 = dto.NotaTrabajo1;
-        //            calificacionExistente.NotaTrabajo2 = dto.NotaTrabajo2;
-        //            calificacionExistente.NotaEvaluacion1 = dto.NotaEvaluacion1;
-        //            calificacionExistente.NotaEvaluacion2 = dto.NotaEvaluacion2;
-        //            calificacionExistente.NotaActitudinal = dto.NotaActitudinal;
-        //            calificacionExistente.NotaExamenFinal = dto.NotaExamenFinal;
-        //            calificacionExistente.NotaDefinitiva = dto.NotaDefinitiva;
-        //            calificacionExistente.Recuperacion = dto.Recuperacion;
-        //            calificacionExistente.NotaRecuperacion = dto.NotaRecuperacion;
-        //            calificacionExistente.Habilitacion = dto.Habilitacion;
-        //            calificacionExistente.NotaHabilitacion = dto.NotaHabilitacion;
-
-        //            calificacionesActualizadas.Add(calificacionExistente);
-        //        }
-        //        else
-        //        {
-        //            // Crear nueva calificación
-        //            var nuevaCalificacion = new Calificacion
-        //            {
-        //                NotaTrabajo1 = dto.NotaTrabajo1,
-        //                NotaTrabajo2 = dto.NotaTrabajo2,
-        //                NotaEvaluacion1 = dto.NotaEvaluacion1,
-        //                NotaEvaluacion2 = dto.NotaEvaluacion2,
-        //                NotaActitudinal = dto.NotaActitudinal,
-        //                NotaExamenFinal = dto.NotaExamenFinal,
-        //                NotaDefinitiva = dto.NotaDefinitiva,
-        //                Recuperacion = dto.Recuperacion,
-        //                NotaRecuperacion = dto.NotaRecuperacion,
-        //                Habilitacion = dto.Habilitacion,
-        //                NotaHabilitacion = dto.NotaHabilitacion,
-        //                EstudianteId = dto.EstudianteId,
-        //                CicloId = dto.CicloId,
-        //                MateriaId = dto.MateriaId
-        //            };
-
-        //            calificacionesNuevas.Add(nuevaCalificacion);
-        //        }
-        //    }
-
-        //    // Agregar nuevas calificaciones si existen
-        //    if (calificacionesNuevas.Any())
-        //    {
-        //        await _context.Calificaciones.AddRangeAsync(calificacionesNuevas);
-        //    }
-
-        //    try
-        //    {
-        //        await _context.SaveChangesAsync();
-
-        //        // Combinar todas las calificaciones para la respuesta
-        //        var todasLasCalificaciones = calificacionesActualizadas.Concat(calificacionesNuevas);
-
-        //        // Convertir a DTOs para la respuesta
-        //        var responseDto = todasLasCalificaciones.Select(c => new CalificacionDTO
-        //        {
-        //            Id = c.Id,
-        //            NotaTrabajo1 = c.NotaTrabajo1,
-        //            NotaTrabajo2 = c.NotaTrabajo2,
-        //            NotaEvaluacion1 = c.NotaEvaluacion1,
-        //            NotaEvaluacion2 = c.NotaEvaluacion2,
-        //            NotaActitudinal = c.NotaActitudinal,
-        //            NotaExamenFinal = c.NotaExamenFinal,
-        //            NotaDefinitiva = c.NotaDefinitiva,
-        //            Recuperacion = c.Recuperacion,
-        //            NotaRecuperacion = c.NotaRecuperacion,
-        //            Habilitacion = c.Habilitacion,
-        //            NotaHabilitacion = c.NotaHabilitacion,
-        //            EstudianteId = c.EstudianteId,
-        //            CicloId = c.CicloId,
-        //            MateriaId = c.MateriaId
-        //        });
-
-        //        return Ok(responseDto);
-        //    }
-        //    catch (DbUpdateException ex)
-        //    {
-        //        return BadRequest("Error al guardar las calificaciones: " + ex.InnerException?.Message);
-        //    }
-        //}
         [HttpPost]
         public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         {
@@ -253,17 +113,22 @@ namespace JWS.Controllers
                     // Actualizar la calificación existente
                     Console.WriteLine($"Actualizando calificación para estudiante {dto.EstudianteId}");
 
-                    calificacionExistente.NotaTrabajo1 = dto.NotaTrabajo1;
-                    calificacionExistente.NotaTrabajo2 = dto.NotaTrabajo2;
-                    calificacionExistente.NotaEvaluacion1 = dto.NotaEvaluacion1;
-                    calificacionExistente.NotaEvaluacion2 = dto.NotaEvaluacion2;
-                    calificacionExistente.NotaActitudinal = dto.NotaActitudinal;
-                    calificacionExistente.NotaExamenFinal = dto.NotaExamenFinal;
-                    calificacionExistente.NotaDefinitiva = dto.NotaDefinitiva;
+                    calificacionExistente.Taller = dto.Taller;
+                    calificacionExistente.Trabajo = dto.Trabajo;
+                    calificacionExistente.Exposicion = dto.Exposicion;
+                    calificacionExistente.Tarea = dto.Tarea;
+                    calificacionExistente.Quiz1 = dto.Quiz1;
+                    calificacionExistente.Quiz2 = dto.Quiz2;
+                    calificacionExistente.Actitudinal = dto.Actitudinal;
+                    calificacionExistente.ExamenFinal = dto.ExamenFinal;
+                    calificacionExistente.Definitiva = dto.Definitiva;
                     calificacionExistente.Recuperacion = dto.Recuperacion;
                     calificacionExistente.NotaRecuperacion = dto.NotaRecuperacion;
                     calificacionExistente.Habilitacion = dto.Habilitacion;
                     calificacionExistente.NotaHabilitacion = dto.NotaHabilitacion;
+                    calificacionExistente.EstudianteId = dto.EstudianteId;
+                    calificacionExistente.CicloId = dto.CicloId;
+                    calificacionExistente.MateriaId = dto.MateriaId;
 
                     _context.Calificaciones.Update(calificacionExistente);
                 }
@@ -274,13 +139,15 @@ namespace JWS.Controllers
 
                     var nuevaCalificacion = new Calificacion
                     {
-                        NotaTrabajo1 = dto.NotaTrabajo1,
-                        NotaTrabajo2 = dto.NotaTrabajo2,
-                        NotaEvaluacion1 = dto.NotaEvaluacion1,
-                        NotaEvaluacion2 = dto.NotaEvaluacion2,
-                        NotaActitudinal = dto.NotaActitudinal,
-                        NotaExamenFinal = dto.NotaExamenFinal,
-                        NotaDefinitiva = dto.NotaDefinitiva,
+                        Taller = dto.Taller,
+                        Trabajo = dto.Trabajo,
+                        Exposicion = dto.Exposicion,
+                        Tarea = dto.Tarea,
+                        Quiz1 = dto.Quiz1,
+                        Quiz2 = dto.Quiz2,
+                        Actitudinal = dto.Actitudinal,
+                        ExamenFinal = dto.ExamenFinal,
+                        Definitiva = dto.Definitiva,
                         Recuperacion = dto.Recuperacion,
                         NotaRecuperacion = dto.NotaRecuperacion,
                         Habilitacion = dto.Habilitacion,
@@ -307,13 +174,15 @@ namespace JWS.Controllers
                     .Select(c => new CalificacionDTO
                     {
                         Id = c.Id,
-                        NotaTrabajo1 = c.NotaTrabajo1,
-                        NotaTrabajo2 = c.NotaTrabajo2,
-                        NotaEvaluacion1 = c.NotaEvaluacion1,
-                        NotaEvaluacion2 = c.NotaEvaluacion2,
-                        NotaActitudinal = c.NotaActitudinal,
-                        NotaExamenFinal = c.NotaExamenFinal,
-                        NotaDefinitiva = c.NotaDefinitiva,
+                        Taller = c.Taller,
+                        Trabajo = c.Trabajo,
+                        Exposicion = c.Exposicion,
+                        Tarea = c.Tarea,
+                        Quiz1 = c.Quiz1,
+                        Quiz2 = c.Quiz2,
+                        Actitudinal = c.Actitudinal,
+                        ExamenFinal = c.ExamenFinal,
+                        Definitiva = c.Definitiva,
                         Recuperacion = c.Recuperacion,
                         NotaRecuperacion = c.NotaRecuperacion,
                         Habilitacion = c.Habilitacion,
@@ -334,8 +203,6 @@ namespace JWS.Controllers
             }
         }
 
-
-
         [HttpPut]
         public async Task<IActionResult> UpdateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         {
@@ -352,13 +219,15 @@ namespace JWS.Controllers
                 var calificacion = calificaciones.FirstOrDefault(c => c.Id == dto.Id);
                 if (calificacion != null)
                 {
-                    calificacion.NotaTrabajo1 = dto.NotaTrabajo1;
-                    calificacion.NotaTrabajo2 = dto.NotaTrabajo2;
-                    calificacion.NotaEvaluacion1 = dto.NotaEvaluacion1;
-                    calificacion.NotaEvaluacion2 = dto.NotaEvaluacion2;
-                    calificacion.NotaActitudinal = dto.NotaActitudinal;
-                    calificacion.NotaExamenFinal = dto.NotaExamenFinal;
-                    calificacion.NotaDefinitiva = dto.NotaDefinitiva;
+                    calificacion.Taller = dto.Taller;
+                    calificacion.Trabajo = dto.Trabajo;
+                    calificacion.Exposicion = dto.Exposicion;
+                    calificacion.Tarea = dto.Tarea;
+                    calificacion.Quiz1 = dto.Quiz1;
+                    calificacion.Quiz2 = dto.Quiz2;
+                    calificacion.Actitudinal = dto.Actitudinal;
+                    calificacion.ExamenFinal = dto.ExamenFinal;
+                    calificacion.Definitiva = dto.Definitiva;
                     calificacion.Recuperacion = dto.Recuperacion;
                     calificacion.NotaRecuperacion = dto.NotaRecuperacion;
                     calificacion.Habilitacion = dto.Habilitacion;

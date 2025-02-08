@@ -193,10 +193,12 @@ onMateriaChange(): void {
   // Filtrar estudiantes por ciclo seleccionado
   filtrarEstudiantesPorCiclo(): void {
     const selectedId = Number(this.selectedCicloId);
+    console.log('selectedId:', selectedId);
     if (selectedId) {
-      this.estudiantesFiltrados = this.estudiantes.filter(
-        (estudiante) => estudiante.cicloId === selectedId
-      );
+      this.estudiantesFiltrados = this.estudiantes.filter((estudiante) => {
+        console.log('Estudiante:', estudiante);
+        return estudiante.cicloId === selectedId;
+      });
     } else {
       this.estudiantesFiltrados = [];
     }
@@ -292,49 +294,6 @@ onMateriaChange(): void {
     return nota;
   }
 
-  // isSelectionValid(): boolean {
-  //   return this.selectedCicloId !== null && this.selectedMateriaId !== null;
-  // }
-
-  // Método para guardar la selección de ciclo, materia y calificaciones
-  // guardarSeleccion(): void {
-  //   if (!this.selectedCicloId || !this.selectedMateriaId) {
-  //     alert('Por favor, seleccione un ciclo y una materia antes de guardar.');
-  //     return;
-  //   }
-  
-  //   // Crear array de CalificacionDTO
-  //   const calificaciones = this.estudiantesFiltrados.map(estudiante => ({
-  //     id: 0,
-  //     notaTrabajo1: estudiante.notas.notaTaller || 0,
-  //     notaTrabajo2: estudiante.notas.notaTrabajo || 0,
-  //     notaEvaluacion1: estudiante.notas.notaQuiz1 || 0,
-  //     notaEvaluacion2: estudiante.notas.notaQuiz2 || 0,
-  //     notaActitudinal: estudiante.notas.notaActitudinal || 0,
-  //     notaExamenFinal: estudiante.notas.notaExamFinal || 0,
-  //     notaDefinitiva: estudiante.notas.definitiva || 0,
-  //     recuperacion: false,
-  //     notaRecuperacion: estudiante.notas.notaRecuperacion || 0,
-  //     habilitacion: false,
-  //     notaHabilitacion: estudiante.notas.notaHabilitacion || 0,
-  //     estudianteId: estudiante.id,
-  //     cicloId: this.selectedCicloId,
-  //     materiaId: this.selectedMateriaId
-  //   }));
-  
-  //   // Enviar el array de calificaciones directamente
-  //   this.http.post(this.calificacionUrl, calificaciones).subscribe({
-  //     next: (response) => {
-  //       alert('Calificaciones guardadas exitosamente.');
-  //       this.limpiarCampos();
-  //     },
-  //     error: (error) => {
-  //       console.error('Error al guardar los datos:', error);
-  //       alert('Ocurrió un error al guardar las calificaciones. Por favor, verifique los datos e intente nuevamente.');
-  //     }
-  //   });
-  // }
-
   guardarSeleccion(): void {
     if (!this.selectedCicloId || !this.selectedMateriaId) {
       alert('Por favor, seleccione un ciclo y una materia antes de guardar.');
@@ -352,20 +311,22 @@ onMateriaChange(): void {
   
       return {
         id: 0,
-        notaTrabajo1: estudiante.notas.notaTaller || 0,
-        notaTrabajo2: estudiante.notas.notaTrabajo || 0,
-        notaEvaluacion1: estudiante.notas.notaQuiz1 || 0,
-        notaEvaluacion2: estudiante.notas.notaQuiz2 || 0,
-        notaActitudinal: estudiante.notas.notaActitudinal || 0,
-        notaExamenFinal: estudiante.notas.notaExamFinal || 0,
-        notaDefinitiva: estudiante.notas.definitiva || 0,
+        Taller: estudiante.notas.notaTaller || 1,
+        Trabajo: estudiante.notas.notaTrabajo || 1,
+        Exposicion: estudiante.notas.notaExposicion || 1,
+        Tarea: estudiante.notas.notaTarea || 1,
+        Quiz1: estudiante.notas.notaQuiz1 || 1,
+        Quiz2: estudiante.notas.notaQuiz2 || 1,
+        Actitudinal: estudiante.notas.notaActitudinal || 1,
+        ExamenFinal: estudiante.notas.notaExamFinal || 1,
+        Definitiva: estudiante.notas.definitiva || 1,
         recuperacion,
-        notaRecuperacion,
+        notaRecuperacion: estudiante.notas.notaRecuperacion || 1,
         habilitacion,
-        notaHabilitacion,
+        notaHabilitacion: estudiante.notas.notaHabilitacion || 1,
         estudianteId: estudiante.id,
         cicloId: this.selectedCicloId,
-        materiaId: this.selectedMateriaId
+        materiaId: this.selectedMateriaId,
       };
     });
   
