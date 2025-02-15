@@ -68,7 +68,10 @@ namespace JWS.Controllers
                         ExamenFinal = c.ExamenFinal ?? 0,
                         Definitiva = c.Definitiva ?? 0,
                         NotaRecuperacion = c.NotaRecuperacion ?? 0,
-                        NotaHabilitacion = c.NotaHabilitacion ?? 0
+                        NotaHabilitacion = c.NotaHabilitacion ?? 0,
+                        CicloId = c.CicloId, // Incluir CicloId
+                        MateriaId = c.MateriaId, // Incluir MateriaId
+                        EstudianteId = c.EstudianteId,
                     })
                 .Select(e => new CalificacionDTO
                 {
@@ -83,7 +86,10 @@ namespace JWS.Controllers
                     ExamenFinal = e.ExamenFinal,
                     Definitiva = e.Definitiva,
                     NotaRecuperacion = e.NotaRecuperacion,
-                    NotaHabilitacion = e.NotaHabilitacion
+                    NotaHabilitacion = e.NotaHabilitacion,
+                    CicloId = e.CicloId, // Incluir CicloId en el DTO
+                    MateriaId = e.MateriaId, // Incluir MateriaId en el DTO
+                    EstudianteId = e.EstudianteId,
                 })
                 .ToListAsync();
 

@@ -35,8 +35,7 @@
               "ViewState": "AQIAAB8AAAAAAAAAAAAQwD4AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-01T21:07:04.905Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -50,7 +49,7 @@
               "RelativeDocumentMoniker": "DTOs\\CalificacionDTO.cs",
               "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\DTOs\\CalificacionDTO.cs",
               "RelativeToolTip": "DTOs\\CalificacionDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAzAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAgAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-08T14:22:43.258Z",
               "EditorCaption": ""
@@ -63,7 +62,7 @@
               "RelativeDocumentMoniker": "Controllers\\CalificacionController.cs",
               "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CalificacionController.cs",
               "RelativeToolTip": "Controllers\\CalificacionController.cs",
-              "ViewState": "AQIAACwAAAAAAAAAAAAAAE0AAAAuAAAA",
+              "ViewState": "AQIAACIAAAAAAAAAAAAlwDIAAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-02T18:05:13.831Z",
               "EditorCaption": ""
