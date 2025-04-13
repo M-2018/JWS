@@ -29,6 +29,8 @@ export class LoginComponent {
       email: ['', Validators.required],
       password: ['', Validators.required],
     });
+
+    this.authService.updateLoginStatus(false);
   }
 
   onSubmit() {

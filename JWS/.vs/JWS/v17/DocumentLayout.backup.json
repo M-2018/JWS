@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "Controllers\\CalificacionController.cs",
               "ToolTip": "C:\\Alucard\\Practicas\\JWS\\JWS\\Controllers\\CalificacionController.cs",
               "RelativeToolTip": "Controllers\\CalificacionController.cs",
-              "ViewState": "AgIAAPcAAAAAAAAAAAAtwAkBAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAPcAAAAAAAAAAAAtwAcBAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-13T18:54:22.558Z",
               "EditorCaption": ""
@@ -47,8 +47,7 @@
               "RelativeToolTip": "Controllers\\AsistenciasController.cs",
               "ViewState": "AgIAAAEBAAAAAAAAAAAAAB8BAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-13T18:59:08.048Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-13T18:59:08.048Z"
             }
           ]
         }
