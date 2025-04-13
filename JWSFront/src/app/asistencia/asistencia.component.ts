@@ -24,6 +24,7 @@ export class AsistenciaComponent implements OnInit {
   ciclos: any[] = [];
   materias: any[] = [];
   estudiantesFiltrados: any[] = [];
+  fechasAsistencias: string[] = [];
 
   fechaSeleccionada: string = '';
   cicloSeleccionado: number | null = null;
@@ -41,6 +42,7 @@ export class AsistenciaComponent implements OnInit {
     this.getCiclos();
     this.getMaterias();
     this.getEstudiantesEditar();
+    this.getFechasAsistenciasAnioActual();
   }
 
   // Obtener lista de ciclos
@@ -247,4 +249,32 @@ export class AsistenciaComponent implements OnInit {
       },
     });
   }
+
+  getFechasAsistenciasAnioActual(): void {
+    const currentYear = new Date().getFullYear();
+    const url = `${this.AsistenciasUrl}/fechas?anio=${currentYear}`;
+    
+    this.http.get<string[]>(url).subscribe({
+      next: (fechas) => {
+        this.fechasAsistencias = fechas;
+        console.log('Fechas de asistencias:', this.fechasAsistencias);
+      },
+      error: (err) => {
+        console.error('Error al obtener fechas de asistencias:', err);
+      }
+    });
+  }
+
+  // Método para sincronizar la fecha seleccionada del histórico
+seleccionarFechaHistorica(event: Event): void {
+  const target = event.target as HTMLSelectElement;
+  if (target && target.value) {
+    this.editFechaSeleccionada = target.value;
+    // Si ya tenemos materia y ciclo seleccionados, hacemos la búsqueda automáticamente
+    if (this.editMateriaSeleccionada && this.editCicloSeleccionado) {
+      this.fetchAssistanceData();
+    }
+  }
+}
+
 }

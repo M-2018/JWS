@@ -269,5 +269,23 @@ namespace JWS.Controllers
             }
         }
 
+        // GET: api/Asistencias/fechas
+        [HttpGet("fechas")]
+        public async Task<ActionResult<IEnumerable<string>>> GetFechasAsistenciasPorAnio([FromQuery] int anio)
+        {
+            // Primero obtenemos las fechas como DateTime
+            var fechas = await _context.Asistencias
+                .Where(a => a.Fecha.HasValue && a.Fecha.Value.Year == anio)
+                .Select(a => a.Fecha.Value)
+                .Distinct()
+                .OrderByDescending(f => f)
+                .ToListAsync();
+
+            // Luego las convertimos a string en memoria
+            var fechasFormateadas = fechas.Select(f => f.ToString("yyyy-MM-dd")).ToList();
+
+            return Ok(fechasFormateadas);
+        }
+
     }
 }

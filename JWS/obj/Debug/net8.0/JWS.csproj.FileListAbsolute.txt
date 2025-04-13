@@ -56,7 +56,6 @@ C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\System.Memory.Data.dll
 C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\System.Runtime.Caching.dll
 C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\System.Security.Permissions.dll
-C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\System.Text.Json.dll
 C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\System.Windows.Extensions.dll
 C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\cs\Microsoft.CodeAnalysis.resources.dll
 C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\de\Microsoft.CodeAnalysis.resources.dll
@@ -136,3 +135,7 @@ C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\refint\JWS.dll
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.pdb
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\JWS.genruntimeconfig.cache
 C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\ref\JWS.dll
+C:\Alucard\Practicas\JWS\JWS\bin\Debug\net8.0\JWS.staticwebassets.endpoints.json
+C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\staticwebassets\msbuild.JWS.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Alucard\Practicas\JWS\JWS\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

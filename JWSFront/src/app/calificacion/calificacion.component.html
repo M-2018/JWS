@@ -106,10 +106,13 @@
                 [(ngModel)]="estudiante.notas.notaTaller"
                 [value]="estudiante.notas.notaTaller"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaTaller', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white; font-weight: bold; margin: 1px"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -118,10 +121,13 @@
                 [(ngModel)]="estudiante.notas.notaTrabajo"
                 [value]="estudiante.notas.notaTrabajo"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaTrabajo', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white; font-weight: bold; margin: 1px"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -130,10 +136,13 @@
                 [(ngModel)]="estudiante.notas.notaExposicion"
                 [value]="estudiante.notas.notaExposicion"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaExposicion', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white; font-weight: bold; margin: 1px"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -142,10 +151,13 @@
                 [(ngModel)]="estudiante.notas.notaTarea"
                 [value]="estudiante.notas.notaTarea"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaTarea', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white; font-weight: bold; margin: 1px"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -170,10 +182,13 @@
                 [(ngModel)]="estudiante.notas.notaQuiz1"
                 [value]="estudiante.notas.notaQuiz1"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaQuiz1', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -182,10 +197,13 @@
                 [(ngModel)]="estudiante.notas.notaQuiz2"
                 [value]="estudiante.notas.notaQuiz2"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaQuiz2', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -210,10 +228,13 @@
                 [(ngModel)]="estudiante.notas.notaActitudinal"
                 [value]="estudiante.notas.notaActitudinal"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaActitudinal', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -231,10 +252,13 @@
                 [(ngModel)]="estudiante.notas.notaExamFinal"
                 [value]="estudiante.notas.notaExamFinal"
                 (change)="calcularPromedio(estudiante)"
+                (blur)="validarNota($event, 'notaExamFinal', estudiante)"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -269,8 +293,10 @@
                 [value]="estudiante.notas.notaRecuperacion"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white; font-weight: bold; margin: 1px"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
             <td>
@@ -280,8 +306,10 @@
                 [value]="estudiante.notas.notaHabilitacion"
                 class="form-control custom-textbox calificacion-textbox"
                 style="color: white; font-weight: bold; margin: 1px"
-                min="1"
+                min="3"
                 max="10"
+                step="0.01"
+                #notaInput
               />
             </td>
           </tr>

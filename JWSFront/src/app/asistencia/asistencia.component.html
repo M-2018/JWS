@@ -140,6 +140,20 @@
       <div class="home-card mt-4">
         <h2 class="home-title text-center mb-4">Editar Asistencia</h2>
 
+        <div class="mb-4">
+          <label for="fechas-historicas" class="form-label">Fechas de asistencias:</label>
+          <select
+            id="fechas-historicas"
+            class="form-control login-input"
+            (change)="seleccionarFechaHistorica($event)"
+          >
+            <option value="" disabled selected>Seleccione una fecha histórica</option>
+            <option *ngFor="let fecha of fechasAsistencias" [value]="fecha">
+              {{ fecha }}
+            </option>
+          </select>
+        </div>
+
         <!-- Campo para seleccionar la fecha -->
         <div class="mb-4">
           <label for="edit-date" class="form-label">Seleccione la fecha:</label>

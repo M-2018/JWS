@@ -243,42 +243,144 @@ export class CalificacionComponent implements OnInit {
   }
 
   // Guardar las calificaciones modificadas
-  guardarSeleccion(): void {
-    const calificacionesParaGuardar = this.estudiantesFiltrados.map((estudiante) => ({
-      id: 0, // en minúscula
-      taller: estudiante.notas.notaTaller || 0,
-      trabajo: estudiante.notas.notaTrabajo || 0,
-      exposicion: estudiante.notas.notaExposicion || 0,
-      tarea: estudiante.notas.notaTarea || 0,
-      quiz1: estudiante.notas.notaQuiz1 || 0,
-      quiz2: estudiante.notas.notaQuiz2 || 0,
-      actitudinal: estudiante.notas.notaActitudinal || 0,
-      examenFinal: estudiante.notas.notaExamFinal || 0,
-      definitiva: estudiante.notas.definitiva || 0,
-      recuperacion: false, // Agregar valor booleano
-      notaRecuperacion: estudiante.notas.notaRecuperacion || 0,
-      habilitacion: false, // Agregar valor booleano
-      notaHabilitacion: estudiante.notas.notaHabilitacion || 0,
-      estudianteId: estudiante.id,
-      cicloId: Number(this.selectedCicloId),
-      materiaId: Number(this.selectedMateriaId)
-    }));
+  // guardarSeleccion(): void {
+  //   const calificacionesParaGuardar = this.estudiantesFiltrados.map((estudiante) => ({
+  //     id: 0, // en minúscula
+  //     taller: estudiante.notas.notaTaller || 0,
+  //     trabajo: estudiante.notas.notaTrabajo || 0,
+  //     exposicion: estudiante.notas.notaExposicion || 0,
+  //     tarea: estudiante.notas.notaTarea || 0,
+  //     quiz1: estudiante.notas.notaQuiz1 || 0,
+  //     quiz2: estudiante.notas.notaQuiz2 || 0,
+  //     actitudinal: estudiante.notas.notaActitudinal || 0,
+  //     examenFinal: estudiante.notas.notaExamFinal || 0,
+  //     definitiva: estudiante.notas.definitiva || 0,
+  //     recuperacion: false, // Agregar valor booleano
+  //     notaRecuperacion: estudiante.notas.notaRecuperacion || 0,
+  //     habilitacion: false, // Agregar valor booleano
+  //     notaHabilitacion: estudiante.notas.notaHabilitacion || 0,
+  //     estudianteId: estudiante.id,
+  //     cicloId: Number(this.selectedCicloId),
+  //     materiaId: Number(this.selectedMateriaId)
+  //   }));
   
-    console.log('Calificaciones a enviar:', calificacionesParaGuardar);
+  //   console.log('Calificaciones a enviar:', calificacionesParaGuardar);
   
-    this.http.post<any>('https://localhost:7246/api/Calificacion', calificacionesParaGuardar)
-      .subscribe({
-        next: (response) => {
-          console.log('Calificaciones guardadas exitosamente', response);
-          // Aquí podrías mostrar un mensaje de éxito
-        },
-        error: (error) => {
-          console.error('Error al guardar calificaciones:', error);
-          if (error.error?.errors) {
-            console.error('Errores de validación:', error.error.errors);
-          }
-          // Aquí podrías mostrar un mensaje de error
-        }
-      });
+  //   this.http.post<any>('https://localhost:7246/api/Calificacion', calificacionesParaGuardar)
+  //     .subscribe({
+  //       next: (response) => {
+  //         console.log('Calificaciones guardadas exitosamente', response);
+  //         // Aquí podrías mostrar un mensaje de éxito
+  //       },
+  //       error: (error) => {
+  //         console.error('Error al guardar calificaciones:', error);
+  //         if (error.error?.errors) {
+  //           console.error('Errores de validación:', error.error.errors);
+  //         }
+  //         // Aquí podrías mostrar un mensaje de error
+  //       }
+  //     });
+  // }
+
+  // Guardar las calificaciones modificadas
+guardarSeleccion(): void {
+  if (!this.selectedCicloId || !this.selectedMateriaId) {
+    alert('Por favor seleccione un ciclo y una materia antes de guardar');
+    return;
   }
+
+  if (this.estudiantesFiltrados.length === 0) {
+    alert('No hay estudiantes para guardar');
+    return;
+  }
+
+  const confirmacion = confirm('¿Está seguro que desea guardar estas calificaciones?');
+  if (!confirmacion) {
+    return;
+  }
+
+  const calificacionesParaGuardar = this.estudiantesFiltrados.map((estudiante) => ({
+    id: 0,
+    taller: estudiante.notas.notaTaller || 0,
+    trabajo: estudiante.notas.notaTrabajo || 0,
+    exposicion: estudiante.notas.notaExposicion || 0,
+    tarea: estudiante.notas.notaTarea || 0,
+    quiz1: estudiante.notas.notaQuiz1 || 0,
+    quiz2: estudiante.notas.notaQuiz2 || 0,
+    actitudinal: estudiante.notas.notaActitudinal || 0,
+    examenFinal: estudiante.notas.notaExamFinal || 0,
+    definitiva: estudiante.notas.definitiva || 0,
+    recuperacion: false,
+    notaRecuperacion: estudiante.notas.notaRecuperacion || 0,
+    habilitacion: false,
+    notaHabilitacion: estudiante.notas.notaHabilitacion || 0,
+    estudianteId: estudiante.id,
+    cicloId: Number(this.selectedCicloId),
+    materiaId: Number(this.selectedMateriaId)
+  }));
+
+  console.log('Calificaciones a enviar:', calificacionesParaGuardar);
+
+  this.http.post<any>('https://localhost:7246/api/Calificacion', calificacionesParaGuardar)
+    .subscribe({
+      next: (response) => {
+        console.log('Calificaciones guardadas exitosamente', response);
+        alert('¡Calificaciones guardadas correctamente!');
+        
+        // Limpiar todo después de guardar exitosamente
+        this.selectedCicloId = null;
+        this.selectedMateriaId = null;
+        this.materiasFiltradas = [];
+        this.estudiantesFiltrados = [];
+      },
+      error: (error) => {
+        console.error('Error al guardar calificaciones:', error);
+        let errorMessage = 'Ocurrió un error al guardar las calificaciones';
+        
+        if (error.error?.errors) {
+          console.error('Errores de validación:', error.error.errors);
+          errorMessage += '\nErrores de validación:\n';
+          for (const key in error.error.errors) {
+            errorMessage += `- ${error.error.errors[key].join(', ')}\n`;
+          }
+        } else if (error.error?.title) {
+          errorMessage += `\n${error.error.title}`;
+        }
+        
+        alert(errorMessage);
+      }
+    });
+}
+
+// Método para validar la nota al perder el foco
+validarNota(event: FocusEvent, campo: string, estudiante: any): void {
+  const input = event.target as HTMLInputElement;
+  const valor = parseFloat(input.value);
+  
+  if (isNaN(valor)) {
+    this.mostrarErrorYEnfocar(input, 'Debe ingresar un valor numérico');
+    return;
+  }
+
+  if (valor < 3 || valor > 10) {
+    this.mostrarErrorYEnfocar(input, 'La nota debe estar entre 3 y 10');
+    return;
+  }
+
+  // Si pasa la validación, actualizar el modelo
+  estudiante.notas[campo] = valor;
+  this.calcularPromedio(estudiante);
+}
+
+// Método para mostrar error y regresar el foco
+mostrarErrorYEnfocar(input: HTMLInputElement, mensaje: string): void {
+  alert(mensaje);
+  
+  // Usamos setTimeout para asegurar que el alert no bloquee el focus
+  setTimeout(() => {
+    input.focus();
+    input.select();
+  }, 0);
+}
+
 }

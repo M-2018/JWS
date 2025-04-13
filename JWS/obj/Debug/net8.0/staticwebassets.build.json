@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "hwuCCeb02Gk9oEIb3reJzsXnZI6K7bmmmMW4Z9ru4JU=",
+  "Hash": "pPdeR17k+NAX8zkWTGPwduzWsRvYiLukffTm+SZAt64=",
   "Source": "JWS",
   "BasePath": "_content/JWS",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }
