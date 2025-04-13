@@ -41,14 +41,14 @@ export class LoginComponent {
             this.username = response.username;
             this.isAdmin = response.isAdmin;
             this.isLoggedIn = true;
-            console.log('Login exitoso', this.username, this.isAdmin);
+            this.authService.updateLoginStatus(true);
           } else {
+            this.isLoggedIn = false;
+            this.authService.updateLoginStatus(false);
             this.errorMessage = 'Credenciales inválidas';
-            console.log('Login fallido');
           }
         },
         (error) => {
-          console.error('Error en el login', error);
           this.errorMessage = 'Error en la conexión con el servidor';
         }
       );

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { LoginResponseDTO } from '../dto/LoginResponseDTO';
 
 @Injectable({
@@ -9,6 +9,10 @@ import { LoginResponseDTO } from '../dto/LoginResponseDTO';
 export class AuthService {
 
   private apiUrl = 'https://localhost:7246/api/Usuario';
+  private isLoggedInSubject = new BehaviorSubject<boolean>(false);
+  public isLoggedIn$ = this.isLoggedInSubject.asObservable();
+
+
   constructor(private http: HttpClient) { }
 
   login(email: string, password: string): Observable<LoginResponseDTO> {
@@ -16,28 +20,8 @@ export class AuthService {
     const body = { email, password }; 
     return this.http.post<LoginResponseDTO>(`${this.apiUrl}/validate-credentials`, body, { headers });
   }
-}
 
-/**
- * [
-  {
-    "id": 1,
-    "username": "Administrador",
-    "email": "admin@mail.com",
-    "nombres": "Luiz",
-    "apellidos": "Diaz",
-    "isAdmin": true
-  },
-  {
-    "id": 2,
-    "username": "Usuario",
-    "email": "usuario@mail.com",
-    "nombres": "Users",
-    "apellidos": "Perez",
-    "isAdmin": false
+  updateLoginStatus(isLoggedIn: boolean): void {
+    this.isLoggedInSubject.next(isLoggedIn);
   }
-]
-
-Admin123@
-Usuario123@
- */
+}
