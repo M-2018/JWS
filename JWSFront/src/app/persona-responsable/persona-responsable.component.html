@@ -101,6 +101,19 @@
   <!-- Tabla para listar responsables -->
   <div *ngIf="responsables.length > 0" class="mt-5">
     <h3 class="home-title text-center">Lista de Responsables</h3>
+
+    <div class="form-group mb-4">
+      <label for="filtroEstudiante">Buscar por estudiante:</label>
+      <input
+        type="text"
+        id="filtroEstudiante"
+        [(ngModel)]="filtroEstudiante"
+        (input)="filtrarPorEstudiante()"
+        class="form-control login-input"
+        placeholder="Escribe el nombre del estudiante..."
+      />
+    </div>
+
     <table class="table table-dark table-striped">
       <thead>
         <tr>

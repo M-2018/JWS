@@ -88,42 +88,6 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-  // Enviar formulario para crear o actualizar matrícula
-  // onSubmit(): void {
-  //   if (this.matriculaForm.invalid) {
-  //     this.matriculaForm.markAllAsTouched();
-  //     return;
-  //   }
-
-  //   const matriculaData = {
-  //     ...this.matriculaForm.value
-  //   };
-
-  //   if (this.editMode && this.selectedMatriculaId !== null) {
-  //     // Actualizar matrícula
-  //     this.http.put(`${this.apiUrl}/${this.selectedMatriculaId}`, matriculaData).subscribe({
-  //       next: () => {
-  //         this.getMatriculas();
-  //         this.resetForm();
-  //       },
-  //       error: (err) => {
-  //         console.error('Error al actualizar matrícula:', err);
-  //       }
-  //     });
-  //   } else {
-  //     // Crear nueva matrícula
-  //     this.http.post(this.apiUrl, matriculaData).subscribe({
-  //       next: () => {
-  //         this.getMatriculas();
-  //         this.resetForm();
-  //       },
-  //       error: (err) => {
-  //         console.error('Error al crear matrícula:', err);
-  //       }
-  //     });
-  //   }
-  // }
-
   onSubmit(): void {
     if (this.matriculaForm.invalid) {
       this.matriculaForm.markAllAsTouched();

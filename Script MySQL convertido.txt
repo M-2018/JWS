@@ -1,0 +1,172 @@
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS JWSDb;
+USE JWSDb;
+
+-- Tabla para migraciones de Entity Framework
+CREATE TABLE `__EFMigrationsHistory` (
+    `MigrationId` varchar(150) NOT NULL,
+    `ProductVersion` varchar(32) NOT NULL,
+    PRIMARY KEY (`MigrationId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Asistencias
+CREATE TABLE `Asistencias` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Fecha` datetime NULL,
+    `Presente` tinyint(1) NULL,
+    `EstudianteId` bigint NOT NULL,
+    `MateriaId` bigint NOT NULL,
+    `CicloId` bigint NOT NULL,
+    PRIMARY KEY (`Id`),
+    INDEX `IX_Asistencias_CicloId` (`CicloId`),
+    INDEX `IX_Asistencias_EstudianteId` (`EstudianteId`),
+    INDEX `IX_Asistencias_MateriaId` (`MateriaId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Calificaciones
+CREATE TABLE `Calificaciones` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Tarea` decimal(18,2) NULL,
+    `Trabajo` decimal(18,2) NULL,
+    `ExamenFinal` decimal(18,2) NULL,
+    `Exposicion` decimal(18,2) NULL,
+    `Actitudinal` decimal(18,2) NULL,
+    `Quiz1` decimal(18,2) NULL,
+    `Definitiva` decimal(18,2) NULL,
+    `Recuperacion` tinyint(1) NULL,
+    `Habilitacion` tinyint(1) NULL,
+    `EstudianteId` bigint NOT NULL,
+    `CicloId` bigint NOT NULL,
+    `MateriaId` bigint NOT NULL,
+    `NotaHabilitacion` decimal(18,2) NULL,
+    `NotaRecuperacion` decimal(18,2) NULL,
+    `Quiz2` decimal(18,2) NULL,
+    `Taller` decimal(18,2) NULL,
+    PRIMARY KEY (`Id`),
+    INDEX `IX_Calificaciones_CicloId` (`CicloId`),
+    INDEX `IX_Calificaciones_MateriaId` (`MateriaId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla CicloMaterias
+CREATE TABLE `CicloMaterias` (
+    `CicloId` bigint NOT NULL,
+    `MateriaId` bigint NOT NULL,
+    PRIMARY KEY (`CicloId`, `MateriaId`),
+    INDEX `IX_CicloMaterias_MateriaId` (`MateriaId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Ciclos
+CREATE TABLE `Ciclos` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Nombre` varchar(255) NOT NULL,
+    `Anio` varchar(255) NOT NULL,
+    `Semestre` varchar(255) NOT NULL,
+    PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Estudiantes
+CREATE TABLE `Estudiantes` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Nombres` varchar(255) NOT NULL,
+    `Apellidos` varchar(255) NOT NULL,
+    `NroDocumento` varchar(255) NOT NULL,
+    `TipoDocumento` varchar(255) NOT NULL,
+    `FechaNacimiento` datetime NOT NULL,
+    `Direccion` varchar(255) NOT NULL,
+    `Telefono` varchar(255) NOT NULL,
+    `Email` varchar(255) NOT NULL,
+    `FotoUrl` varchar(255) NULL,
+    `SemestrePagado` tinyint(1) NULL,
+    `CicloId` bigint NOT NULL,
+    PRIMARY KEY (`Id`),
+    INDEX `IX_Estudiantes_CicloId` (`CicloId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Materias
+CREATE TABLE `Materias` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Nombre` varchar(255) NOT NULL,
+    `ProfesorId` bigint NOT NULL,
+    PRIMARY KEY (`Id`),
+    INDEX `IX_Materias_ProfesorId` (`ProfesorId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Matriculas
+CREATE TABLE `Matriculas` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `EstudianteId` bigint NOT NULL,
+    `CicloId` bigint NOT NULL,
+    `AnioLectivo` int NOT NULL,
+    PRIMARY KEY (`Id`),
+    INDEX `IX_Matriculas_CicloId` (`CicloId`),
+    INDEX `IX_Matriculas_EstudianteId` (`EstudianteId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla PersonasResponsables
+CREATE TABLE `PersonasResponsables` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Nombres` varchar(255) NOT NULL,
+    `Apellidos` varchar(255) NOT NULL,
+    `Relacion` varchar(255) NOT NULL,
+    `EstudianteId` bigint NOT NULL,
+    `CorreoElectronico` varchar(255) NOT NULL,
+    `Telefono` varchar(255) NOT NULL,
+    PRIMARY KEY (`Id`),
+    INDEX `IX_PersonasResponsables_EstudianteId` (`EstudianteId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Profesores
+CREATE TABLE `Profesores` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Nombres` varchar(255) NOT NULL,
+    `Apellidos` varchar(255) NOT NULL,
+    `NroDocumento` varchar(255) NOT NULL,
+    `TipoDocumento` varchar(255) NOT NULL,
+    `FechaNacimiento` datetime NOT NULL,
+    `Direccion` varchar(255) NOT NULL,
+    `Telefono` varchar(255) NOT NULL,
+    `Email` varchar(255) NOT NULL,
+    `Especialidad` varchar(255) NOT NULL,
+    `Activo` tinyint(1) NOT NULL,
+    PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Tabla Usuarios
+CREATE TABLE `Usuarios` (
+    `Id` bigint NOT NULL AUTO_INCREMENT,
+    `Username` varchar(255) NOT NULL,
+    `Email` varchar(255) NOT NULL,
+    `Password` varchar(255) NOT NULL,
+    `Nombres` varchar(255) NOT NULL,
+    `Apellidos` varchar(255) NOT NULL,
+    `IsAdmin` tinyint(1) NOT NULL,
+    PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Agregar las restricciones de clave foránea
+ALTER TABLE `Asistencias`
+    ADD CONSTRAINT `FK_Asistencias_Ciclos` FOREIGN KEY (`CicloId`) REFERENCES `Ciclos` (`Id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `FK_Asistencias_Estudiantes` FOREIGN KEY (`EstudianteId`) REFERENCES `Estudiantes` (`Id`),
+    ADD CONSTRAINT `FK_Asistencias_Materias` FOREIGN KEY (`MateriaId`) REFERENCES `Materias` (`Id`);
+
+ALTER TABLE `Calificaciones`
+    ADD CONSTRAINT `FK_Calificaciones_Ciclos` FOREIGN KEY (`CicloId`) REFERENCES `Ciclos` (`Id`),
+    ADD CONSTRAINT `FK_Calificaciones_Estudiantes` FOREIGN KEY (`EstudianteId`) REFERENCES `Estudiantes` (`Id`),
+    ADD CONSTRAINT `FK_Calificaciones_Materias` FOREIGN KEY (`MateriaId`) REFERENCES `Materias` (`Id`);
+
+ALTER TABLE `CicloMaterias`
+    ADD CONSTRAINT `FK_CicloMaterias_Ciclos` FOREIGN KEY (`CicloId`) REFERENCES `Ciclos` (`Id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `FK_CicloMaterias_Materias` FOREIGN KEY (`MateriaId`) REFERENCES `Materias` (`Id`);
+
+ALTER TABLE `Estudiantes`
+    ADD CONSTRAINT `FK_Estudiantes_Ciclos` FOREIGN KEY (`CicloId`) REFERENCES `Ciclos` (`Id`);
+
+ALTER TABLE `Materias`
+    ADD CONSTRAINT `FK_Materias_Profesores` FOREIGN KEY (`ProfesorId`) REFERENCES `Profesores` (`Id`);
+
+ALTER TABLE `Matriculas`
+    ADD CONSTRAINT `FK_Matriculas_Ciclos` FOREIGN KEY (`CicloId`) REFERENCES `Ciclos` (`Id`) ON DELETE CASCADE,
+    ADD CONSTRAINT `FK_Matriculas_Estudiantes` FOREIGN KEY (`EstudianteId`) REFERENCES `Estudiantes` (`Id`) ON DELETE CASCADE;
+
+ALTER TABLE `PersonasResponsables`
+    ADD CONSTRAINT `FK_PersonasResponsables_Estudiantes` FOREIGN KEY (`EstudianteId`) REFERENCES `Estudiantes` (`Id`) ON DELETE CASCADE;

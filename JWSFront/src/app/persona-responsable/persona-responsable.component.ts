@@ -20,8 +20,10 @@ export class PersonaResponsableComponent implements OnInit {
   responsableForm: FormGroup;
   estudiantes: any[] = [];
   responsables: any[] = [];
+  originalResponsables: any[] = [];
   editMode = false;
   selectedResponsableId: number | null = null;
+  filtroEstudiante: string = '';
 
   private apiUrl = 'https://localhost:7246/api/PersonaResponsable';
   private estudiantesUrl = 'https://localhost:7246/api/Estudiante';
@@ -46,7 +48,8 @@ export class PersonaResponsableComponent implements OnInit {
   getResponsables(): void {
     this.http.get<any[]>(this.apiUrl).subscribe({
       next: (data) => {
-        this.responsables = data;
+        this.originalResponsables = data; 
+        this.responsables = [...this.originalResponsables]; 
       },
       error: (err) => {
         console.error('Error al obtener responsables:', err);
@@ -66,9 +69,9 @@ export class PersonaResponsableComponent implements OnInit {
   }
 
   getEstudianteNombre(id: number): string {
-  const estudiante = this.estudiantes.find(e => e.id === id);
-  return estudiante ? `${estudiante.nombres} ${estudiante.apellidos}` : 'N/A';
-}
+    const estudiante = this.estudiantes.find(e => e.id === id);
+    return estudiante ? `${estudiante.nombres} ${estudiante.apellidos}` : 'Estudiante no encontrado';
+  }
 
 
   onSubmit(): void {
@@ -138,5 +141,21 @@ export class PersonaResponsableComponent implements OnInit {
     this.editMode = false;
     this.selectedResponsableId = null;
     this.responsableForm.reset();
+  }
+
+  filtrarPorEstudiante(): void {
+    if (!this.filtroEstudiante) {
+      this.responsables = [...this.originalResponsables];
+      return;
+    }
+
+    const terminoBusqueda = this.filtroEstudiante.toLowerCase();
+    this.responsables = this.originalResponsables.filter(responsable => {
+      const estudiante = this.estudiantes.find(e => e.id === responsable.estudianteId);
+      if (!estudiante) return false;
+      
+      const nombreCompleto = `${estudiante.nombres} ${estudiante.apellidos}`.toLowerCase();
+      return nombreCompleto.includes(terminoBusqueda);
+    });
   }
 }

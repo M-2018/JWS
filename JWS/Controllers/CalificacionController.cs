@@ -136,6 +136,16 @@ namespace JWS.Controllers
         [HttpPost]
         public async Task<ActionResult<IEnumerable<CalificacionDTO>>> CreateCalificaciones(IEnumerable<CalificacionDTO> calificacionesDTO)
         {
+            if (!calificacionesDTO.Any())
+            {
+                return BadRequest("No se proporcionaron calificaciones para guardar.");
+            }
+
+            if (calificacionesDTO.Any(c => c.EstudianteId <= 0 || c.CicloId <= 0 || c.MateriaId <= 0))
+            {
+                return BadRequest("Los IDs de estudiante, ciclo y materia deben ser valores positivos.");
+            }
+
             // Primero, obtenemos todos los IDs relevantes
             var estudianteIds = calificacionesDTO.Select(c => c.EstudianteId).ToList();
             var materiaId = calificacionesDTO.First().MateriaId;

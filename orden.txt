@@ -6,11 +6,12 @@ Basado en las relaciones y dependencias mostradas en tu código, aquí está el 
 2. Profesor ok
    - No tiene dependencias de otras tablas
 
-3. Ciclo ok
+3. Materia ok
+   - Depende de Profesor 
+
+4. Ciclo ok
    - No tiene dependencias de otras tablas
 
-4. Materia ok
-   - Depende de Profesor
 
 5. CicloMateria
    - Depende de Ciclo y Materia
@@ -27,7 +28,7 @@ En relación se debe agregar una combo con las opciones disponibles
 8. Matricula ok
    - Depende de Estudiante y Ciclo
 
-9. Asistencia ok
+9. Asistencia 
    - Depende de Estudiante, Materia y Ciclo
 
 10. Calificacion

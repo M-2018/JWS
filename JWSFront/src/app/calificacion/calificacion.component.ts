@@ -26,6 +26,20 @@ interface Calificacion {
   nombreCompleto: string;
 }
 
+interface EstudianteDTO {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  nroDocumento: string;
+  tipoDocumento: string;
+  fechaNacimiento: string;
+  direccion: string;
+  telefono: string;
+  email: string;
+  semestrePagado: boolean;
+  cicloId: number;
+}
+
 @Component({
   selector: 'app-calificacion',
   imports: [FormsModule, CommonModule],
@@ -41,9 +55,11 @@ export class CalificacionComponent implements OnInit {
   selectedMateriaId: number | null = null;
   estudiantesFiltrados: any[] = [];
 
+  // URLs de la API
   private ciclosUrl = 'https://localhost:7246/api/Ciclos';
   private materiasApiUrl = 'https://localhost:7246/api/Materia';
   private calificacionUrl = 'https://localhost:7246/api/Calificacion/Calificaciones';
+  private estudiantesPorCicloUrl = 'https://localhost:7246/api/Estudiante/Ciclo'; // Nueva URL
 
   constructor(
     private http: HttpClient,
@@ -85,6 +101,12 @@ export class CalificacionComponent implements OnInit {
     return this.http.get<Calificacion[]>(url);
   }
 
+  // Obtener estudiantes por ciclo desde la API
+  getEstudiantesPorCiclo(cicloId: number): Observable<EstudianteDTO[]> {
+    const url = `${this.estudiantesPorCicloUrl}/${cicloId}`;
+    return this.http.get<EstudianteDTO[]>(url);
+  }
+
   // Filtrar materias por ciclo seleccionado
   filtrarMateriasPorCiclo(): void {
     const selectedId = Number(this.selectedCicloId);
@@ -112,7 +134,44 @@ export class CalificacionComponent implements OnInit {
     if (this.selectedCicloId && this.selectedMateriaId) {
       this.getCalificaciones(this.selectedCicloId, this.selectedMateriaId).subscribe({
         next: (calificaciones) => {
-          this.actualizarCalificacionesEnInterfaz(calificaciones);
+          if (calificaciones.length === 0) {
+            // Si no hay calificaciones, obtener estudiantes del ciclo y inicializar notas en 0
+            this.getEstudiantesPorCiclo(this.selectedCicloId!).subscribe({
+              next: (estudiantes) => {
+                this.estudiantesFiltrados = estudiantes.map((estudiante) => ({
+                  id: estudiante.id,
+                  nombres: estudiante.nombres,
+                  apellidos: estudiante.apellidos,
+                  notas: {
+                    notaTaller: 0,
+                    notaTrabajo: 0,
+                    notaExposicion: 0,
+                    notaTarea: 0,
+                    notaQuiz1: 0,
+                    notaQuiz2: 0,
+                    notaActitudinal: 0,
+                    notaExamFinal: 0,
+                    definitiva: 0,
+                    notaRecuperacion: 0,
+                    notaHabilitacion: 0,
+                    promedioTrabajos: 0,
+                    promedioQuizes: 0,
+                    desTrabajos: '',
+                    desQuizes: '',
+                    desActitudinal: '',
+                    desExamenFinal: '',
+                    desDefinitiva: '',
+                  },
+                }));
+              },
+              error: (error) => {
+                console.error('Error al obtener estudiantes:', error);
+              },
+            });
+          } else {
+            // Si hay calificaciones, mapear los datos como antes
+            this.actualizarCalificacionesEnInterfaz(calificaciones);
+          }
         },
         error: (error) => {
           console.error('Error al obtener calificaciones:', error);
@@ -143,14 +202,15 @@ export class CalificacionComponent implements OnInit {
         notaHabilitacion: calificacion.notaHabilitacion,
         promedioTrabajos: (calificacion.taller + calificacion.trabajo + calificacion.exposicion + calificacion.tarea) / 4,
         promedioQuizes: (calificacion.quiz1 + calificacion.quiz2) / 2,
-        desTrabajos: '', // Puedes ajustar esto según tu lógica
-        desQuizes: '', // Puedes ajustar esto según tu lógica
-        desActitudinal: '', // Puedes ajustar esto según tu lógica
-        desExamenFinal: '', // Puedes ajustar esto según tu lógica
-        desDefinitiva: '', // Puedes ajustar esto según tu lógica
+        desTrabajos: '',
+        desQuizes: '',
+        desActitudinal: '',
+        desExamenFinal: '',
+        desDefinitiva: '',
       },
     }));
 
+    // Recalcular promedios para todos los estudiantes
     this.estudiantesFiltrados.forEach((estudiante) => this.calcularPromedio(estudiante));
   }
 
@@ -185,25 +245,40 @@ export class CalificacionComponent implements OnInit {
   // Guardar las calificaciones modificadas
   guardarSeleccion(): void {
     const calificacionesParaGuardar = this.estudiantesFiltrados.map((estudiante) => ({
-      cicloId: this.selectedCicloId,
-      materiaId: this.selectedMateriaId,
+      id: 0, // en minúscula
+      taller: estudiante.notas.notaTaller || 0,
+      trabajo: estudiante.notas.notaTrabajo || 0,
+      exposicion: estudiante.notas.notaExposicion || 0,
+      tarea: estudiante.notas.notaTarea || 0,
+      quiz1: estudiante.notas.notaQuiz1 || 0,
+      quiz2: estudiante.notas.notaQuiz2 || 0,
+      actitudinal: estudiante.notas.notaActitudinal || 0,
+      examenFinal: estudiante.notas.notaExamFinal || 0,
+      definitiva: estudiante.notas.definitiva || 0,
+      recuperacion: false, // Agregar valor booleano
+      notaRecuperacion: estudiante.notas.notaRecuperacion || 0,
+      habilitacion: false, // Agregar valor booleano
+      notaHabilitacion: estudiante.notas.notaHabilitacion || 0,
       estudianteId: estudiante.id,
-      notaTrabajo1: estudiante.notas.notaTaller,
-      notaTrabajo2: estudiante.notas.notaTrabajo,
-      notaEvaluacion1: estudiante.notas.notaQuiz1,
-      notaEvaluacion2: estudiante.notas.notaQuiz2,
-      notaActitudinal: estudiante.notas.notaActitudinal,
-      notaExamenFinal: estudiante.notas.notaExamFinal,
-      notaDefinitiva: estudiante.notas.definitiva,
+      cicloId: Number(this.selectedCicloId),
+      materiaId: Number(this.selectedMateriaId)
     }));
-
-    this.http.post(this.calificacionUrl, calificacionesParaGuardar).subscribe({
-      next: () => {
-        console.log('Calificaciones guardadas exitosamente');
-      },
-      error: (error) => {
-        console.error('Error al guardar calificaciones:', error);
-      },
-    });
+  
+    console.log('Calificaciones a enviar:', calificacionesParaGuardar);
+  
+    this.http.post<any>('https://localhost:7246/api/Calificacion', calificacionesParaGuardar)
+      .subscribe({
+        next: (response) => {
+          console.log('Calificaciones guardadas exitosamente', response);
+          // Aquí podrías mostrar un mensaje de éxito
+        },
+        error: (error) => {
+          console.error('Error al guardar calificaciones:', error);
+          if (error.error?.errors) {
+            console.error('Errores de validación:', error.error.errors);
+          }
+          // Aquí podrías mostrar un mensaje de error
+        }
+      });
   }
 }

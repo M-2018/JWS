@@ -62,6 +62,39 @@ namespace JWS.Controllers
             return Ok(matriculaDTO);
         }
 
+        [HttpGet("EstudiantesNoMatriculados")]
+        public async Task<ActionResult<IEnumerable<EstudianteDTO>>> GetEstudiantesNoMatriculados()
+        {
+            // Obtener todos los estudiantes
+            var todosLosEstudiantes = await _context.Estudiantes.ToListAsync();
+
+            // Obtener los IDs de los estudiantes matriculados
+            var estudiantesMatriculadosIds = await _context.Matriculas
+                .Select(m => m.EstudianteId)
+                .Distinct()
+                .ToListAsync();
+
+            // Filtrar los estudiantes que no están matriculados
+            var estudiantesNoMatriculados = todosLosEstudiantes
+                .Where(e => !estudiantesMatriculadosIds.Contains(e.Id))
+                .Select(e => new EstudianteDTO
+                {
+                    Id = e.Id,
+                    Nombres = e.Nombres,
+                    Apellidos = e.Apellidos,
+                    NroDocumento = e.NroDocumento,
+                    TipoDocumento = e.TipoDocumento,
+                    FechaNacimiento = e.FechaNacimiento,
+                    Direccion = e.Direccion,
+                    Telefono = e.Telefono,
+                    Email = e.Email,
+                    SemestrePagado = e.SemestrePagado,
+                    CicloId = e.CicloId
+                }).ToList();
+
+            return Ok(estudiantesNoMatriculados);
+        }
+
         // POST: api/Matricula
         [HttpPost]
         public async Task<ActionResult<MatriculaDTO>> PostMatricula(MatriculaDTO matriculaDTO)

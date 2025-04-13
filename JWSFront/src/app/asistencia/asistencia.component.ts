@@ -155,54 +155,6 @@ export class AsistenciaComponent implements OnInit {
     }
   }
 
-  // fetchAssistanceData(): void {
-  //   if (!this.editFechaSeleccionada || !this.editMateriaSeleccionada || !this.editCicloSeleccionado) {
-  //     return; // No realiza ninguna acción si falta algún dato
-  //   }
-
-  //   const url = `${this.AsistenciasUrl}/filtrar?fecha=${this.editFechaSeleccionada}&cicloId=${this.editCicloSeleccionado}&materiaId=${this.editMateriaSeleccionada}`;
-
-  //   this.http.get<any[]>(url).subscribe({
-  //     next: (data) => {
-  //       console.log('Datos de asistencia:', data);
-  //       this.editEstudiantes = data;
-  //       this.mensajeError = '';
-  //     },
-  //     error: () => {
-  //       this.editEstudiantes = [];
-  //       this.mensajeError = 'No se encontraron asistencias para los filtros seleccionados.';
-  //     },
-  //   });
-  // }
-
-  // guardarCambiosAsistencia(): void {
-  //   // Preparar los datos para enviar
-  //   const asistenciasActualizar = this.editEstudiantes.map((estudiante) => ({
-  //     Id: estudiante.id, // Asegúrate de enviar el ID de la asistencia
-  //     Fecha: this.editFechaSeleccionada,
-  //     Presente: estudiante.presente,
-  //     EstudianteId: estudiante.estudianteId, // Asegúrate de enviar el ID del estudiante
-  //     MateriaId: this.editMateriaSeleccionada,
-  //     CicloId: this.editCicloSeleccionado,
-  //   }));
-
-  //   const url = `${this.AsistenciasUrl}/ActualizarAsistencias`;
-
-  //   console.log(
-  //     'asistenciasActualizar: ' + JSON.stringify(asistenciasActualizar)
-  //   );
-
-  //   this.http.put(url, asistenciasActualizar).subscribe({
-  //     next: (response) => {
-  //       console.log('Asistencias actualizadas:', response);
-  //       alert('Asistencias actualizadas correctamente');
-  //     },
-  //     error: (err) => {
-  //       console.error('Error al actualizar asistencias:', err);
-  //     },
-  //   });
-  // }
-
   guardarCambiosAsistencia(): void {
     const asistenciasActualizar = this.editEstudiantes.map((estudiante) => ({
       Id: estudiante.id,
@@ -239,40 +191,6 @@ export class AsistenciaComponent implements OnInit {
         },
       });
   }
-
-  // Modificar fetchAssistanceData para asegurar que se recuperen todos los datos necesarios
-  // fetchAssistanceData(): void {
-  //   if (
-  //     !this.editFechaSeleccionada ||
-  //     !this.editMateriaSeleccionada ||
-  //     !this.editCicloSeleccionado
-  //   ) {
-  //     return; // No realiza ninguna acción si falta algún dato
-  //   }
-
-  //   const url = `${this.AsistenciasUrl}/filtrar?fecha=${this.editFechaSeleccionada}&cicloId=${this.editCicloSeleccionado}&materiaId=${this.editMateriaSeleccionada}`;
-
-  //   this.http.get<any[]>(url).subscribe({
-  //     next: (data) => {
-  //       console.log('Datos de asistencia:', data);
-  //       // Mapear los datos para asegurar que tengamos todas las propiedades necesarias
-  //       this.editEstudiantes = data.map((asistencia) => ({
-  //         ...asistencia,
-  //         presente: asistencia.presente ?? false,
-  //         estudianteId: asistencia.estudianteId,
-  //         nombres: asistencia.nombres,
-  //         apellidos: asistencia.apellidos,
-  //       }));
-  //       this.mensajeError = '';
-  //     },
-  //     error: () => {
-  //       this.editEstudiantes = [];
-  //       this.mensajeError =
-  //         'No se encontraron asistencias para los filtros seleccionados.';
-  //     },
-
-  //   });
-  // }
 
   fetchAssistanceData(): void {
     if (
